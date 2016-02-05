@@ -44,8 +44,8 @@ public abstract class ConfigurationBuilder {
         return OutboundEndpointBuilder.outboundEndpoint(name, epr);
     }
 
-    public HTTPInboundEPBuilder httpInboundEndpoint(String name, int port) {
-        return HTTPInboundEPBuilder.httpInboundEndpoint(name, port);
+    public HTTPInboundEPBuilder httpInboundEndpoint(String name, int port, String sequence) {
+        return HTTPInboundEPBuilder.httpInboundEndpoint(name, port, sequence);
     }
 
     public HeaderBasedRouterBuilder headerBasedRouter() {

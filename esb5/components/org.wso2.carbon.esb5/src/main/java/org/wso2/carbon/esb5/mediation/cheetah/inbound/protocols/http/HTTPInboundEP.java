@@ -63,7 +63,9 @@ public class HTTPInboundEP extends InboundEndpoint {
     }
 
     public boolean receive(CarbonMessage cMsg, CarbonCallback callback) {
-        log.info("HTTP Endpoint Processing");
+        if (log.isDebugEnabled()) {
+            log.debug("HTTP Endpoint : " + getName() + " received the message");
+        }
         super.receive(cMsg, callback);
         return true;
     }
