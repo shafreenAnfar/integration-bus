@@ -346,7 +346,7 @@
 
     </profiles>
     <properties>
-        <bundle.activator>org.wso2.carbon.esb5.internal.Activator</bundle.activator>
+        <bundle.activator>org.wso2.carbon.esb5.Activator</bundle.activator>
         <private.package>org.wso2.carbon.esb5.internal</private.package>
         <export.package>
             !org.wso2.carbon.esb5.internal,
