@@ -29,6 +29,9 @@ public class DSLLoader {
     private static final Logger log = LoggerFactory.getLogger(DSLLoader.class);
 
     public static void loadDSL(ConfigurationBuilder configurationBuilder) {
+        if (log.isDebugEnabled()) {
+            log.debug("Loading Java DSL..");
+        }
         configurationBuilder.configure();
     }
 
