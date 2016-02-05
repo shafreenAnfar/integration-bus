@@ -66,8 +66,8 @@ public class HTTPInboundEPDispatcher implements Dispatcher, ConfigRegistryObserv
         }
 
         for (HTTPInboundEP endpoint : endpointsOnPort) {
-           if (endpoint.canProcess(cMsg)) {
-               endpoint.process(cMsg, callback);
+           if (endpoint.canReceive(cMsg)) {
+               endpoint.receive(cMsg, callback);
            }
         }
 

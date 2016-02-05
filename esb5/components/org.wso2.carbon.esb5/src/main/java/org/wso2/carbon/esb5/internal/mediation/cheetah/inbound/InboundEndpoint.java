@@ -20,6 +20,7 @@ package org.wso2.carbon.esb5.internal.mediation.cheetah.inbound;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.esb5.internal.mediation.cheetah.config.CheetahConfigRegistry;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
@@ -32,7 +33,7 @@ public abstract class InboundEndpoint {
 
     private String name;
 
-    private String flowName;
+    private String sequence;
 
     public InboundEndpoint(String name) {
         this.name = name;
@@ -42,12 +43,12 @@ public abstract class InboundEndpoint {
         return name;
     }
 
-    public String getFlowName() {
-        return flowName;
+    public String getSequence() {
+        return sequence;
     }
 
-    public void setFlowName(String flowName) {
-        this.flowName = flowName;
+    public void setSequence(String sequence) {
+        this.sequence = sequence;
     }
 
     /**
@@ -56,15 +57,17 @@ public abstract class InboundEndpoint {
      * @param   cMsg  Carbon Message
      * @return  Check whether Carbon message can be processed with this endpoint
      */
-    public abstract boolean canProcess(CarbonMessage cMsg);
+    public abstract boolean canReceive(CarbonMessage cMsg);
 
     /**
      * Process the message
      *
-     * @param message   Carbon Message
+     * @param cMsg   Carbon Message
      * @param callback  Callback to execute response flow
-     * @return  whether forward processing is successful
+     * @return whether forward processing is successful
      */
-    public abstract boolean process(CarbonMessage message, CarbonCallback callback);
+    public boolean receive(CarbonMessage cMsg, CarbonCallback callback) {
+        return CheetahConfigRegistry.getInstance().getSequence(getSequence()).receive(cMsg, callback);
+    }
 
 }

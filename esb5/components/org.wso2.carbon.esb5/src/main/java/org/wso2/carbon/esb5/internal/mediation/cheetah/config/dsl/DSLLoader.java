@@ -28,8 +28,8 @@ public class DSLLoader {
 
     private static final Logger log = LoggerFactory.getLogger(DSLLoader.class);
 
-    public static void loadDSL(DSLBase dslBase) {
-        dslBase.configure();
+    public static void loadDSL(ConfigurationBuilder configurationBuilder) {
+        configurationBuilder.configure();
     }
 
 }

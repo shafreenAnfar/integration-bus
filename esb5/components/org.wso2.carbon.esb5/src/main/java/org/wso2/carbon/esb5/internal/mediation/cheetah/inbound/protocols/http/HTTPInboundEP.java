@@ -36,8 +36,9 @@ public class HTTPInboundEP extends InboundEndpoint {
 
     private static final Logger log = LoggerFactory.getLogger(InboundEndpoint.class);
 
-    public HTTPInboundEP(String name) {
+    public HTTPInboundEP(String name, int port) {
         super(name);
+        this.port = port;
     }
 
     public String getContext() {
@@ -52,11 +53,7 @@ public class HTTPInboundEP extends InboundEndpoint {
         return port;
     }
 
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    public boolean canProcess(CarbonMessage cMsg) {
+    public boolean canReceive(CarbonMessage cMsg) {
 
         String uri = (String) cMsg.getProperty(Constants.TO);
         if (uri.startsWith(context)) {
@@ -65,8 +62,9 @@ public class HTTPInboundEP extends InboundEndpoint {
         return false;
     }
 
-    public boolean process(CarbonMessage message, CarbonCallback callback) {
+    public boolean receive(CarbonMessage cMsg, CarbonCallback callback) {
         log.info("HTTP Endpoint Processing");
+        super.receive(cMsg, callback);
         return true;
     }
 
