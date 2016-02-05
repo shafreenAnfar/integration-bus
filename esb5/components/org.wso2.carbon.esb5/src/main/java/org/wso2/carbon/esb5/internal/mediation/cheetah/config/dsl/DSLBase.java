@@ -16,15 +16,24 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.internal.mediation.cheetah.flow;
+package org.wso2.carbon.esb5.internal.mediation.cheetah.config.dsl;
+
+import org.wso2.carbon.esb5.internal.mediation.cheetah.config.CheetahConfigRegistry;
+import org.wso2.carbon.esb5.internal.mediation.cheetah.inbound.protocols.http.HTTPInboundEP;
 
 /**
- * Cheetah Message Flow
+ * Base class for DSL Configuration
  */
-public interface MessageFlow {
+public abstract class DSLBase {
 
+    public void endpoint(String name, int port, String context) {
+        HTTPInboundEP ep1 = new HTTPInboundEP(name);
+        ep1.setPort(port);
+        ep1.setContext(context);
+        CheetahConfigRegistry.getInstance().registerEndpoint(name, ep1);
+    }
 
-
+    public abstract void configure();
 
 
 }

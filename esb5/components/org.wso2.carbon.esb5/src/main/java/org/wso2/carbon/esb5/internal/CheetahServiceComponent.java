@@ -22,8 +22,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
-import org.wso2.carbon.esb5.internal.mediation.cheetah.config.DSLBase;
-import org.wso2.carbon.esb5.internal.mediation.cheetah.config.DSLLoader;
+import org.wso2.carbon.esb5.internal.mediation.cheetah.config.dsl.DSLBase;
+import org.wso2.carbon.esb5.internal.mediation.cheetah.config.dsl.DSLLoader;
 import org.wso2.carbon.messaging.TransportSender;
 
 

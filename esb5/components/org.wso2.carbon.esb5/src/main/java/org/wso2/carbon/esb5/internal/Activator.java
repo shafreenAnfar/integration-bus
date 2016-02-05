@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.esb5.internal.mediation.cheetah.CheetahMessageProcessor;
 import org.wso2.carbon.esb5.internal.mediation.cheetah.inbound.DispatcherRegistry;
-import org.wso2.carbon.esb5.internal.mediation.cheetah.inbound.http.HTTPInboundEPDispatcher;
+import org.wso2.carbon.esb5.internal.mediation.cheetah.inbound.protocols.http.HTTPInboundEPDispatcher;
 import org.wso2.carbon.messaging.CarbonMessageProcessor;
 
 import java.io.File;

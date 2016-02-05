@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.internal.mediation.cheetah.config;
+package org.wso2.carbon.esb5.internal.mediation.cheetah.config.dsl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -15,13 +15,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.carbon.esb5.internal.mediation.cheetah.inbound.http;
+package org.wso2.carbon.esb5.internal.mediation.cheetah.inbound.protocols.http;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.esb5.internal.mediation.cheetah.config.CheetahConfigRegistry;
+import org.wso2.carbon.esb5.internal.mediation.cheetah.config.ConfigRegistryObserver;
 import org.wso2.carbon.esb5.internal.mediation.cheetah.inbound.Dispatcher;
-import org.wso2.carbon.esb5.internal.mediation.cheetah.inbound.InboundEPRegistry;
-import org.wso2.carbon.esb5.internal.mediation.cheetah.inbound.InboundEPRegistryObserver;
 import org.wso2.carbon.esb5.internal.mediation.cheetah.inbound.InboundEndpoint;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
@@ -33,7 +33,7 @@ import java.util.HashMap;
 /**
  * This handles the message dispatching for HTTP Inbound Endpoints
  */
-public class HTTPInboundEPDispatcher implements Dispatcher, InboundEPRegistryObserver {
+public class HTTPInboundEPDispatcher implements Dispatcher, ConfigRegistryObserver {
 
 
     private static HTTPInboundEPDispatcher instance = new HTTPInboundEPDispatcher();
@@ -51,7 +51,7 @@ public class HTTPInboundEPDispatcher implements Dispatcher, InboundEPRegistryObs
 
     public HTTPInboundEPDispatcher() {
         httpEPRegistry = new HashMap<Integer, ArrayList<HTTPInboundEP>>();
-        InboundEPRegistry.getInstance().registerObserver(this);
+        CheetahConfigRegistry.getInstance().registerObserver(this);
     }
 
     @Override
