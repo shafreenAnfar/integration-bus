@@ -27,14 +27,11 @@ import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ConfigurationBuilder;
  */
 public class Activator implements BundleActivator {
     public void start(BundleContext bundleContext) throws Exception {
-        System.out.println("#######################");
         bundleContext.registerService(ConfigurationBuilder.class, new MyDSL(), null);
     }
 
     public void stop(BundleContext bundleContext) throws Exception {
 
     }
-
-
 
 }
