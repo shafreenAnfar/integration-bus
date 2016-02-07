@@ -50,7 +50,7 @@ public class InboundEPBuilder {
         return this;
     }
 
-    public void sequence(String sequence) {
+    public void callSequence(String sequence) {
         this.sequence = sequence;
 
         if (inboundEndpoint != null) {

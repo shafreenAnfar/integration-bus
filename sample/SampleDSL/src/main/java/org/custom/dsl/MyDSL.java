@@ -35,12 +35,12 @@ public class MyDSL extends ConfigurationBuilder {
 
         router.inboundEndpoint("inboundEP1").
                 http(port(9090), context("/sample/request")).
-                sequence("seq1");
+                callSequence("seq1");
 
         router.sequence("seq1").call("outboundEP1");
 
         /*
-        router.sequence("seq1").
+        router.callSequence("seq1").
                 filter(condition("route==foo")).
                 then(log().call("outboundEP1")).
                 otherwise(call("outboundEP2")).respond();
