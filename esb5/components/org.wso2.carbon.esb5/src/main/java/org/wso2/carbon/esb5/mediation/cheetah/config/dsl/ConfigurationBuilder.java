@@ -19,6 +19,11 @@
 package org.wso2.carbon.esb5.mediation.cheetah.config.dsl;
 
 
+import org.wso2.carbon.esb5.mediation.cheetah.config.ESBConfigHolder;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.sequence.builder.SequenceBuilder;
+import org.wso2.carbon.esb5.mediation.cheetah.inbound.builder.InboundEPBuilder;
+import org.wso2.carbon.esb5.mediation.cheetah.outbound.builder.OutboundEndpointBuilder;
+
 /**
  * A class that used to create entire configuration.Anyone can extend this and overwrite configure method with
  * relevant configuration
@@ -31,5 +36,38 @@ public abstract class ConfigurationBuilder {
     public ESBConfig esbConfig(String name) {
         return new ESBConfig(name);
     }
+
+    /**
+     * ESB Configuration Builder
+     */
+    public static class ESBConfig {
+
+        private ESBConfigHolder esbConfigHolder;
+
+        public ESBConfig(String name) {
+            esbConfigHolder = new ESBConfigHolder(name);
+        }
+
+        public ESBConfigHolder getEsbConfigHolder() {
+            return esbConfigHolder;
+        }
+
+        /* For Inbound */
+        public InboundEPBuilder inboundEndpoint(String name) {
+            return InboundEPBuilder.inboundEndpoint(name, esbConfigHolder);
+        }
+
+        /* For Outbound */
+        public OutboundEndpointBuilder outboundEndpoint(String name) {
+            return OutboundEndpointBuilder.outboundEndpoint(name, esbConfigHolder);
+        }
+
+        /* For Sequence */
+        public SequenceBuilder sequence(String name) {
+            return SequenceBuilder.sequence(name, esbConfigHolder);
+        }
+
+    }
+
 
 }

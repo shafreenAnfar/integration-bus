@@ -18,7 +18,7 @@
 
 package org.wso2.carbon.esb5.mediation.cheetah.inbound.builder;
 
-import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ESBConfig;
+import org.wso2.carbon.esb5.mediation.cheetah.config.ESBConfigHolder;
 import org.wso2.carbon.esb5.mediation.cheetah.inbound.InboundEndpoint;
 import org.wso2.carbon.esb5.mediation.cheetah.inbound.protocols.http.builder.HTTPInboundEPBuilder;
 
@@ -29,14 +29,14 @@ public class InboundEPBuilder {
 
     String name;
     InboundEndpoint inboundEndpoint;
-    ESBConfig parentConfig;
+    ESBConfigHolder parentConfig;
     String sequence;
 
-    public static InboundEPBuilder inboundEndpoint(String name, ESBConfig parentConfig) {
+    public static InboundEPBuilder inboundEndpoint(String name, ESBConfigHolder parentConfig) {
         return new InboundEPBuilder(name, parentConfig);
     }
 
-    private InboundEPBuilder(String name, ESBConfig parentConfig) {
+    private InboundEPBuilder(String name, ESBConfigHolder parentConfig) {
         this.name = name;
         this.parentConfig = parentConfig;
     }

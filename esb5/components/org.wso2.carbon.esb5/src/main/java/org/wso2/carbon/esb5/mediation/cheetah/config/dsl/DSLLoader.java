@@ -34,10 +34,10 @@ public class DSLLoader {
             log.debug("Loading Java DSL..");
         }
         // Call the DSL
-        ESBConfig config = configurationBuilder.configure();
+        ConfigurationBuilder.ESBConfig config = configurationBuilder.configure();
 
         // Register the configuration
-        CheetahConfigRegistry.getInstance().addESBConfig(config);
+        CheetahConfigRegistry.getInstance().addESBConfig(config.getEsbConfigHolder());
 
     }
 

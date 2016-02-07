@@ -19,7 +19,7 @@
 package org.wso2.carbon.esb5.mediation.cheetah.outbound.builder;
 
 
-import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ESBConfig;
+import org.wso2.carbon.esb5.mediation.cheetah.config.ESBConfigHolder;
 import org.wso2.carbon.esb5.mediation.cheetah.outbound.OutboundEndpoint;
 import org.wso2.carbon.esb5.mediation.cheetah.outbound.protocol.http.builder.HTTPOutboundEPBuilder;
 
@@ -30,14 +30,14 @@ public class OutboundEndpointBuilder {
 
     private OutboundEndpoint outboundEndpoint;
     private String name;
-    private ESBConfig parentConfig;
+    private ESBConfigHolder parentConfig;
     private int timeout;
 
-    public static OutboundEndpointBuilder outboundEndpoint(String name, ESBConfig parentConfig) {
+    public static OutboundEndpointBuilder outboundEndpoint(String name, ESBConfigHolder parentConfig) {
         return new OutboundEndpointBuilder(name, parentConfig);
     }
 
-    private OutboundEndpointBuilder(String name, ESBConfig parentConfig) {
+    private OutboundEndpointBuilder(String name, ESBConfigHolder parentConfig) {
         this.name = name;
         this.parentConfig = parentConfig;
         outboundEndpoint = null;

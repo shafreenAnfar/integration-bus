@@ -20,7 +20,6 @@ package org.custom.dsl;
 
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ConfigurationBuilder;
-import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ESBConfig;
 import static org.wso2.carbon.esb5.mediation.cheetah.inbound.protocols.http.builder.HTTPInboundEPBuilder.context;
 import static org.wso2.carbon.esb5.mediation.cheetah.inbound.protocols.http.builder.HTTPInboundEPBuilder.port;
 import static org.wso2.carbon.esb5.mediation.cheetah.outbound.protocol.http.builder.HTTPOutboundEPBuilder.uri;
@@ -32,7 +31,6 @@ import static org.wso2.carbon.esb5.mediation.cheetah.outbound.protocol.http.buil
 public class MyDSL extends ConfigurationBuilder {
 
     public ESBConfig configure() {
-
 
         ESBConfig router = esbConfig("SampleRouter");
 
@@ -56,9 +54,6 @@ public class MyDSL extends ConfigurationBuilder {
                 http(uri("http://localhost:8081"));
 
         return router;
-
-
-
 
     }
 }
