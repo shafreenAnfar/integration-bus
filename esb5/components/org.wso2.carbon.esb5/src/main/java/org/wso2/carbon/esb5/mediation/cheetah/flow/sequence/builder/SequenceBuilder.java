@@ -44,5 +44,10 @@ public class SequenceBuilder {
         return this;
     }
 
+    public SequenceBuilder filter(String condition) {
+
+        return this;
+    }
+
 
 }

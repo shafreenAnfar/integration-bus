@@ -16,9 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.flow.sequence;
-
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.Mediator;
+package org.wso2.carbon.esb5.mediation.cheetah.flow.mediators;
 
 /**
  * An interface for identify FlowControllable artifacts
