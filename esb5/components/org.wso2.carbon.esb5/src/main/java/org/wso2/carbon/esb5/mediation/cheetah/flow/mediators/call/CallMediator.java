@@ -22,6 +22,7 @@ import org.wso2.carbon.esb5.ServiceContextHolder;
 import org.wso2.carbon.esb5.mediation.cheetah.config.CheetahConfigRegistry;
 import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.Mediator;
 import org.wso2.carbon.esb5.mediation.cheetah.outbound.OutboundEndpoint;
+import org.wso2.carbon.esb5.mediation.cheetah.outbound.protocol.http.HTTPOutboundEndpoint;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 import org.wso2.carbon.messaging.Constants;
@@ -70,16 +71,20 @@ public class CallMediator implements Mediator {
         }
     }
 
-
     private void processRequest(CarbonMessage carbonMessage) throws MalformedURLException {
         OutboundEndpoint outboundEndpoint = CheetahConfigRegistry.getInstance().getOutboundEndpoint(key);
 
         if (outboundEndpoint != null) {
-            URL url = new URL(outboundEndpoint.getEpr());
-            String host = url.getHost();
-            int port = (url.getPort() == -1) ? 80 : url.getPort();
-            String urls = url.getPath();
-            setCarbonHeadersToBackendRequest(carbonMessage, host, port, urls);
+            if (outboundEndpoint instanceof HTTPOutboundEndpoint) {
+                //TODO: Implement this properly at the endpoint level.
+                //TODO: Call mediator is not suppose to handle protocol
+
+                URL url = new URL(((HTTPOutboundEndpoint) outboundEndpoint).getUri());
+                String host = url.getHost();
+                int port = (url.getPort() == -1) ? 80 : url.getPort();
+                String urls = url.getPath();
+                setCarbonHeadersToBackendRequest(carbonMessage, host, port, urls);
+            }
         }
     }
 

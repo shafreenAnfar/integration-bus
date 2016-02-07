@@ -19,13 +19,6 @@
 package org.wso2.carbon.esb5.mediation.cheetah.config.dsl;
 
 
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.call.CallMediator;
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.call.builder.CallMediatorBuilder;
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.headerrouter.builder.HeaderBasedRouterBuilder;
-import org.wso2.carbon.esb5.mediation.cheetah.flow.sequence.builder.SequenceBuilder;
-import org.wso2.carbon.esb5.mediation.cheetah.inbound.protocols.http.builder.HTTPInboundEPBuilder;
-import org.wso2.carbon.esb5.mediation.cheetah.outbound.builder.OutboundEndpointBuilder;
-
 /**
  * A class that used to create entire configuration.Anyone can extend this and overwrite configure method with
  * relevant configuration
@@ -33,27 +26,10 @@ import org.wso2.carbon.esb5.mediation.cheetah.outbound.builder.OutboundEndpointB
 public abstract class ConfigurationBuilder {
 
 
-    public abstract void configure();
+    public abstract ESBConfig configure();
 
-
-    public SequenceBuilder sequence(String name) {
-        return SequenceBuilder.sequence(name);
-    }
-
-    public OutboundEndpointBuilder outboundEndpoint(String name, String epr) {
-        return OutboundEndpointBuilder.outboundEndpoint(name, epr);
-    }
-
-    public HTTPInboundEPBuilder httpInboundEndpoint(String name, int port, String sequence) {
-        return HTTPInboundEPBuilder.httpInboundEndpoint(name, port, sequence);
-    }
-
-    public HeaderBasedRouterBuilder headerBasedRouter() {
-        return HeaderBasedRouterBuilder.headerbasedrouter();
-    }
-
-    public CallMediator call(String key) {
-        return CallMediatorBuilder.call(key);
+    public ESBConfig esbConfiguration(String name) {
+        return new ESBConfig(name);
     }
 
 }

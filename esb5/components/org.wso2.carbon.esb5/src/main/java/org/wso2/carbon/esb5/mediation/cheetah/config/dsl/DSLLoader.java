@@ -20,6 +20,7 @@ package org.wso2.carbon.esb5.mediation.cheetah.config.dsl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.esb5.mediation.cheetah.config.CheetahConfigRegistry;
 
 /**
  * This loads the JAVA DSLs
@@ -32,7 +33,12 @@ public class DSLLoader {
         if (log.isDebugEnabled()) {
             log.debug("Loading Java DSL..");
         }
-        configurationBuilder.configure();
+        // Call the DSL
+        ESBConfig config = configurationBuilder.configure();
+
+        // Register the configuration
+        CheetahConfigRegistry.getInstance().addESBConfig(config);
+
     }
 
 }

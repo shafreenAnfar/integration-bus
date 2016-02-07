@@ -19,29 +19,43 @@
 package org.wso2.carbon.esb5.mediation.cheetah.outbound.builder;
 
 
-import org.wso2.carbon.esb5.mediation.cheetah.config.CheetahConfigRegistry;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ESBConfig;
 import org.wso2.carbon.esb5.mediation.cheetah.outbound.OutboundEndpoint;
+import org.wso2.carbon.esb5.mediation.cheetah.outbound.protocol.http.builder.HTTPOutboundEPBuilder;
 
 /**
  * A Builder class for OutBound Endpoint
  */
 public class OutboundEndpointBuilder {
 
-
     private OutboundEndpoint outboundEndpoint;
+    private String name;
+    private ESBConfig parentConfig;
+    private int timeout;
 
-    public static OutboundEndpointBuilder outboundEndpoint(String name, String epr) {
-        return new OutboundEndpointBuilder(name, epr);
+    public static OutboundEndpointBuilder outboundEndpoint(String name, ESBConfig parentConfig) {
+        return new OutboundEndpointBuilder(name, parentConfig);
     }
 
-    private OutboundEndpointBuilder(String name, String epr) {
-        outboundEndpoint = new OutboundEndpoint(name, epr);
-        CheetahConfigRegistry.getInstance().registerOutboundEndpoint(outboundEndpoint.getName(), outboundEndpoint);
+    private OutboundEndpointBuilder(String name, ESBConfig parentConfig) {
+        this.name = name;
+        this.parentConfig = parentConfig;
+        outboundEndpoint = null;
     }
 
-    public OutboundEndpointBuilder timeOut(int value) {
-        outboundEndpoint.setTimeOut(value);
-        CheetahConfigRegistry.getInstance().registerOutboundEndpoint(outboundEndpoint.getName(), outboundEndpoint);
+    public OutboundEndpointBuilder timeOut(int timeout) {
+        this.timeout = timeout;
+        if (outboundEndpoint != null) {
+            outboundEndpoint.setTimeOut(timeout);
+        }
+        return this;
+    }
+
+    public OutboundEndpointBuilder http(HTTPOutboundEPBuilder.URI uri) {
+        outboundEndpoint =
+                HTTPOutboundEPBuilder.httpOutboundEndpoint(name, uri).getHttpOutboundEndpoint();
+        outboundEndpoint.setTimeOut(timeout);
+        parentConfig.addOutboundEndpoint(outboundEndpoint);
         return this;
     }
 

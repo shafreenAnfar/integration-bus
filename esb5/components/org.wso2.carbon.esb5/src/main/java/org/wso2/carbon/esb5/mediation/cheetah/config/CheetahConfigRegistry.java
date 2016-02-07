@@ -46,18 +46,48 @@ public class CheetahConfigRegistry {
 
     private List<ConfigRegistryObserver> observers = new ArrayList<>();
 
+    private Map<String, ESBConfigHolder> configurations = new HashMap<>();
 
     public static CheetahConfigRegistry getInstance() {
         return cheetahConfigRegistry;
     }
 
-
     private CheetahConfigRegistry() {
 
     }
 
-    public void registerInboundEndpoint(String name, InboundEndpoint inboundEndpoint) {
-        inboundEndpoints.put(name, inboundEndpoint);
+    public void addESBConfig(ESBConfigHolder config) {
+        configurations.put(config.getName(), config);
+        updateArtifacts(config);
+    }
+
+    public ESBConfigHolder getESBConfig(String name) {
+        return configurations.get(name);
+    }
+
+    private void updateArtifacts(ESBConfigHolder config) {
+
+        //For Inbound Endpoint
+        InboundEndpoint inboundEndpoint = config.getInboundEndpoint();
+        if (inboundEndpoint != null) {
+            registerInboundEndpoint(inboundEndpoint);
+        }
+
+        //For Sequences
+        for (Sequence sequence : config.getSequences().values()) {
+            registerSequence(sequence);
+        }
+
+        //For Outbound Endpoints
+        for (OutboundEndpoint outboundEndpoint : config.getOutboundEndpoints().values()) {
+            registerOutboundEndpoint(outboundEndpoint);
+        }
+
+
+    }
+
+    public void registerInboundEndpoint(InboundEndpoint inboundEndpoint) {
+        inboundEndpoints.put(inboundEndpoint.getName(), inboundEndpoint);
 
         //Inform Observers
         for (ConfigRegistryObserver observer : observers) {
@@ -88,10 +118,9 @@ public class CheetahConfigRegistry {
     }
 
 
-    public void addSequence(Sequence sequence) {
+    public void registerSequence(Sequence sequence) {
         sequenceMap.put(sequence.getName(), sequence);
     }
-
 
     public Sequence getSequence(String name) {
         return sequenceMap.get(name);
@@ -101,8 +130,8 @@ public class CheetahConfigRegistry {
         return outBoundEndpointMap.get(key);
     }
 
-    public void registerOutboundEndpoint(String key, OutboundEndpoint outboundEndpoint) {
-        outBoundEndpointMap.put(key, outboundEndpoint);
+    public void registerOutboundEndpoint(OutboundEndpoint outboundEndpoint) {
+        outBoundEndpointMap.put(outboundEndpoint.getName(), outboundEndpoint);
     }
 
 }

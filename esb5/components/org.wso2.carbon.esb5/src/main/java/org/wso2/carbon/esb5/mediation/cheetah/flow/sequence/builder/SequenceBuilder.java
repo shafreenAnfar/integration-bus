@@ -42,13 +42,13 @@ public class SequenceBuilder {
 
     public SequenceBuilder flowController(FlowController flowController) {
         sequence.addMediator(flowController);
-        CheetahConfigRegistry.getInstance().addSequence(sequence);
+        CheetahConfigRegistry.getInstance().registerSequence(sequence);
         return this;
     }
 
     public SequenceBuilder mediate(Mediator mediator) {
         sequence.addMediator(mediator);
-        CheetahConfigRegistry.getInstance().addSequence(sequence);
+        CheetahConfigRegistry.getInstance().registerSequence(sequence);
         return this;
     }
 

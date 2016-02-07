@@ -24,15 +24,12 @@ package org.wso2.carbon.esb5.mediation.cheetah.outbound;
 public class OutboundEndpoint {
 
 
-    private String epr;
-
     private int timeOut;
 
     private String name;
 
-    public OutboundEndpoint(String name, String epr) {
+    public OutboundEndpoint(String name) {
         this.name = name;
-        this.epr = epr;
     }
 
     public int getTimeOut() {
@@ -41,10 +38,6 @@ public class OutboundEndpoint {
 
     public void setTimeOut(int timeOut) {
         this.timeOut = timeOut;
-    }
-
-    public String getEpr() {
-        return epr;
     }
 
     public String getName() {
