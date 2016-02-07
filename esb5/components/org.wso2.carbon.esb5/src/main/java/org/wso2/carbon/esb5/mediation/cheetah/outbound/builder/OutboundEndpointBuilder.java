@@ -53,7 +53,7 @@ public class OutboundEndpointBuilder {
 
     public OutboundEndpointBuilder http(HTTPOutboundEPBuilder.URI uri) {
         outboundEndpoint =
-                HTTPOutboundEPBuilder.httpOutboundEndpoint(name, uri).getHttpOutboundEndpoint();
+                HTTPOutboundEPBuilder.http(name, uri).getHttpOutboundEndpoint();
         outboundEndpoint.setTimeOut(timeout);
         parentConfig.addOutboundEndpoint(outboundEndpoint);
         return this;

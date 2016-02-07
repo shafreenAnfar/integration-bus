@@ -35,10 +35,10 @@ import java.net.URL;
  */
 public class CallMediator implements Mediator {
 
-    private String key;
+    private String outboundEPKey;
 
-    public CallMediator(String key) {
-        this.key = key;
+    public CallMediator(String outboundEPKey) {
+        this.outboundEPKey = outboundEPKey;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class CallMediator implements Mediator {
     }
 
     private void processRequest(CarbonMessage carbonMessage) throws MalformedURLException {
-        OutboundEndpoint outboundEndpoint = CheetahConfigRegistry.getInstance().getOutboundEndpoint(key);
+        OutboundEndpoint outboundEndpoint = CheetahConfigRegistry.getInstance().getOutboundEndpoint(outboundEPKey);
 
         if (outboundEndpoint != null) {
             if (outboundEndpoint instanceof HTTPOutboundEndpoint) {

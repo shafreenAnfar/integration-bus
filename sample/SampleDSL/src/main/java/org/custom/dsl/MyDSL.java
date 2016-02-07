@@ -20,7 +20,10 @@ package org.custom.dsl;
 
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ConfigurationBuilder;
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.headerrouter.HeaderBasedRouter;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ESBConfig;
+import static org.wso2.carbon.esb5.mediation.cheetah.inbound.protocols.http.builder.HTTPInboundEPBuilder.context;
+import static org.wso2.carbon.esb5.mediation.cheetah.inbound.protocols.http.builder.HTTPInboundEPBuilder.port;
+import static org.wso2.carbon.esb5.mediation.cheetah.outbound.protocol.http.builder.HTTPOutboundEPBuilder.uri;
 
 
 /**
@@ -28,25 +31,34 @@ import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.headerrouter.Header
  */
 public class MyDSL extends ConfigurationBuilder {
 
-    public void configure() {
+    public ESBConfig configure() {
 
 
-        httpInboundEndpoint("inboundEP1", 9090, "seq1").context("/sample/request");
+        ESBConfig router = esbConfig("SampleRouter");
 
-        HeaderBasedRouter headerBasedRouter = headerBasedRouter().
-                ifHeader("routeId").
-                equals("r1").
-                then(call("outboundEP1")).
-                ifHeader("routeId").
-                equals("r2").
-                then(call("outboundEP2"))
-                .elseDefault(call("outboundEP3"));
+        router.inboundEndpoint("inboundEP1").
+                http(port(9090), context("/sample/request")).
+                sequence("seq1");
 
-        sequence("seq1").flowController(headerBasedRouter);
+        router.sequence("seq1").call("outboundEP1");
 
-        outboundEndpoint("outboundEP1", "http://localhost:8080/service");
-        outboundEndpoint("outboundEP2", "http://localhost:8081/service");
-        outboundEndpoint("outboundEP3", "http://localhost:8082/service");
+        /*
+        router.sequence("seq1").
+                filter(condition("route==foo")).
+                then(log().call("outboundEP1")).
+                otherwise(call("outboundEP2")).respond();
+        */
+
+        router.outboundEndpoint("outboundEP1").
+                http(uri("http://localhost:8080"));
+
+        router.outboundEndpoint("outboundEP2").
+                http(uri("http://localhost:8081"));
+
+        return router;
+
+
+
 
     }
 }

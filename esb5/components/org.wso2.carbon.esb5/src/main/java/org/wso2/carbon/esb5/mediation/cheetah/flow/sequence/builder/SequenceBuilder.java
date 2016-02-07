@@ -19,37 +19,30 @@
 package org.wso2.carbon.esb5.mediation.cheetah.flow.sequence.builder;
 
 
-import org.wso2.carbon.esb5.mediation.cheetah.config.CheetahConfigRegistry;
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.Mediator;
-import org.wso2.carbon.esb5.mediation.cheetah.flow.sequence.FlowController;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ESBConfig;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.call.builder.CallMediatorBuilder;
 import org.wso2.carbon.esb5.mediation.cheetah.flow.sequence.Sequence;
 
 /**
- * A class responsible for elseDefault the Sequence
+ * A class Sequence Builder
  */
 public class SequenceBuilder {
 
     private Sequence sequence;
 
-    public static SequenceBuilder sequence(String name) {
-        return new SequenceBuilder(name);
+    public static SequenceBuilder sequence(String name, ESBConfig parentConfig) {
+        return new SequenceBuilder(name, parentConfig);
     }
 
-    private SequenceBuilder(String name) {
+    private SequenceBuilder(String name, ESBConfig parentConfig) {
         sequence = new Sequence(name);
-
+        parentConfig.addSequence(sequence);
     }
 
-    public SequenceBuilder flowController(FlowController flowController) {
-        sequence.addMediator(flowController);
-        CheetahConfigRegistry.getInstance().registerSequence(sequence);
+    public SequenceBuilder call(String endpointKey) {
+        sequence.addMediator(CallMediatorBuilder.call(endpointKey));
         return this;
     }
 
-    public SequenceBuilder mediate(Mediator mediator) {
-        sequence.addMediator(mediator);
-        CheetahConfigRegistry.getInstance().registerSequence(sequence);
-        return this;
-    }
 
 }

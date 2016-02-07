@@ -28,7 +28,7 @@ public abstract class ConfigurationBuilder {
 
     public abstract ESBConfig configure();
 
-    public ESBConfig esbConfiguration(String name) {
+    public ESBConfig esbConfig(String name) {
         return new ESBConfig(name);
     }
 

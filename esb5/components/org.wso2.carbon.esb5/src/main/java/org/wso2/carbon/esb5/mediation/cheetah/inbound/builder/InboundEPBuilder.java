@@ -44,7 +44,7 @@ public class InboundEPBuilder {
     public InboundEPBuilder http(HTTPInboundEPBuilder.Port port, HTTPInboundEPBuilder.Context context) {
 
         inboundEndpoint =
-                HTTPInboundEPBuilder.httpInboundInboundEndpoint(name, port, context).getHttpInboundEP();
+                HTTPInboundEPBuilder.http(name, port, context).getHttpInboundEP();
         inboundEndpoint.setSequence(sequence);
         parentConfig.setInboundEndpoint(inboundEndpoint);
         return this;

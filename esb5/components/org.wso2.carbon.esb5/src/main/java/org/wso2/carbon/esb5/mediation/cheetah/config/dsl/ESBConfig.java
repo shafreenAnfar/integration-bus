@@ -19,6 +19,7 @@
 package org.wso2.carbon.esb5.mediation.cheetah.config.dsl;
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.ESBConfigHolder;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.sequence.builder.SequenceBuilder;
 import org.wso2.carbon.esb5.mediation.cheetah.inbound.builder.InboundEPBuilder;
 import org.wso2.carbon.esb5.mediation.cheetah.outbound.builder.OutboundEndpointBuilder;
 
@@ -40,6 +41,11 @@ public class ESBConfig extends ESBConfigHolder {
     /* For Outbound */
     public OutboundEndpointBuilder outboundEndpoint(String name) {
         return OutboundEndpointBuilder.outboundEndpoint(name, this);
+    }
+
+    /* For Sequence */
+    public SequenceBuilder sequence(String name) {
+        return SequenceBuilder.sequence(name, this);
     }
 
 

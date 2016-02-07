@@ -25,9 +25,8 @@ import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.call.CallMediator;
  */
 public class CallMediatorBuilder {
 
-    public static CallMediator call(String key) {
-        return new CallMediator(key);
+    public static CallMediator call(String endpointKey) {
+        return new CallMediator(endpointKey);
     }
-
 
 }

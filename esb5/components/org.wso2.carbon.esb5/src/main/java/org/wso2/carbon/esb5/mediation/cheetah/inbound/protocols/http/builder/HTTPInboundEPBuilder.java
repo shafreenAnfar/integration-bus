@@ -27,7 +27,7 @@ public class HTTPInboundEPBuilder {
 
     private HTTPInboundEP httpInboundEP;
 
-    public static HTTPInboundEPBuilder httpInboundInboundEndpoint(String name, Port port, Context context) {
+    public static HTTPInboundEPBuilder http(String name, Port port, Context context) {
         return new HTTPInboundEPBuilder(name, port, context);
     }
 
@@ -40,11 +40,11 @@ public class HTTPInboundEPBuilder {
         return httpInboundEP;
     }
 
-    public Context context(String context) {
+    public static Context context(String context) {
         return new Context(context);
     }
 
-    public Port port(int port) {
+    public static Port port(int port) {
         return new Port(port);
     }
 
