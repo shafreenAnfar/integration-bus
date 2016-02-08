@@ -34,10 +34,8 @@ public class MyDSL extends ConfigurationBuilder {
         IntegrationFlow router = integrationFlow("MessageRouter");
 
         router.inboundEndpoint("inboundEP1").
-                http(port(9090), context("/sample/request")).
-                pipeline("seq1");
-
-        router.pipeline("seq1").call("outboundEP1");
+                    http(port(9090), context("/sample/request")).
+               pipeline("seq1").call("outboundEP1");
 
         /*
         router.pipeline("seq1").
