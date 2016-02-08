@@ -31,20 +31,20 @@ import org.wso2.carbon.esb5.mediation.cheetah.outbound.builder.OutboundEndpointB
 public abstract class ConfigurationBuilder {
 
 
-    public abstract ESBConfig configure();
+    public abstract IntegrationFlow configure();
 
-    public ESBConfig esbConfig(String name) {
-        return new ESBConfig(name);
+    public IntegrationFlow integrationFlow(String name) {
+        return new IntegrationFlow(name);
     }
 
     /**
      * ESB Configuration Builder
      */
-    public static class ESBConfig {
+    public static class IntegrationFlow {
 
         private ESBConfigHolder esbConfigHolder;
 
-        public ESBConfig(String name) {
+        public IntegrationFlow(String name) {
             esbConfigHolder = new ESBConfigHolder(name);
         }
 
@@ -54,7 +54,7 @@ public abstract class ConfigurationBuilder {
 
         /* For Inbound */
         public InboundEPBuilder inboundEndpoint(String name) {
-            return InboundEPBuilder.inboundEndpoint(name, esbConfigHolder);
+            return InboundEPBuilder.inboundEndpoint(name, esbConfigHolder, this);
         }
 
         /* For Outbound */
@@ -63,7 +63,7 @@ public abstract class ConfigurationBuilder {
         }
 
         /* For Sequence */
-        public SequenceBuilder sequence(String name) {
+        public SequenceBuilder pipeline(String name) {
             return SequenceBuilder.sequence(name, esbConfigHolder);
         }
 

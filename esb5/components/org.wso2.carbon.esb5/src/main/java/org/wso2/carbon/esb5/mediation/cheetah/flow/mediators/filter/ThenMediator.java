@@ -18,28 +18,42 @@
 
 package org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.filter;
 
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.FlowController;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.Mediator;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Filter Mediator
+ * Then Mediator
  */
-public class FilterMediator implements FlowController {
+public class ThenMediator implements Mediator {
 
-    private String condition;
+    private List<Mediator> mediators = new ArrayList<>();
 
-    public FilterMediator(String condition) {
-        this.condition = condition;
+    public void addMediator(Mediator mediator) {
+        mediators.add(mediator);
     }
+
+    public List<Mediator> getMediators() {
+        return mediators;
+    }
+
 
     @Override
-    public CarbonCallback receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
+    public CarbonCallback receive(CarbonMessage cMsg, CarbonCallback callback)
             throws Exception {
-        return null;
+        for (Mediator mediator : mediators) {
+            try {
+                mediator.receive(cMsg, callback);
+            } catch (Exception e) {
+                //TODO: Exception Handling
+                return callback;
+            }
+        }
+        return callback;
     }
 
-    public String getCondition() {
-        return condition;
-    }
+
 }

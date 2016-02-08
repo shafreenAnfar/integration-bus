@@ -29,18 +29,18 @@ import static org.wso2.carbon.esb5.mediation.cheetah.outbound.protocol.http.buil
  */
 public class MyDSL extends ConfigurationBuilder {
 
-    public ESBConfig configure() {
+    public IntegrationFlow configure() {
 
-        ESBConfig router = esbConfig("SampleRouter");
+        IntegrationFlow router = integrationFlow("MessageRouter");
 
         router.inboundEndpoint("inboundEP1").
                 http(port(9090), context("/sample/request")).
-                callSequence("seq1");
+                pipeline("seq1");
 
-        router.sequence("seq1").call("outboundEP1");
+        router.pipeline("seq1").call("outboundEP1");
 
         /*
-        router.callSequence("seq1").
+        router.pipeline("seq1").
                 filter(condition("route==foo")).
                 then(log().call("outboundEP1")).
                 otherwise(call("outboundEP2")).respond();

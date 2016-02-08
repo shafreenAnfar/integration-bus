@@ -18,28 +18,18 @@
 
 package org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.filter;
 
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.FlowController;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.Mediator;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
 /**
- * Filter Mediator
+ * Otherwise Mediator
  */
-public class FilterMediator implements FlowController {
-
-    private String condition;
-
-    public FilterMediator(String condition) {
-        this.condition = condition;
-    }
+public class OtherwiseMediator implements Mediator {
 
     @Override
     public CarbonCallback receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
             throws Exception {
         return null;
-    }
-
-    public String getCondition() {
-        return condition;
     }
 }

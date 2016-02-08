@@ -19,6 +19,8 @@
 package org.wso2.carbon.esb5.mediation.cheetah.inbound.builder;
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.ESBConfigHolder;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ConfigurationBuilder;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.sequence.builder.SequenceBuilder;
 import org.wso2.carbon.esb5.mediation.cheetah.inbound.InboundEndpoint;
 import org.wso2.carbon.esb5.mediation.cheetah.inbound.protocols.http.builder.HTTPInboundEPBuilder;
 
@@ -31,14 +33,18 @@ public class InboundEPBuilder {
     InboundEndpoint inboundEndpoint;
     ESBConfigHolder parentConfig;
     String sequence;
+    ConfigurationBuilder.IntegrationFlow integrationFlow;
 
-    public static InboundEPBuilder inboundEndpoint(String name, ESBConfigHolder parentConfig) {
-        return new InboundEPBuilder(name, parentConfig);
+    public static InboundEPBuilder inboundEndpoint(String name, ESBConfigHolder parentConfig,
+                                                   ConfigurationBuilder.IntegrationFlow integrationFlow) {
+        return new InboundEPBuilder(name, parentConfig, integrationFlow);
     }
 
-    private InboundEPBuilder(String name, ESBConfigHolder parentConfig) {
+    private InboundEPBuilder(String name, ESBConfigHolder parentConfig,
+                             ConfigurationBuilder.IntegrationFlow integrationFlow) {
         this.name = name;
         this.parentConfig = parentConfig;
+        this.integrationFlow = integrationFlow;
     }
 
     public InboundEPBuilder http(HTTPInboundEPBuilder.Port port, HTTPInboundEPBuilder.Context context) {
@@ -50,12 +56,13 @@ public class InboundEPBuilder {
         return this;
     }
 
-    public void callSequence(String sequence) {
+    public SequenceBuilder pipeline(String sequence) {
         this.sequence = sequence;
 
         if (inboundEndpoint != null) {
             inboundEndpoint.setSequence(sequence);
         }
+        return integrationFlow.pipeline(sequence);
     }
 
 }
