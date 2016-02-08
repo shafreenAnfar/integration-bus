@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.headerrouter.builder;
+package org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.headerrouter;
 
 import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.Mediator;
 import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.headerrouter.HeaderBasedRouter;

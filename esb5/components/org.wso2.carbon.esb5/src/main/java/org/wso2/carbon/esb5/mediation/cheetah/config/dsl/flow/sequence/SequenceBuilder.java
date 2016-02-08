@@ -16,11 +16,11 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.flow.sequence.builder;
+package org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.sequence;
 
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.ESBConfigHolder;
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.call.builder.CallMediatorBuilder;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.call.CallMediatorBuilder;
 import org.wso2.carbon.esb5.mediation.cheetah.flow.sequence.Sequence;
 
 /**

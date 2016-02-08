@@ -16,12 +16,12 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.outbound.builder;
+package org.wso2.carbon.esb5.mediation.cheetah.config.dsl.outbound;
 
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.ESBConfigHolder;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.outbound.http.HTTPOutboundEPBuilder;
 import org.wso2.carbon.esb5.mediation.cheetah.outbound.OutboundEndpoint;
-import org.wso2.carbon.esb5.mediation.cheetah.outbound.protocol.http.builder.HTTPOutboundEPBuilder;
 
 /**
  * A Builder class for OutBound Endpoint

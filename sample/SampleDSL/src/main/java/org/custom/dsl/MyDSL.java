@@ -20,8 +20,8 @@ package org.custom.dsl;
 
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ConfigurationBuilder;
-import static org.wso2.carbon.esb5.mediation.cheetah.inbound.protocols.http.builder.HTTPInboundEPBuilder.*;
-import static org.wso2.carbon.esb5.mediation.cheetah.outbound.protocol.http.builder.HTTPOutboundEPBuilder.*;
+import static org.wso2.carbon.esb5.mediation.cheetah.config.dsl.inbound.http.HTTPInboundEPBuilder.*;
+import static org.wso2.carbon.esb5.mediation.cheetah.config.dsl.outbound.http.HTTPOutboundEPBuilder.*;
 
 
 /**

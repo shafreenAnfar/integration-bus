@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.inbound.protocols.http.builder;
+package org.wso2.carbon.esb5.mediation.cheetah.config.dsl.inbound.http;
 
 import org.wso2.carbon.esb5.mediation.cheetah.inbound.protocols.http.HTTPInboundEP;
 

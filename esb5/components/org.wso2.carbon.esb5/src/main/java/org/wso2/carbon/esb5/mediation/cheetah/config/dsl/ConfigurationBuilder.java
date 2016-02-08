@@ -20,9 +20,9 @@ package org.wso2.carbon.esb5.mediation.cheetah.config.dsl;
 
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.ESBConfigHolder;
-import org.wso2.carbon.esb5.mediation.cheetah.flow.sequence.builder.SequenceBuilder;
-import org.wso2.carbon.esb5.mediation.cheetah.inbound.builder.InboundEPBuilder;
-import org.wso2.carbon.esb5.mediation.cheetah.outbound.builder.OutboundEndpointBuilder;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.sequence.SequenceBuilder;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.inbound.InboundEPBuilder;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.outbound.OutboundEndpointBuilder;
 
 /**
  * A class that used to create entire configuration.Anyone can extend this and overwrite configure method with

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.call.builder;
+package org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.call;
 
 import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.call.CallMediator;
 

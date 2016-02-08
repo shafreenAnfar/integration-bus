@@ -16,13 +16,13 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.inbound.builder;
+package org.wso2.carbon.esb5.mediation.cheetah.config.dsl.inbound;
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.ESBConfigHolder;
 import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ConfigurationBuilder;
-import org.wso2.carbon.esb5.mediation.cheetah.flow.sequence.builder.SequenceBuilder;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.sequence.SequenceBuilder;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.inbound.http.HTTPInboundEPBuilder;
 import org.wso2.carbon.esb5.mediation.cheetah.inbound.InboundEndpoint;
-import org.wso2.carbon.esb5.mediation.cheetah.inbound.protocols.http.builder.HTTPInboundEPBuilder;
 
 /**
  * A Builder class for Inbound Endpoint
