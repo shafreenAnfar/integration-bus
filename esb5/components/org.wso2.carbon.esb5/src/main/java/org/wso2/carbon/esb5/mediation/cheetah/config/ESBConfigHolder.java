@@ -18,7 +18,7 @@
 
 package org.wso2.carbon.esb5.mediation.cheetah.config;
 
-import org.wso2.carbon.esb5.mediation.cheetah.flow.sequence.Sequence;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.Pipeline;
 import org.wso2.carbon.esb5.mediation.cheetah.inbound.InboundEndpoint;
 import org.wso2.carbon.esb5.mediation.cheetah.outbound.OutboundEndpoint;
 
@@ -34,7 +34,7 @@ public class ESBConfigHolder {
 
     private InboundEndpoint inboundEndpoint;
 
-    private Map<String, Sequence> sequences = new HashMap<>();
+    private Map<String, Pipeline> sequences = new HashMap<>();
 
     private Map<String, OutboundEndpoint> outboundEndpoints = new HashMap<>();
 
@@ -60,15 +60,15 @@ public class ESBConfigHolder {
         this.inboundEndpoint = inboundEndpoint;
     }
 
-    public Sequence getSequence(String name) {
+    public Pipeline getSequence(String name) {
         return sequences.get(name);
     }
 
-    public void addSequence(Sequence sequence) {
-        sequences.put(sequence.getName(), sequence);
+    public void addSequence(Pipeline pipeline) {
+        sequences.put(pipeline.getName(), pipeline);
     }
 
-    public Map<String, Sequence> getSequences() {
+    public Map<String, Pipeline> getSequences() {
         return sequences;
     }
 

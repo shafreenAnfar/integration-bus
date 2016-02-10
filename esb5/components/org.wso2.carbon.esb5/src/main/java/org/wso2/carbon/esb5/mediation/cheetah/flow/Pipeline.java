@@ -16,29 +16,27 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.flow.sequence;
+package org.wso2.carbon.esb5.mediation.cheetah.flow;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.carbon.esb5.mediation.cheetah.flow.Mediator;
-import org.wso2.carbon.esb5.mediation.cheetah.flow.MediatorCollection;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
 /**
  * A Class representing collection of Mediators
  */
-public class Sequence {
+public class Pipeline {
 
     private String name;
 
     MediatorCollection mediators;
 
-    private static final Logger log = LoggerFactory.getLogger(Sequence.class);
+    private static final Logger log = LoggerFactory.getLogger(Pipeline.class);
 
 
-    public Sequence() {
+    public Pipeline() {
         mediators = new MediatorCollection();
     }
 
@@ -52,7 +50,7 @@ public class Sequence {
         return true;
     }
 
-    public Sequence(String name) {
+    public Pipeline(String name) {
         this.name = name;
     }
 

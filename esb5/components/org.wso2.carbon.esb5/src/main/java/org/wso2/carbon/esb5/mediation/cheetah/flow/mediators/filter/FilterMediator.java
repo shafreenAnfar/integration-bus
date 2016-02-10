@@ -38,9 +38,6 @@ public class FilterMediator implements FlowController {
     private MediatorCollection childThenMediatorList = new MediatorCollection();
     private MediatorCollection childOtherwiseMediatorList = new MediatorCollection();
 
-    private Mediator nextSibling;
-
-
     private Condition condition;
 
 

@@ -20,7 +20,7 @@ package org.wso2.carbon.esb5.mediation.cheetah.config;
 
 
 
-import org.wso2.carbon.esb5.mediation.cheetah.flow.sequence.Sequence;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.Pipeline;
 import org.wso2.carbon.esb5.mediation.cheetah.inbound.InboundEndpoint;
 import org.wso2.carbon.esb5.mediation.cheetah.outbound.OutboundEndpoint;
 
@@ -40,7 +40,7 @@ public class CheetahConfigRegistry {
 
     private Map<String, InboundEndpoint> inboundEndpoints = new HashMap<>();
 
-    private Map<String, Sequence> sequenceMap = new HashMap<>();
+    private Map<String, Pipeline> sequenceMap = new HashMap<>();
 
     private Map<String, OutboundEndpoint> outBoundEndpointMap = new HashMap<>();
 
@@ -74,8 +74,8 @@ public class CheetahConfigRegistry {
         }
 
         //For Sequences
-        for (Sequence sequence : config.getSequences().values()) {
-            registerSequence(sequence);
+        for (Pipeline pipeline : config.getSequences().values()) {
+            registerSequence(pipeline);
         }
 
         //For Outbound Endpoints
@@ -118,11 +118,11 @@ public class CheetahConfigRegistry {
     }
 
 
-    public void registerSequence(Sequence sequence) {
-        sequenceMap.put(sequence.getName(), sequence);
+    public void registerSequence(Pipeline pipeline) {
+        sequenceMap.put(pipeline.getName(), pipeline);
     }
 
-    public Sequence getSequence(String name) {
+    public Pipeline getSequence(String name) {
         return sequenceMap.get(name);
     }
 

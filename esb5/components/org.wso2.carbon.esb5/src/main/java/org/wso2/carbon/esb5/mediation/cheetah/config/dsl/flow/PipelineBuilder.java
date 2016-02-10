@@ -16,40 +16,40 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.sequence;
+package org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow;
 
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.ESBConfigHolder;
 import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.CallMediatorBuilder;
 import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.RespondMediatorBuilder;
-import org.wso2.carbon.esb5.mediation.cheetah.flow.sequence.Sequence;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.Pipeline;
 
 /**
  * A class Sequence Builder
  */
-public class SequenceBuilder {
+public class PipelineBuilder {
 
-    private Sequence sequence;
+    private Pipeline pipeline;
 
-    public static SequenceBuilder sequence(String name, ESBConfigHolder parentConfig) {
-        return new SequenceBuilder(name, parentConfig);
+    public static PipelineBuilder sequence(String name, ESBConfigHolder parentConfig) {
+        return new PipelineBuilder(name, parentConfig);
     }
 
-    private SequenceBuilder(String name, ESBConfigHolder parentConfig) {
-        sequence = new Sequence(name);
-        parentConfig.addSequence(sequence);
+    private PipelineBuilder(String name, ESBConfigHolder parentConfig) {
+        pipeline = new Pipeline(name);
+        parentConfig.addSequence(pipeline);
     }
 
-    public SequenceBuilder call(String endpointKey) {
-        sequence.addMediator(CallMediatorBuilder.call(endpointKey));
+    public PipelineBuilder call(String endpointKey) {
+        pipeline.addMediator(CallMediatorBuilder.call(endpointKey));
         return this;
     }
 
     public void respond() {
-        sequence.addMediator(RespondMediatorBuilder.respond());
+        pipeline.addMediator(RespondMediatorBuilder.respond());
     }
 
-    public SequenceBuilder filter(String condition) {
+    public PipelineBuilder filter(String condition) {
 
         return this;
     }

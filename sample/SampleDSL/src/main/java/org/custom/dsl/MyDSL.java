@@ -36,8 +36,8 @@ public class MyDSL extends ConfigurationBuilder {
 
         router.inboundEndpoint("inboundEP1").
                 http(port(9090), context("/sample/request")).
-              pipeline("seq1").
-                call("outboundEP1");
+              pipeline("pipeline1").
+                call("outboundEP1").respond();
 
         /*
         router.pipeline("seq1").

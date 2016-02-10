@@ -20,7 +20,7 @@ package org.wso2.carbon.esb5.mediation.cheetah.config.dsl;
 
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.ESBConfigHolder;
-import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.sequence.SequenceBuilder;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.PipelineBuilder;
 import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.inbound.InboundEPBuilder;
 import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.outbound.OutboundEndpointBuilder;
 
@@ -63,8 +63,8 @@ public abstract class ConfigurationBuilder {
         }
 
         /* For Sequence */
-        public SequenceBuilder pipeline(String name) {
-            return SequenceBuilder.sequence(name, esbConfigHolder);
+        public PipelineBuilder pipeline(String name) {
+            return PipelineBuilder.sequence(name, esbConfigHolder);
         }
 
     }

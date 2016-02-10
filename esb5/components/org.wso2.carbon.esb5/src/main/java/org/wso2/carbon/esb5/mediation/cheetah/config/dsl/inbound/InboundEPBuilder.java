@@ -20,7 +20,7 @@ package org.wso2.carbon.esb5.mediation.cheetah.config.dsl.inbound;
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.ESBConfigHolder;
 import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ConfigurationBuilder;
-import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.sequence.SequenceBuilder;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.PipelineBuilder;
 import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.inbound.http.HTTPInboundEPBuilder;
 import org.wso2.carbon.esb5.mediation.cheetah.inbound.InboundEndpoint;
 
@@ -56,7 +56,7 @@ public class InboundEPBuilder {
         return this;
     }
 
-    public SequenceBuilder pipeline(String sequence) {
+    public PipelineBuilder pipeline(String sequence) {
         this.sequence = sequence;
 
         if (inboundEndpoint != null) {
