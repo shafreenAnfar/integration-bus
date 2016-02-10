@@ -16,30 +16,22 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.filter;
+package org.wso2.carbon.esb5.mediation.cheetah.flow;
 
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.FlowController;
-import org.wso2.carbon.messaging.CarbonCallback;
-import org.wso2.carbon.messaging.CarbonMessage;
 
 /**
- * Filter Mediator
+ * Abstract implementation of Mediator
  */
-public class FilterMediator implements FlowController {
+public abstract class AbstractMediator implements Mediator {
 
-    private String condition;
+    Mediator nextMediator = null;
 
-    public FilterMediator(String condition) {
-        this.condition = condition;
+    public Mediator getNext() {
+        return nextMediator;
     }
 
-    @Override
-    public CarbonCallback receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
-            throws Exception {
-        return null;
+    public void setNext(Mediator nextMediator) {
+        this.nextMediator = nextMediator;
     }
 
-    public String getCondition() {
-        return condition;
-    }
 }

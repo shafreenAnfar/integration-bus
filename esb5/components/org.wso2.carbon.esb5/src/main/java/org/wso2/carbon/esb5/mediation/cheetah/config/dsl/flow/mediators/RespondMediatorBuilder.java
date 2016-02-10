@@ -16,17 +16,17 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.call;
+package org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators;
 
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.call.CallMediator;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.RespondMediator;
 
 /**
- * A builder class for CallMediator
+ * A builder class for RespondMediator
  */
-public class CallMediatorBuilder {
+public class RespondMediatorBuilder {
 
-    public static CallMediator call(String endpointKey) {
-        return new CallMediator(endpointKey);
+    public static RespondMediator respond() {
+        return new RespondMediator();
     }
 
 }

@@ -19,49 +19,50 @@
 package org.wso2.carbon.esb5.mediation.cheetah.flow.sequence;
 
 
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.Mediator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.Mediator;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.MediatorCollection;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A Class representing collection of Mediators
  */
 public class Sequence {
 
-
     private String name;
-    private List<Mediator> mediators;
+
+    MediatorCollection mediators;
+
+    private static final Logger log = LoggerFactory.getLogger(Sequence.class);
+
+
+    public Sequence() {
+        mediators = new MediatorCollection();
+    }
+
+    public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) {
+
+        try {
+            mediators.getFirstMediator().receive(carbonMessage, carbonCallback);
+        } catch (Exception e) {
+            log.error("Error while mediating", e);
+        }
+        return true;
+    }
 
     public Sequence(String name) {
-        this.mediators = new ArrayList<>();
         this.name = name;
-    }
-
-    public void addMediator(Mediator mediator) {
-        mediators.add(mediator);
-    }
-
-    public List<Mediator> getMediators() {
-        return mediators;
     }
 
     public String getName() {
         return name;
     }
 
-    public boolean receive(CarbonMessage cMsg, CarbonCallback callback) {
-        for (Mediator mediator : mediators) {
-            try {
-                mediator.receive(cMsg, callback);
-            } catch (Exception e) {
-                //TODO: Exception Handling
-                return false;
-            }
-        }
-        return true;
+    public void addMediator(Mediator mediator) {
+        mediators.addMediator(mediator);
     }
+
 
 }

@@ -20,6 +20,7 @@ package org.custom.dsl;
 
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ConfigurationBuilder;
+
 import static org.wso2.carbon.esb5.mediation.cheetah.config.dsl.inbound.http.HTTPInboundEPBuilder.*;
 import static org.wso2.carbon.esb5.mediation.cheetah.config.dsl.outbound.http.HTTPOutboundEPBuilder.*;
 
@@ -34,8 +35,9 @@ public class MyDSL extends ConfigurationBuilder {
         IntegrationFlow router = integrationFlow("MessageRouter");
 
         router.inboundEndpoint("inboundEP1").
-                    http(port(9090), context("/sample/request")).
-               pipeline("seq1").call("outboundEP1");
+                http(port(9090), context("/sample/request")).
+              pipeline("seq1").
+                call("outboundEP1");
 
         /*
         router.pipeline("seq1").

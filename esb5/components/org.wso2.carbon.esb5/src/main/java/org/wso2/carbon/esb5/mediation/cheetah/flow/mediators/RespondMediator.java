@@ -16,20 +16,29 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.filter;
+package org.wso2.carbon.esb5.mediation.cheetah.flow.mediators;
 
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.Mediator;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.AbstractMediator;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.FlowControllerCallback;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
 /**
- * Otherwise Mediator
+ * Respond Mediator
  */
-public class OtherwiseMediator implements Mediator {
-
+public class RespondMediator extends AbstractMediator {
     @Override
-    public CarbonCallback receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
+    public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
             throws Exception {
-        return null;
+
+        CarbonCallback parentCallback = carbonCallback;
+
+        while (parentCallback instanceof FlowControllerCallback) {
+            parentCallback = ((FlowControllerCallback) parentCallback).getParentCallback();
+        }
+
+        parentCallback.done(carbonMessage);
+
+        return true;
     }
 }

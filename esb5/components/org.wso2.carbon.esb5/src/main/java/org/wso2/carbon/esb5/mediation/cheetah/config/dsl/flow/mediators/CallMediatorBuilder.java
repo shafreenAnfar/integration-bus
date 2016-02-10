@@ -16,18 +16,17 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.flow.mediators;
+package org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators;
 
-import org.wso2.carbon.messaging.CarbonCallback;
-import org.wso2.carbon.messaging.CarbonMessage;
-
+import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.CallMediator;
 
 /**
- * Interface for Mediators
+ * A builder class for CallMediator
  */
-public interface Mediator {
+public class CallMediatorBuilder {
 
+    public static CallMediator call(String endpointKey) {
+        return new CallMediator(endpointKey);
+    }
 
-    public CarbonCallback receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws
-                                                                                              Exception;
 }

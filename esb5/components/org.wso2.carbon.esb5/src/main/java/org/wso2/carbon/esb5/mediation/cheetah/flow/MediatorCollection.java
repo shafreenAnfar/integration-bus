@@ -16,32 +16,35 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.filter;
+package org.wso2.carbon.esb5.mediation.cheetah.flow;
 
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.filter.FilterMediator;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * FilterMediatorBuilder
+ * PLaceHolder for chain of mediators
  */
-public class FilterMediatorBuilder {
+public class MediatorCollection {
 
-    FilterMediator filterMediator;
+    private List<Mediator> mediators;
 
-    public static FilterMediatorBuilder filter(String condition) {
-        return new FilterMediatorBuilder(condition);
+    public MediatorCollection() {
+        mediators = new ArrayList<>();
     }
 
-    public FilterMediatorBuilder(String condition) {
-        filterMediator = new FilterMediator(condition);
+    public Mediator getFirstMediator() {
+        return mediators.get(0);
     }
 
-    public FilterMediator getFilterMediator() {
-        return filterMediator;
+    public List<Mediator> getMediators() {
+        return mediators;
     }
 
-    /*public FilterMediatorBuilder then() {
-
+    public void addMediator(Mediator mediator) {
+        int lastIndex = mediators.size() - 1;
+        if (lastIndex >= 0) {
+            mediators.get(lastIndex).setNext(mediator);
+        }
+        mediators.add(mediator);
     }
-    */
-
 }

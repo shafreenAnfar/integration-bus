@@ -16,11 +16,12 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.flow.mediators;
+package org.wso2.carbon.esb5.mediation.cheetah.flow;
 
 /**
  * An interface for identify FlowControllable artifacts
  */
 public interface FlowController extends Mediator {
+
 
 }

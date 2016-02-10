@@ -16,11 +16,12 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.call;
+package org.wso2.carbon.esb5.mediation.cheetah.flow.mediators;
 
 import org.wso2.carbon.esb5.ServiceContextHolder;
 import org.wso2.carbon.esb5.mediation.cheetah.config.CheetahConfigRegistry;
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.Mediator;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.AbstractMediator;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.FlowControllerCallback;
 import org.wso2.carbon.esb5.mediation.cheetah.outbound.OutboundEndpoint;
 import org.wso2.carbon.esb5.mediation.cheetah.outbound.protocol.http.HTTPOutboundEndpoint;
 import org.wso2.carbon.messaging.CarbonCallback;
@@ -33,7 +34,7 @@ import java.net.URL;
 /**
  * A class responsible for send msg out from engine to transport sender
  */
-public class CallMediator implements Mediator {
+public class CallMediator extends AbstractMediator {
 
     private String outboundEPKey;
 
@@ -42,12 +43,13 @@ public class CallMediator implements Mediator {
     }
 
     @Override
-    public CarbonCallback receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
+    public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
             throws Exception {
         processRequest(carbonMessage);
-        CarbonCallback callback = new CallMediatorCallBack(carbonCallback);
+
+        CarbonCallback callback = new FlowControllerCallback(carbonCallback, this);
         ServiceContextHolder.getInstance().getSender().send(carbonMessage, callback);
-        return callback;
+        return false;
     }
 
     private void setCarbonHeadersToBackendRequest(CarbonMessage request, String host, int port, String urls) {

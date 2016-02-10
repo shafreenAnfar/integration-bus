@@ -16,24 +16,21 @@
  * under the License.
  */
 
-package org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.call;
+package org.wso2.carbon.esb5.mediation.cheetah.flow;
 
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
+
 /**
- * A Class represents the CallBack for call mediator
+ * Interface for Mediators
  */
-public class CallMediatorCallBack implements CarbonCallback {
+public interface Mediator {
 
-    private CarbonCallback carbonCallback;
+    public void setNext(Mediator nextMediator);
 
-    public CallMediatorCallBack(CarbonCallback carbonCallback) {
-        this.carbonCallback = carbonCallback;
-    }
+    public Mediator getNext();
 
-    @Override
-    public void done(CarbonMessage carbonMessage) {
-        carbonCallback.done(carbonMessage);
-    }
+    public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws
+                                                                                              Exception;
 }

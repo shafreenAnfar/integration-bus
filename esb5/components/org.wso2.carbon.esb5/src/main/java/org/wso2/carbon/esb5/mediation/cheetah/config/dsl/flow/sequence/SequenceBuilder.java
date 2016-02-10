@@ -20,7 +20,8 @@ package org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.sequence;
 
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.ESBConfigHolder;
-import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.call.CallMediatorBuilder;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.CallMediatorBuilder;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.RespondMediatorBuilder;
 import org.wso2.carbon.esb5.mediation.cheetah.flow.sequence.Sequence;
 
 /**
@@ -42,6 +43,10 @@ public class SequenceBuilder {
     public SequenceBuilder call(String endpointKey) {
         sequence.addMediator(CallMediatorBuilder.call(endpointKey));
         return this;
+    }
+
+    public void respond() {
+        sequence.addMediator(RespondMediatorBuilder.respond());
     }
 
     public SequenceBuilder filter(String condition) {
