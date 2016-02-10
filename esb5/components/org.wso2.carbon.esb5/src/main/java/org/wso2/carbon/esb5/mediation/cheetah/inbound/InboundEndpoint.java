@@ -33,7 +33,7 @@ public abstract class InboundEndpoint {
 
     private String name;
 
-    private String sequence;
+    private String pipeline;
 
     public InboundEndpoint(String name) {
         this.name = name;
@@ -43,12 +43,12 @@ public abstract class InboundEndpoint {
         return name;
     }
 
-    public String getSequence() {
-        return sequence;
+    public String getPipeline() {
+        return pipeline;
     }
 
-    public void setSequence(String sequence) {
-        this.sequence = sequence;
+    public void setPipeline(String pipeline) {
+        this.pipeline = pipeline;
     }
 
     /**
@@ -67,7 +67,7 @@ public abstract class InboundEndpoint {
      * @return whether forward processing is successful
      */
     public boolean receive(CarbonMessage cMsg, CarbonCallback callback) {
-        return CheetahConfigRegistry.getInstance().getSequence(getSequence()).receive(cMsg, callback);
+        return CheetahConfigRegistry.getInstance().getPipeline(getPipeline()).receive(cMsg, callback);
     }
 
 }

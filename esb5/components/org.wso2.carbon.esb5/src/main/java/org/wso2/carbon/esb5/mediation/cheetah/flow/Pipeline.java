@@ -35,9 +35,9 @@ public class Pipeline {
 
     private static final Logger log = LoggerFactory.getLogger(Pipeline.class);
 
-
-    public Pipeline() {
+    public Pipeline(String name) {
         mediators = new MediatorCollection();
+        this.name = name;
     }
 
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) {
@@ -48,10 +48,6 @@ public class Pipeline {
             log.error("Error while mediating", e);
         }
         return true;
-    }
-
-    public Pipeline(String name) {
-        this.name = name;
     }
 
     public String getName() {

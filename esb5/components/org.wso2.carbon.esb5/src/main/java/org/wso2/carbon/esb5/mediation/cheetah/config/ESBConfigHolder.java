@@ -34,7 +34,7 @@ public class ESBConfigHolder {
 
     private InboundEndpoint inboundEndpoint;
 
-    private Map<String, Pipeline> sequences = new HashMap<>();
+    private Map<String, Pipeline> pipelines = new HashMap<>();
 
     private Map<String, OutboundEndpoint> outboundEndpoints = new HashMap<>();
 
@@ -60,16 +60,16 @@ public class ESBConfigHolder {
         this.inboundEndpoint = inboundEndpoint;
     }
 
-    public Pipeline getSequence(String name) {
-        return sequences.get(name);
+    public Pipeline getPipeline(String name) {
+        return pipelines.get(name);
     }
 
-    public void addSequence(Pipeline pipeline) {
-        sequences.put(pipeline.getName(), pipeline);
+    public void addPipeline(Pipeline pipeline) {
+        pipelines.put(pipeline.getName(), pipeline);
     }
 
-    public Map<String, Pipeline> getSequences() {
-        return sequences;
+    public Map<String, Pipeline> getPipelines() {
+        return pipelines;
     }
 
     public Map<String, OutboundEndpoint> getOutboundEndpoints() {

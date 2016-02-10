@@ -40,7 +40,7 @@ public class CheetahConfigRegistry {
 
     private Map<String, InboundEndpoint> inboundEndpoints = new HashMap<>();
 
-    private Map<String, Pipeline> sequenceMap = new HashMap<>();
+    private Map<String, Pipeline> pipelineMap = new HashMap<>();
 
     private Map<String, OutboundEndpoint> outBoundEndpointMap = new HashMap<>();
 
@@ -73,9 +73,9 @@ public class CheetahConfigRegistry {
             registerInboundEndpoint(inboundEndpoint);
         }
 
-        //For Sequences
-        for (Pipeline pipeline : config.getSequences().values()) {
-            registerSequence(pipeline);
+        //For Pipelines
+        for (Pipeline pipeline : config.getPipelines().values()) {
+            registerPipeline(pipeline);
         }
 
         //For Outbound Endpoints
@@ -118,12 +118,12 @@ public class CheetahConfigRegistry {
     }
 
 
-    public void registerSequence(Pipeline pipeline) {
-        sequenceMap.put(pipeline.getName(), pipeline);
+    public void registerPipeline(Pipeline pipeline) {
+        pipelineMap.put(pipeline.getName(), pipeline);
     }
 
-    public Pipeline getSequence(String name) {
-        return sequenceMap.get(name);
+    public Pipeline getPipeline(String name) {
+        return pipelineMap.get(name);
     }
 
     public OutboundEndpoint getOutboundEndpoint(String key) {

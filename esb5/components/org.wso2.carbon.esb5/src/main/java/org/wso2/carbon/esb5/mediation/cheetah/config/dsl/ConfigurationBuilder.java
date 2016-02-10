@@ -62,9 +62,9 @@ public abstract class ConfigurationBuilder {
             return OutboundEndpointBuilder.outboundEndpoint(name, esbConfigHolder);
         }
 
-        /* For Sequence */
+        /* For Pipeline */
         public PipelineBuilder pipeline(String name) {
-            return PipelineBuilder.sequence(name, esbConfigHolder);
+            return PipelineBuilder.pipeline(name, esbConfigHolder);
         }
 
     }

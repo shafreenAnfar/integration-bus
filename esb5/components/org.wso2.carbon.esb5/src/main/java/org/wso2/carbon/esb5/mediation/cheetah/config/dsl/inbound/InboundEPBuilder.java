@@ -32,7 +32,7 @@ public class InboundEPBuilder {
     String name;
     InboundEndpoint inboundEndpoint;
     ESBConfigHolder parentConfig;
-    String sequence;
+    String pipeline;
     ConfigurationBuilder.IntegrationFlow integrationFlow;
 
     public static InboundEPBuilder inboundEndpoint(String name, ESBConfigHolder parentConfig,
@@ -51,18 +51,18 @@ public class InboundEPBuilder {
 
         inboundEndpoint =
                 HTTPInboundEPBuilder.http(name, port, context).getHttpInboundEP();
-        inboundEndpoint.setSequence(sequence);
+        inboundEndpoint.setPipeline(pipeline);
         parentConfig.setInboundEndpoint(inboundEndpoint);
         return this;
     }
 
-    public PipelineBuilder pipeline(String sequence) {
-        this.sequence = sequence;
+    public PipelineBuilder pipeline(String pipeline) {
+        this.pipeline = pipeline;
 
         if (inboundEndpoint != null) {
-            inboundEndpoint.setSequence(sequence);
+            inboundEndpoint.setPipeline(pipeline);
         }
-        return integrationFlow.pipeline(sequence);
+        return integrationFlow.pipeline(pipeline);
     }
 
 }

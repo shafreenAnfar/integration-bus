@@ -25,19 +25,19 @@ import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.RespondM
 import org.wso2.carbon.esb5.mediation.cheetah.flow.Pipeline;
 
 /**
- * A class Sequence Builder
+ * A class Pipeline Builder
  */
 public class PipelineBuilder {
 
     private Pipeline pipeline;
 
-    public static PipelineBuilder sequence(String name, ESBConfigHolder parentConfig) {
+    public static PipelineBuilder pipeline(String name, ESBConfigHolder parentConfig) {
         return new PipelineBuilder(name, parentConfig);
     }
 
     private PipelineBuilder(String name, ESBConfigHolder parentConfig) {
         pipeline = new Pipeline(name);
-        parentConfig.addSequence(pipeline);
+        parentConfig.addPipeline(pipeline);
     }
 
     public PipelineBuilder call(String endpointKey) {
