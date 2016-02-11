@@ -21,8 +21,11 @@ package org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow;
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.ESBConfigHolder;
 import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.CallMediatorBuilder;
+import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.FilterMediatorBuilder;
 import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.RespondMediatorBuilder;
 import org.wso2.carbon.esb5.mediation.cheetah.flow.Pipeline;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.filter.Condition;
+
 
 /**
  * A class Pipeline Builder
@@ -49,9 +52,9 @@ public class PipelineBuilder {
         pipeline.addMediator(RespondMediatorBuilder.respond());
     }
 
-    public PipelineBuilder filter(String condition) {
 
-        return this;
+    public FilterMediatorBuilder.ThenMediatorBuilder filter(Condition condition) {
+        return FilterMediatorBuilder.filter(condition, pipeline, this);
     }
 
 

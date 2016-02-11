@@ -20,9 +20,12 @@ package org.custom.dsl;
 
 
 import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ConfigurationBuilder;
+import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.filter.Scope;
 
 import static org.wso2.carbon.esb5.mediation.cheetah.config.dsl.inbound.http.HTTPInboundEPBuilder.*;
 import static org.wso2.carbon.esb5.mediation.cheetah.config.dsl.outbound.http.HTTPOutboundEPBuilder.*;
+import static org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.FilterMediatorBuilder.*;
+import static org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.CallMediatorBuilder.*;
 
 
 /**
@@ -35,22 +38,18 @@ public class MyDSL extends ConfigurationBuilder {
         IntegrationFlow router = integrationFlow("MessageRouter");
 
         router.inboundEndpoint("inboundEP1").
-                http(port(9090), context("/sample/request")).
-              pipeline("pipeline1").
-                call("outboundEP1").respond();
 
-        /*
-        router.pipeline("seq1").
-                filter(condition("route==foo")).
-                then(log().call("outboundEP1")).
-                otherwise(call("outboundEP2")).respond();
-        */
+                   http(port(8280), context("/sample/request")).
+                   pipeline("pipeline1").
+                   filter(condition(source("routeId", Scope.Transport), pattern("r1"))).
+                   then(call("outboundEP1")).
+                   otherwise(call("outboundEP2")).respond();
 
         router.outboundEndpoint("outboundEP1").
-                http(uri("http://localhost:8080"));
+                   http(uri("http://204.13.85.5:5050/service"));
 
         router.outboundEndpoint("outboundEP2").
-                http(uri("http://localhost:8081"));
+                   http(uri("http://204.13.85.5:5050/service"));
 
         return router;
 
