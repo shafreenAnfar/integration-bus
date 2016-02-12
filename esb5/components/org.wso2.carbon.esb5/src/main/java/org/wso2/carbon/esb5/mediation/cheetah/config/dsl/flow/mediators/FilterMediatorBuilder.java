@@ -38,6 +38,11 @@ public class FilterMediatorBuilder {
     }
 
 
+    public static FilterMediator filter(Condition condition) {
+        return new FilterMediator(condition);
+    }
+
+
     public static Condition condition(Source source, Pattern pattern) {
         return new Condition(source, pattern);
     }
@@ -68,10 +73,10 @@ public class FilterMediatorBuilder {
         }
 
         public OtherwiseMediatorBuilder then(Mediator... mediators) {
-            for (Mediator mediator : mediators) {
-                filterMediator.addThenMediator(mediator);
-            }
+            filterMediator.then(mediators);
             return new OtherwiseMediatorBuilder(filterMediator, pipeline, sequenceBuilder);
+
+
         }
 
 
@@ -93,13 +98,13 @@ public class FilterMediatorBuilder {
             this.pipeline = pipeline;
         }
 
+
         public PipelineBuilder otherwise(Mediator... mediators) {
-            for (Mediator mediator : mediators) {
-                filterMediator.addOtherwiseMediator(mediator);
-            }
+            filterMediator.otherwise(mediators);
             pipeline.addMediator(filterMediator);
             return sequenceBuilder;
         }
+
     }
 
 }

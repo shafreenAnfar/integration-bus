@@ -45,12 +45,18 @@ public class FilterMediator implements FlowController {
         this.condition = condition;
     }
 
-    public void addThenMediator(Mediator mediator) {
-        childThenMediatorList.addMediator(mediator);
+    public FilterMediator then(Mediator... mediators) {
+        for (Mediator mediator : mediators) {
+            childThenMediatorList.addMediator(mediator);
+        }
+      return  this;
     }
 
-    public void addOtherwiseMediator(Mediator mediator) {
-        childOtherwiseMediatorList.addMediator(mediator);
+    public FilterMediator otherwise(Mediator... mediators) {
+        for (Mediator mediator : mediators) {
+            childOtherwiseMediatorList.addMediator(mediator);
+        }
+       return this;
     }
 
     @Override
@@ -71,10 +77,10 @@ public class FilterMediator implements FlowController {
 
             if (Evaluator.isHeaderMatched(carbonMessage, condition)) {
                 childThenMediatorList.getFirstMediator().
-                        receive(carbonMessage, new FlowControllerCallback(carbonCallback, this));
+                           receive(carbonMessage, new FlowControllerCallback(carbonCallback, this));
             } else {
                 childOtherwiseMediatorList.getFirstMediator().
-                        receive(carbonMessage, new FlowControllerCallback(carbonCallback, this));
+                           receive(carbonMessage, new FlowControllerCallback(carbonCallback, this));
             }
         }
 
