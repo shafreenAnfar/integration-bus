@@ -50,6 +50,7 @@ public class PipelineBuilder {
 
     public void respond() {
         pipeline.addMediator(RespondMediatorBuilder.respond());
+
     }
 
 

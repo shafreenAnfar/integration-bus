@@ -36,6 +36,7 @@ public class MediatorCollection {
         return mediators.get(0);
     }
 
+
     public List<Mediator> getMediators() {
         return mediators;
     }
