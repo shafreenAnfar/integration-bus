@@ -32,9 +32,9 @@
     <name>WSO2 Carbon - Product Integration Bus Parent</name>
 
     <scm>
-        <url>https://github.com/isudana/IntegrationBus.git</url>
-        <developerConnection>scm:git:https://github.com/isudana/IntegrationBus.git</developerConnection>
-        <connection>scm:git:https://github.com/isudana/IntegrationBus.git</connection>
+        <url>https://github.com/isudana/integration-bus.git</url>
+        <developerConnection>scm:git:https://github.com/isudana/integration-bus.git</developerConnection>
+        <connection>scm:git:https://github.com/isudana/integration-bus.git</connection>
         <tag>HEAD</tag>
     </scm>
 
