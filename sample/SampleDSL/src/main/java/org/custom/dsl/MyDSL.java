@@ -19,13 +19,13 @@
 package org.custom.dsl;
 
 
-import org.wso2.carbon.esb5.mediation.cheetah.config.dsl.ConfigurationBuilder;
-import org.wso2.carbon.esb5.mediation.cheetah.flow.mediators.filter.Scope;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.ConfigurationBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Scope;
 
-import static org.wso2.carbon.esb5.mediation.cheetah.config.dsl.inbound.http.HTTPInboundEPBuilder.*;
-import static org.wso2.carbon.esb5.mediation.cheetah.config.dsl.outbound.http.HTTPOutboundEPBuilder.*;
-import static org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.FilterMediatorBuilder.*;
-import static org.wso2.carbon.esb5.mediation.cheetah.config.dsl.flow.mediators.CallMediatorBuilder.*;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.inbound.http.HTTPInboundEPBuilder.*;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.outbound.http.HTTPOutboundEPBuilder.*;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.FilterMediatorBuilder.*;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.CallMediatorBuilder.*;
 
 
 /**
@@ -38,7 +38,6 @@ public class MyDSL extends ConfigurationBuilder {
         IntegrationFlow router = integrationFlow("MessageRouter");
 
         router.inboundEndpoint("inboundEP1").
-
                    http(port(8280), context("/sample/request")).
                    pipeline("pipeline1").
                    filter(condition(source("routeId", Scope.Transport), pattern("r1"))).

@@ -20,16 +20,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wso2.carbon.esb5</groupId>
-        <artifactId>org.wso2.carbon.esb5.parent</artifactId>
+        <groupId>org.wso2.carbon.ibus</groupId>
+        <artifactId>org.wso2.carbon.ibus.parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>wso2esb5</artifactId>
+    <artifactId>wso2ibus</artifactId>
     <packaging>pom</packaging>
-    <name>WSO2 ESB5 Server - Distribution</name>
-    <description>WSO2 ESB5 Server - Distribution</description>
+    <name>WSO2 Integration Bus - Distribution</name>
+    <description>WSO2 Integration Bus - Distribution</description>
     <url>http://wso2.org</url>
 
     <dependencies>
@@ -54,9 +54,9 @@
             <type>zip</type>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon.esb5</groupId>
-            <artifactId>org.wso2.carbon.esb5.feature</artifactId>
-            <version>${carbon.esb5.version}</version>
+            <groupId>org.wso2.carbon.ibus</groupId>
+            <artifactId>org.wso2.carbon.ibus.feature</artifactId>
+            <version>${carbon.ibus.version}</version>
             <type>zip</type>
         </dependency>
         <dependency>
@@ -125,8 +125,8 @@
                                     <version>${carbon.kernel.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.esb5.feature</id>
-                                    <version>${carbon.esb5.version}</version>
+                                    <id>org.wso2.carbon.ibus.feature</id>
+                                    <version>${carbon.ibus.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.transport.http.netty.feature</id>
@@ -193,8 +193,8 @@
                                     <version>${carbon.kernel.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>org.wso2.carbon.esb5.feature.group</id>
-                                    <version>${carbon.esb5.version}</version>
+                                    <id>org.wso2.carbon.ibus.feature.group</id>
+                                    <version>${carbon.ibus.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.transport.http.netty.feature.group</id>

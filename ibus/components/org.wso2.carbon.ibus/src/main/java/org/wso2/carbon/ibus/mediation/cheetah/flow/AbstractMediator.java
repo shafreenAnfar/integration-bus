@@ -16,24 +16,22 @@
  * under the License.
  */
 
-package org.custom.dsl;
+package org.wso2.carbon.ibus.mediation.cheetah.flow;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.ConfigurationBuilder;
 
 /**
- * Bundle Activator
+ * Abstract implementation of Mediator
  */
-public class Activator implements BundleActivator {
-    public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(ConfigurationBuilder.class, new MyDSL(), null);
+public abstract class AbstractMediator implements Mediator {
+
+    Mediator nextMediator = null;
+
+    public Mediator getNext() {
+        return nextMediator;
     }
 
-    public void stop(BundleContext bundleContext) throws Exception {
-
+    public void setNext(Mediator nextMediator) {
+        this.nextMediator = nextMediator;
     }
-
-
 
 }

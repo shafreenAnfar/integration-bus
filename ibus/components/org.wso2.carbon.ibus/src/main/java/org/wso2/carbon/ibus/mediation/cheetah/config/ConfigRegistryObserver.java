@@ -15,25 +15,27 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+package org.wso2.carbon.ibus.mediation.cheetah.config;
 
-package org.custom.dsl;
-
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.ConfigurationBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.inbound.InboundEndpoint;
 
 /**
- * Bundle Activator
+ * Observer for changes in InboundEndpoints Registry
  */
-public class Activator implements BundleActivator {
-    public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(ConfigurationBuilder.class, new MyDSL(), null);
-    }
+public interface ConfigRegistryObserver {
 
-    public void stop(BundleContext bundleContext) throws Exception {
+    /**
+     * Triggered when Endpoint is added
+     *
+     * @param endpoint Inbound Endpoint which got added
+     */
+    public void endpointAdded(InboundEndpoint endpoint);
 
-    }
-
-
+    /**
+     * Triggered when Endpoint is removed
+     *
+     * @param endpoint Inbound Endpoint which got removed
+     */
+    public void endpointRemoved(InboundEndpoint endpoint);
 
 }

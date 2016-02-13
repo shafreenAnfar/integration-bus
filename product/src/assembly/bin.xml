@@ -17,8 +17,8 @@
   -->
 <assembly>
     <includeBaseDirectory>true</includeBaseDirectory>
-    <baseDirectory>esb5-${project.version}</baseDirectory>
-    <id>esb5</id>
+    <baseDirectory>wso2-ibus-${project.version}</baseDirectory>
+    <id>Integration Bus</id>
     <formats>
         <format>zip</format>
     </formats>
