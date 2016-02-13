@@ -18,9 +18,6 @@
 
 package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators;
 
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.PipelineBuilder;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.Mediator;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.Pipeline;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Condition;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.FilterMediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Scope;
@@ -33,13 +30,9 @@ import java.util.regex.Pattern;
  */
 public class FilterMediatorBuilder {
 
-    public static ThenMediatorBuilder filter(Condition condition, Pipeline pipeline, PipelineBuilder sequenceBuilder) {
-        return new ThenMediatorBuilder(new FilterMediator(condition), pipeline, sequenceBuilder);
-    }
 
-
-    public static FilterMediator filter(Condition condition) {
-        return new FilterMediator(condition);
+    public static ThenMediatorBuilder filter(Condition condition, MediatorCollectionBuilder mediatorCollectionBuilder) {
+        return new ThenMediatorBuilder(new FilterMediator(condition), mediatorCollectionBuilder);
     }
 
 
@@ -62,24 +55,20 @@ public class FilterMediatorBuilder {
     public static class ThenMediatorBuilder {
 
         private FilterMediator filterMediator;
-        private PipelineBuilder sequenceBuilder;
-        private Pipeline pipeline;
+        private MediatorCollectionBuilder mediatorCollectionBuilder;
 
 
-        public ThenMediatorBuilder(FilterMediator filterMediator, Pipeline pipeline, PipelineBuilder sequenceBuilder) {
+        public ThenMediatorBuilder(FilterMediator filterMediator, MediatorCollectionBuilder mediatorCollectionBuilder) {
             this.filterMediator = filterMediator;
-            this.sequenceBuilder = sequenceBuilder;
-            this.pipeline = pipeline;
+            this.mediatorCollectionBuilder = mediatorCollectionBuilder;
         }
 
-        public OtherwiseMediatorBuilder then(Mediator... mediators) {
-            filterMediator.then(mediators);
-            return new OtherwiseMediatorBuilder(filterMediator, pipeline, sequenceBuilder);
+        public OtherwiseMediatorBuilder then(MediatorCollectionBuilder mediatorCollection) {
+            filterMediator.addthenMediators(mediatorCollection.getMediatorCollection());
 
 
+            return new OtherwiseMediatorBuilder(filterMediator, mediatorCollectionBuilder);
         }
-
-
     }
 
     /**
@@ -88,21 +77,21 @@ public class FilterMediatorBuilder {
     public static class OtherwiseMediatorBuilder {
 
         private FilterMediator filterMediator;
-        private PipelineBuilder sequenceBuilder;
-        private Pipeline pipeline;
+        private MediatorCollectionBuilder mediatorCollectionBuilder;
 
-        public OtherwiseMediatorBuilder(FilterMediator filterMediator, Pipeline pipeline,
-                                        PipelineBuilder sequenceBuilder) {
+
+        public OtherwiseMediatorBuilder(FilterMediator filterMediator,
+                                        MediatorCollectionBuilder mediatorCollectionBuilder) {
             this.filterMediator = filterMediator;
-            this.sequenceBuilder = sequenceBuilder;
-            this.pipeline = pipeline;
+            this.mediatorCollectionBuilder = mediatorCollectionBuilder;
+
         }
 
 
-        public PipelineBuilder otherwise(Mediator... mediators) {
-            filterMediator.otherwise(mediators);
-            pipeline.addMediator(filterMediator);
-            return sequenceBuilder;
+        public MediatorCollectionBuilder otherwise(MediatorCollectionBuilder collectionBuilder) {
+            filterMediator.addotherwiseMediators(collectionBuilder.getMediatorCollection());
+            mediatorCollectionBuilder.getMediatorCollection().addMediator(filterMediator);
+            return mediatorCollectionBuilder;
         }
 
     }

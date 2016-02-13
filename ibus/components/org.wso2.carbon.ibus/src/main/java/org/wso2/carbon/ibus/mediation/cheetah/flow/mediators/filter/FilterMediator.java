@@ -45,18 +45,14 @@ public class FilterMediator implements FlowController {
         this.condition = condition;
     }
 
-    public FilterMediator then(Mediator... mediators) {
-        for (Mediator mediator : mediators) {
-            childThenMediatorList.addMediator(mediator);
-        }
-      return  this;
+    public FilterMediator addthenMediators(MediatorCollection mediatorCollection) {
+        childThenMediatorList = mediatorCollection;
+        return this;
     }
 
-    public FilterMediator otherwise(Mediator... mediators) {
-        for (Mediator mediator : mediators) {
-            childOtherwiseMediatorList.addMediator(mediator);
-        }
-       return this;
+    public FilterMediator addotherwiseMediators(MediatorCollection mediatorCollection) {
+        childOtherwiseMediatorList = mediatorCollection;
+        return this;
     }
 
     @Override
