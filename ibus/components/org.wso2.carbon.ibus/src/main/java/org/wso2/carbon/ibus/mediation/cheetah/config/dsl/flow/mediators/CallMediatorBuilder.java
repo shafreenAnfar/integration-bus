@@ -25,8 +25,10 @@ import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.CallMediator;
  */
 public class CallMediatorBuilder {
 
-    public static CallMediator call(String endpointKey) {
-        return new CallMediator(endpointKey);
+    public static MediatorCollectionBuilder call(String endpointKey) {
+        MediatorCollectionBuilder mediatorCollectionBuilder = new MediatorCollectionBuilder();
+        mediatorCollectionBuilder.getMediatorCollection().addMediator(new CallMediator(endpointKey));
+        return mediatorCollectionBuilder;
     }
 
 }

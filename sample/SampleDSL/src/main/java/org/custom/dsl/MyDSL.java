@@ -28,6 +28,7 @@ import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.F
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.CallMediatorBuilder.*;
 
 
+
 /**
  * Sample DSL
  */
@@ -41,7 +42,7 @@ public class MyDSL extends ConfigurationBuilder {
                    http(port(8280), context("/sample/request")).
                    pipeline("pipeline1").
                    filter(condition(source("routeId", Scope.Transport), pattern("r1"))).
-                   then(call("outboundEP1")).
+                   then(call("outboundEP1").respond()).
                    otherwise(call("outboundEP2")).respond();
 
         router.outboundEndpoint("outboundEP1").

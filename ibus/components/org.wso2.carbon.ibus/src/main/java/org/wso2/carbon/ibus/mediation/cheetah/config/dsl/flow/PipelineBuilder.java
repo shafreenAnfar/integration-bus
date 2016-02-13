@@ -20,10 +20,11 @@ package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow;
 
 
 import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.CallMediatorBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.FilterMediatorBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.MediatorCollectionBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.RespondMediatorBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.Pipeline;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.CallMediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Condition;
 
 
@@ -34,6 +35,8 @@ public class PipelineBuilder {
 
     private Pipeline pipeline;
 
+    private MediatorCollectionBuilder mediatorCollectionBuilder;
+
     public static PipelineBuilder pipeline(String name, ESBConfigHolder parentConfig) {
         return new PipelineBuilder(name, parentConfig);
     }
@@ -41,21 +44,21 @@ public class PipelineBuilder {
     private PipelineBuilder(String name, ESBConfigHolder parentConfig) {
         pipeline = new Pipeline(name);
         parentConfig.addPipeline(pipeline);
+        mediatorCollectionBuilder = new MediatorCollectionBuilder();
     }
 
-    public PipelineBuilder call(String endpointKey) {
-        pipeline.addMediator(CallMediatorBuilder.call(endpointKey));
-        return this;
+    public MediatorCollectionBuilder call(String endpointKey) {
+        mediatorCollectionBuilder.getMediatorCollection().addMediator(new CallMediator(endpointKey));
+        return mediatorCollectionBuilder;
     }
 
     public void respond() {
-        pipeline.addMediator(RespondMediatorBuilder.respond());
-
+        mediatorCollectionBuilder.getMediatorCollection().addMediator(RespondMediatorBuilder.respond());
     }
 
 
     public FilterMediatorBuilder.ThenMediatorBuilder filter(Condition condition) {
-        return FilterMediatorBuilder.filter(condition, pipeline, this);
+        return FilterMediatorBuilder.filter(condition, mediatorCollectionBuilder);
     }
 
 
