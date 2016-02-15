@@ -23,6 +23,7 @@ import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.FilterMediatorBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.MediatorCollectionBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.RespondMediatorBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.Mediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.Pipeline;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.CallMediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Condition;
@@ -42,13 +43,18 @@ public class PipelineBuilder {
     }
 
     private PipelineBuilder(String name, ESBConfigHolder parentConfig) {
-        pipeline = new Pipeline(name);
-        parentConfig.addPipeline(pipeline);
         mediatorCollectionBuilder = new MediatorCollectionBuilder();
+        pipeline = new Pipeline(name, mediatorCollectionBuilder.getMediatorCollection());
+        parentConfig.addPipeline(pipeline);
     }
 
     public MediatorCollectionBuilder call(String endpointKey) {
         mediatorCollectionBuilder.getMediatorCollection().addMediator(new CallMediator(endpointKey));
+        return mediatorCollectionBuilder;
+    }
+
+    public MediatorCollectionBuilder customMediator(Mediator mediator) {
+        mediatorCollectionBuilder.getMediatorCollection().addMediator(mediator);
         return mediatorCollectionBuilder;
     }
 

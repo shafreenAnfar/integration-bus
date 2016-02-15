@@ -35,8 +35,8 @@ public class Pipeline {
 
     private static final Logger log = LoggerFactory.getLogger(Pipeline.class);
 
-    public Pipeline(String name) {
-        mediators = new MediatorCollection();
+    public Pipeline(String name, MediatorCollection mediators) {
+        this.mediators = mediators;
         this.name = name;
     }
 
@@ -52,10 +52,6 @@ public class Pipeline {
 
     public String getName() {
         return name;
-    }
-
-    public void addMediator(Mediator mediator) {
-        mediators.addMediator(mediator);
     }
 
 
