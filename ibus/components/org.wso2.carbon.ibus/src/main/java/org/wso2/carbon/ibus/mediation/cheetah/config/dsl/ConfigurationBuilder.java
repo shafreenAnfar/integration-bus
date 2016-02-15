@@ -23,6 +23,7 @@ import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.PipelineBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.inbound.InboundEPBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.outbound.OutboundEndpointBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.outbound.OutboundEndpoint;
 
 /**
  * A class that used to create entire configuration.Anyone can extend this and overwrite configure method with
@@ -53,13 +54,14 @@ public abstract class ConfigurationBuilder {
         }
 
         /* For Inbound */
-        public InboundEPBuilder inboundEndpoint(String name) {
-            return InboundEPBuilder.inboundEndpoint(name, esbConfigHolder, this);
+        public InboundEPBuilder inboundEndpoint() {
+            return InboundEPBuilder.inboundEndpoint(esbConfigHolder, this);
         }
 
+
         /* For Outbound */
-        public OutboundEndpointBuilder outboundEndpoint(String name) {
-            return OutboundEndpointBuilder.outboundEndpoint(name, esbConfigHolder);
+        public OutboundEndpointBuilder outboundEndpoint(OutboundEndpoint outboundEndpoint) {
+            return OutboundEndpointBuilder.outboundEndpoint(outboundEndpoint, esbConfigHolder);
         }
 
         /* For Pipeline */

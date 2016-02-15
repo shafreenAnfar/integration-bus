@@ -49,7 +49,7 @@ public class HTTPInboundEPDispatcher implements Dispatcher, ConfigRegistryObserv
     }
 
 
-    public HTTPInboundEPDispatcher() {
+    private HTTPInboundEPDispatcher() {
         httpEPRegistry = new HashMap<Integer, ArrayList<HTTPInboundEP>>();
         CheetahConfigRegistry.getInstance().registerObserver(this);
     }

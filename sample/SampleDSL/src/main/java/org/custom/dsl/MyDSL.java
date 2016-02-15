@@ -20,13 +20,21 @@ package org.custom.dsl;
 
 
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.ConfigurationBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.inbound.http.HTTPInboundEPBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.AbstractMediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Scope;
+import org.wso2.carbon.ibus.mediation.cheetah.inbound.protocols.http.HTTPInboundEP;
+import org.wso2.carbon.messaging.CarbonCallback;
+import org.wso2.carbon.messaging.CarbonMessage;
 
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.inbound.http.HTTPInboundEPBuilder.*;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.outbound.http.HTTPOutboundEPBuilder.*;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.FilterMediatorBuilder.*;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.CallMediatorBuilder.*;
-
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.CallMediatorBuilder.call;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.FilterMediatorBuilder.condition;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.FilterMediatorBuilder.pattern;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators.FilterMediatorBuilder.source;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.inbound.http.HTTPInboundEPBuilder.context;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.inbound.http.HTTPInboundEPBuilder.port;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.outbound.http.HTTPOutboundEPBuilder.httpOutboundEndpoint;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.outbound.http.HTTPOutboundEPBuilder.uri;
 
 
 /**
@@ -38,20 +46,52 @@ public class MyDSL extends ConfigurationBuilder {
 
         IntegrationFlow router = integrationFlow("MessageRouter");
 
-        router.inboundEndpoint("inboundEP1").
-                   http(port(8280), context("/sample/request")).
+
+        router.inboundEndpoint().
+                   http("inboundEndpoint1", port(8280), context("/sample/request")).
                    pipeline("pipeline1").
                    filter(condition(source("routeId", Scope.Transport), pattern("r1"))).
-                   then(call("outboundEP1").respond()).
+                   then(call("outboundEP1")).
                    otherwise(call("outboundEP2")).respond();
 
-        router.outboundEndpoint("outboundEP1").
-                   http(uri("http://204.13.85.5:5050/service"));
+       /** Customize route
+        router.inboundEndpoint().
+                       custom(new MyInbound("test1", port(8280))).
+                       pipeline("pipeline1").
+                                    customMediator(new MyCustomMediator()).
+                                    call("outboundEp1").
+                                    respond();
+        */
 
-        router.outboundEndpoint("outboundEP2").
-                   http(uri("http://204.13.85.5:5050/service"));
+        router.outboundEndpoint(httpOutboundEndpoint("outboundEp1", uri("http://localhost:9000/service")));
+
+        router.outboundEndpoint(httpOutboundEndpoint("outboundEp2", uri("http://204.13.85.5:5050/service")));
 
         return router;
 
+    }
+
+
+    private class MyInbound extends HTTPInboundEP {
+
+        public MyInbound(String name, HTTPInboundEPBuilder.Port port) {
+            super(name, port.getPort());
+        }
+
+        @Override
+        public boolean canReceive(CarbonMessage cMsg) {
+            return true;
+        }
+    }
+
+
+    private class MyCustomMediator extends AbstractMediator {
+
+        @Override
+        public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws Exception {
+            System.out.println("###############################My Custom Mediator###########################");
+            getNext().receive(carbonMessage, carbonCallback);
+            return false;
+        }
     }
 }

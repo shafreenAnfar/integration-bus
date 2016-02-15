@@ -29,32 +29,38 @@ import org.wso2.carbon.ibus.mediation.cheetah.inbound.InboundEndpoint;
  */
 public class InboundEPBuilder {
 
-    String name;
     InboundEndpoint inboundEndpoint;
     ESBConfigHolder parentConfig;
     String pipeline;
     ConfigurationBuilder.IntegrationFlow integrationFlow;
 
-    public static InboundEPBuilder inboundEndpoint(String name, ESBConfigHolder parentConfig,
+    public static InboundEPBuilder inboundEndpoint(ESBConfigHolder parentConfig,
                                                    ConfigurationBuilder.IntegrationFlow integrationFlow) {
-        return new InboundEPBuilder(name, parentConfig, integrationFlow);
+        return new InboundEPBuilder(parentConfig, integrationFlow);
     }
 
-    private InboundEPBuilder(String name, ESBConfigHolder parentConfig,
+    private InboundEPBuilder(ESBConfigHolder parentConfig,
                              ConfigurationBuilder.IntegrationFlow integrationFlow) {
-        this.name = name;
         this.parentConfig = parentConfig;
         this.integrationFlow = integrationFlow;
     }
 
-    public InboundEPBuilder http(HTTPInboundEPBuilder.Port port, HTTPInboundEPBuilder.Context context) {
+    public InboundEPBuilder http(String name, HTTPInboundEPBuilder.Port port, HTTPInboundEPBuilder.Context context) {
 
         inboundEndpoint =
-                HTTPInboundEPBuilder.http(name, port, context).getHttpInboundEP();
+                   HTTPInboundEPBuilder.http(name, port, context).getHttpInboundEP();
         inboundEndpoint.setPipeline(pipeline);
         parentConfig.setInboundEndpoint(inboundEndpoint);
         return this;
     }
+
+    public InboundEPBuilder custom(InboundEndpoint inboundEndpoint) {
+        this.inboundEndpoint = inboundEndpoint;
+        inboundEndpoint.setPipeline(pipeline);
+        parentConfig.setInboundEndpoint(inboundEndpoint);
+        return this;
+    }
+
 
     public PipelineBuilder pipeline(String pipeline) {
         this.pipeline = pipeline;

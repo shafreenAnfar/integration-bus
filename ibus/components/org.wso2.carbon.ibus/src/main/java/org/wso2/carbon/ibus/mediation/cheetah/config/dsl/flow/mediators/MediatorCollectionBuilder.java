@@ -18,6 +18,7 @@
 
 package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators;
 
+import org.wso2.carbon.ibus.mediation.cheetah.flow.Mediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.MediatorCollection;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.CallMediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Condition;
@@ -41,6 +42,11 @@ public class MediatorCollectionBuilder {
         mediatorCollection.addMediator(RespondMediatorBuilder.respond());
         return this;
 
+    }
+
+    public MediatorCollectionBuilder customMediator(Mediator mediator) {
+        mediatorCollection.addMediator(mediator);
+        return this;
     }
 
 

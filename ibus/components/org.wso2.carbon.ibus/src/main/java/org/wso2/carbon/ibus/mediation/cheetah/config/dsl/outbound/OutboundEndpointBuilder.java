@@ -20,7 +20,6 @@ package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.outbound;
 
 
 import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.outbound.http.HTTPOutboundEPBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.outbound.OutboundEndpoint;
 
 /**
@@ -29,33 +28,23 @@ import org.wso2.carbon.ibus.mediation.cheetah.outbound.OutboundEndpoint;
 public class OutboundEndpointBuilder {
 
     private OutboundEndpoint outboundEndpoint;
-    private String name;
     private ESBConfigHolder parentConfig;
-    private int timeout;
 
-    public static OutboundEndpointBuilder outboundEndpoint(String name, ESBConfigHolder parentConfig) {
-        return new OutboundEndpointBuilder(name, parentConfig);
+    public static OutboundEndpointBuilder outboundEndpoint(OutboundEndpoint outboundEndpoint,
+                                                           ESBConfigHolder parentConfig) {
+        return new OutboundEndpointBuilder(outboundEndpoint, parentConfig);
     }
 
-    private OutboundEndpointBuilder(String name, ESBConfigHolder parentConfig) {
-        this.name = name;
+    private OutboundEndpointBuilder(OutboundEndpoint outboundEndpoint, ESBConfigHolder parentConfig) {
         this.parentConfig = parentConfig;
-        outboundEndpoint = null;
+        this.outboundEndpoint = outboundEndpoint;
+        this.parentConfig.addOutboundEndpoint(outboundEndpoint);
     }
 
     public OutboundEndpointBuilder timeOut(int timeout) {
-        this.timeout = timeout;
         if (outboundEndpoint != null) {
             outboundEndpoint.setTimeOut(timeout);
         }
-        return this;
-    }
-
-    public OutboundEndpointBuilder http(HTTPOutboundEPBuilder.URI uri) {
-        outboundEndpoint =
-                HTTPOutboundEPBuilder.http(name, uri).getHttpOutboundEndpoint();
-        outboundEndpoint.setTimeOut(timeout);
-        parentConfig.addOutboundEndpoint(outboundEndpoint);
         return this;
     }
 

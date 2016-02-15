@@ -25,19 +25,10 @@ import org.wso2.carbon.ibus.mediation.cheetah.outbound.protocol.http.HTTPOutboun
  */
 public class HTTPOutboundEPBuilder {
 
-    private HTTPOutboundEndpoint httpOutboundEndpoint;
 
-    public static HTTPOutboundEPBuilder http(String name, URI uri) {
-        return new HTTPOutboundEPBuilder(name, uri);
+    public static HTTPOutboundEndpoint httpOutboundEndpoint(String name, URI uri) {
+        return new HTTPOutboundEndpoint(name, uri.getUri());
 
-    }
-
-    private HTTPOutboundEPBuilder(String name, URI uri) {
-        httpOutboundEndpoint = new HTTPOutboundEndpoint(name, uri.getUri());
-    }
-
-    public HTTPOutboundEndpoint getHttpOutboundEndpoint() {
-        return httpOutboundEndpoint;
     }
 
 

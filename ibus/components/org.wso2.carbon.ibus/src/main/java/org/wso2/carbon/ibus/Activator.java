@@ -46,7 +46,7 @@ public class Activator implements BundleActivator {
             bundleContext.registerService(CarbonMessageProcessor.class, engine, null);
 
             //Registering dispatchers
-            DispatcherRegistry.getInstance().registerDispatcher("http", new HTTPInboundEPDispatcher());
+            DispatcherRegistry.getInstance().registerDispatcher("http", HTTPInboundEPDispatcher.getInstance());
 
         } catch (Exception ex) {
             String msg = "Error while loading Cheetah";
