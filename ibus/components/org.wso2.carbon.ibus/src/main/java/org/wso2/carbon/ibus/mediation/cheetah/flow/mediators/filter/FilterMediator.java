@@ -20,9 +20,9 @@ package org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.AbstractMediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.FlowController;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.FlowControllerCallback;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.Mediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.MediatorCollection;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.evaluator.Evaluator;
 import org.wso2.carbon.messaging.CarbonCallback;
@@ -31,7 +31,7 @@ import org.wso2.carbon.messaging.CarbonMessage;
 /**
  * Filter Mediator
  */
-public class FilterMediator implements FlowController {
+public class FilterMediator extends AbstractMediator implements FlowController {
 
     private static final Logger log = LoggerFactory.getLogger(FilterMediator.class);
 
@@ -55,15 +55,6 @@ public class FilterMediator implements FlowController {
         return this;
     }
 
-    @Override
-    public void setNext(Mediator nextMediator) {
-
-    }
-
-    @Override
-    public Mediator getNext() {
-        return null;
-    }
 
     @Override
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
