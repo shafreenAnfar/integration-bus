@@ -27,20 +27,39 @@ import org.wso2.carbon.messaging.ArtifactDeployer;
 import org.wso2.carbon.messaging.TransportListener;
 
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * An InboundEndpoint Deployer class
  */
 public class InboundEndpointDeployer implements ArtifactDeployer {
 
-    private Map<String, TransportListener> listenerMap = new HashMap<>();
 
+    private Map<String, TransportListener> listenerMap = new ConcurrentHashMap<>();
+
+    private Map<String, InboundEndpoint> earlyInbounds = new ConcurrentHashMap<>();
+
+    private static InboundEndpointDeployer inboundEndpointDeployer = new InboundEndpointDeployer();
+
+    public static InboundEndpointDeployer getInstance() {
+        return inboundEndpointDeployer;
+    }
+
+    private InboundEndpointDeployer() {
+
+
+    }
 
     @Override
-    public void registerTransportListener(String id, TransportListener transportListener) {
+    public synchronized void registerTransportListener(String id, TransportListener transportListener) {
+
         listenerMap.put(id, transportListener);
+        for (Map.Entry entry : earlyInbounds.entrySet()) {
+            //TODO check relevant mapping listneres
+            deploy((InboundEndpoint) entry.getValue());
+            earlyInbounds.remove(entry.getKey());
+        }
     }
 
     @Override
@@ -51,15 +70,7 @@ public class InboundEndpointDeployer implements ArtifactDeployer {
     @Override
     public Object deploy(Artifact artifact) throws CarbonDeploymentException {
         InboundEndpoint inboundEndpoint = createInboundEndpoint(artifact);
-        if (inboundEndpoint instanceof HTTPInboundEP) {
-            int port = ((HTTPInboundEP) inboundEndpoint).getPort();
-            String host = ((HTTPInboundEP) inboundEndpoint).getHost();
-            String id = ((HTTPInboundEP) inboundEndpoint).getBindListenerId();
-            TransportListener transportListener = listenerMap.get(id);
-            if (transportListener != null) {
-                transportListener.listen(host, port);
-            }
-        }
+        deploy(inboundEndpoint);
 
         return null;
     }
@@ -86,5 +97,22 @@ public class InboundEndpointDeployer implements ArtifactDeployer {
 
     public InboundEndpoint createInboundEndpoint(Artifact artifact) {
         return null;
+    }
+
+    public synchronized void deploy(InboundEndpoint inboundEndpoint) {
+        if (listenerMap.size() == 0) {
+            earlyInbounds.put(inboundEndpoint.getName(), inboundEndpoint);
+            return;
+        }
+        if (inboundEndpoint instanceof HTTPInboundEP) {
+            int port = ((HTTPInboundEP) inboundEndpoint).getPort();
+            String host = ((HTTPInboundEP) inboundEndpoint).getHost();
+            TransportListener transportListener = listenerMap.get("netty-gw");
+            if (transportListener != null) {
+                transportListener.listen(host, port);
+            } else {
+                earlyInbounds.put(inboundEndpoint.getName(), inboundEndpoint);
+            }
+        }
     }
 }

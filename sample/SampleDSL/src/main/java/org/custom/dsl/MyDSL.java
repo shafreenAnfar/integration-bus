@@ -51,8 +51,8 @@ public class MyDSL extends ConfigurationBuilder {
                    http("inboundEndpoint1", port(8280), context("/sample/request")).
                    pipeline("pipeline1").
                    filter(condition(source("routeId", Scope.Transport), pattern("r1"))).
-                   then(call("outboundEP1")).
-                   otherwise(call("outboundEP2")).respond();
+                   then(call("outboundEp1")).
+                   otherwise(call("outboundEp2")).respond();
 
         /** Customize route
          router.inboundEndpoint().

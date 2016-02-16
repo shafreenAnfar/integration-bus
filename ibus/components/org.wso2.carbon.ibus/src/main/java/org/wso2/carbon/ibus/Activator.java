@@ -21,7 +21,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.ibus.mediation.cheetah.CheetahMessageProcessor;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.DispatcherRegistry;
+import org.wso2.carbon.ibus.mediation.cheetah.inbound.deployer.InboundEndpointDeployer;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.protocols.http.HTTPInboundEPDispatcher;
+import org.wso2.carbon.messaging.ArtifactDeployer;
 import org.wso2.carbon.messaging.CarbonMessageProcessor;
 
 import java.io.File;
@@ -44,6 +46,7 @@ public class Activator implements BundleActivator {
             //Creating the processor and registering the service
             CheetahMessageProcessor engine = new CheetahMessageProcessor();
             bundleContext.registerService(CarbonMessageProcessor.class, engine, null);
+            bundleContext.registerService(ArtifactDeployer.class, InboundEndpointDeployer.getInstance(), null);
 
             //Registering dispatchers
             DispatcherRegistry.getInstance().registerDispatcher("http", HTTPInboundEPDispatcher.getInstance());
