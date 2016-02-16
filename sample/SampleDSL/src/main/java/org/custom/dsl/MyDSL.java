@@ -54,18 +54,21 @@ public class MyDSL extends ConfigurationBuilder {
                    then(call("outboundEP1")).
                    otherwise(call("outboundEP2")).respond();
 
-       /** Customize route
-        router.inboundEndpoint().
-                       custom(new MyInbound("test1", port(8280))).
-                       pipeline("pipeline1").
-                                    customMediator(new MyCustomMediator()).
-                                    call("outboundEp1").
-                                    respond();
-        */
+        /** Customize route
+         router.inboundEndpoint().
+         custom(new MyInbound("test1", port(8280))).
+         pipeline("pipeline1").
+         customMediator(new MyCustomMediator()).
+         call("outboundEp1").
+         respond();
+         */
+
 
         router.outboundEndpoint(httpOutboundEndpoint("outboundEp1", uri("http://localhost:9000/service")));
 
         router.outboundEndpoint(httpOutboundEndpoint("outboundEp2", uri("http://204.13.85.5:5050/service")));
+
+        router.outboundEndpoint(httpOutboundEndpoint("outboundEp3", uri("http://204.13.85.6:5050/service")));
 
         return router;
 
