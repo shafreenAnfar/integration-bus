@@ -30,6 +30,7 @@ import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated.WUMLParser;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.Mediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.Pipeline;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.CallMediator;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.InboundEndpoint;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.protocols.http.HTTPInboundEP;
 import org.wso2.carbon.ibus.mediation.cheetah.outbound.OutboundEndpoint;
@@ -42,11 +43,12 @@ import java.util.Stack;
 
 public class WUMLBaseListenerImpl extends WUMLBaseListener {
 
+
     WUMLConfigurationBuilder.IntegrationFlow integrationFlow;
     Stack<String> pipelineStack = new Stack<String>();
 
     public WUMLBaseListenerImpl() {
-        integrationFlow = new WUMLConfigurationBuilder.IntegrationFlow("default");
+        this.integrationFlow = new WUMLConfigurationBuilder.IntegrationFlow("default");
     }
 
     ;
@@ -159,7 +161,11 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     @Override
     public void exitProcessmessageDef(WUMLParser.ProcessmessageDefContext ctx) {
         String mediatorName = StringParserUtil.getValueWithinDoubleQuotes(ctx.MEDIATORNAMESTRINGX().getText());
+        String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.CONFIGSDEF().getText());
         Mediator mediator = MediatorFactory.getMediator(MediatorType.valueOf(mediatorName));
+        if(mediator instanceof CallMediator) {
+            ((CallMediator) mediator).setOutboundEPKey(configurations);
+        }
         integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
         super.exitProcessmessageDef(ctx);
     }
@@ -252,5 +258,10 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     @Override
     public void exitExpression(WUMLParser.ExpressionContext ctx) {
         super.exitExpression(ctx);
+    }
+
+
+    public WUMLConfigurationBuilder.IntegrationFlow getIntegrationFlow() {
+        return integrationFlow;
     }
 }

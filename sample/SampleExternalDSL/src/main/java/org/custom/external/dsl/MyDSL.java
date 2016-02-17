@@ -48,7 +48,7 @@ public class MyDSL extends WUMLConfigurationBuilder {
 
     public WUMLConfigurationBuilder.IntegrationFlow configure() {
 
-        WUMLConfigurationBuilder.IntegrationFlow router = integrationFlow("MessageRouter");
+        WUMLConfigurationBuilder.IntegrationFlow router = null;
 
 //        // Reading the DSL script
 //        InputStream is = ClassLoader
@@ -73,13 +73,13 @@ public class MyDSL extends WUMLConfigurationBuilder {
             WUMLParser parser = new WUMLParser(tokens);
 
             // Adding the listener to facilitate walking through parse tree.
-            parser.addParseListener(new WUMLBaseListenerImpl(router));
-
+            WUMLBaseListenerImpl wumlBaseListener = new WUMLBaseListenerImpl();
+            parser.addParseListener(wumlBaseListener);
             parser.script();
+            router = wumlBaseListener.getIntegrationFlow();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         return router;
 

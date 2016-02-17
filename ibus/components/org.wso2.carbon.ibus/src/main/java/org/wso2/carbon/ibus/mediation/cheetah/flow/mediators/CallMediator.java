@@ -36,6 +36,7 @@ import java.net.URL;
  */
 public class CallMediator extends AbstractMediator {
 
+
     private String outboundEPKey;
 
     public CallMediator() {};
@@ -90,6 +91,10 @@ public class CallMediator extends AbstractMediator {
                 setCarbonHeadersToBackendRequest(carbonMessage, host, port, urls);
             }
         }
+    }
+
+    public void setOutboundEPKey(String outboundEPKey) {
+        this.outboundEPKey = outboundEPKey;
     }
 
 }

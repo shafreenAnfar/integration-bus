@@ -37,6 +37,8 @@ process_message("enrich",configs("xpath://test","inline:true"))
 
 process_message("log",configs("user:test","password:chana"))
 
+process_message("call",configs("http://localhost:9000/services/SimpleStockQuoteService"))
+
 pipelineptt -> outboundendpoint1 : "Validate_policy"
 
 outboundendpoint1 -> pipelineptt : "Validation_response"

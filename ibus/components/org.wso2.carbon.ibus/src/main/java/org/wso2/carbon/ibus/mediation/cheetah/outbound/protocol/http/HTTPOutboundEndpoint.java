@@ -18,7 +18,16 @@
 
 package org.wso2.carbon.ibus.mediation.cheetah.outbound.protocol.http;
 
+import org.wso2.carbon.ibus.ServiceContextHolder;
+import org.wso2.carbon.ibus.mediation.cheetah.config.CheetahConfigRegistry;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.FlowControllerCallback;
 import org.wso2.carbon.ibus.mediation.cheetah.outbound.OutboundEndpoint;
+import org.wso2.carbon.messaging.CarbonCallback;
+import org.wso2.carbon.messaging.CarbonMessage;
+import org.wso2.carbon.messaging.Constants;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * HTTP Outbound Endpoint
@@ -26,6 +35,45 @@ import org.wso2.carbon.ibus.mediation.cheetah.outbound.OutboundEndpoint;
 public class HTTPOutboundEndpoint extends OutboundEndpoint {
 
     private String uri;
+
+    @Override
+    public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
+            throws Exception {
+        processRequest(carbonMessage);
+
+        CarbonCallback callback = new FlowControllerCallback(carbonCallback, this);
+        ServiceContextHolder.getInstance().getSender().send(carbonMessage, callback);
+        return false;
+    }
+
+    private void setCarbonHeadersToBackendRequest(CarbonMessage request, String host, int port, String urls) {
+
+        if (request != null) {
+
+            request.setProperty(Constants.HOST, host);
+            request.setProperty(Constants.PORT, port);
+
+
+            request.setProperty(Constants.TO, urls);
+
+
+            if (port != 80) {
+                request.getHeaders().put(Constants.HTTP_HOST, host + ":" + port);
+            } else {
+                request.getHeaders().put(Constants.HTTP_HOST, host);
+            }
+
+        }
+    }
+
+    private void processRequest(CarbonMessage carbonMessage) throws MalformedURLException {
+                URL url = new URL(uri);
+                String host = url.getHost();
+                int port = (url.getPort() == -1) ? 80 : url.getPort();
+                String urls = url.getPath();
+                setCarbonHeadersToBackendRequest(carbonMessage, host, port, urls);
+
+    }
 
     public HTTPOutboundEndpoint(String name, String uri) {
         super(name);
@@ -35,4 +83,6 @@ public class HTTPOutboundEndpoint extends OutboundEndpoint {
     public String getUri() {
         return uri;
     }
+
+
 }

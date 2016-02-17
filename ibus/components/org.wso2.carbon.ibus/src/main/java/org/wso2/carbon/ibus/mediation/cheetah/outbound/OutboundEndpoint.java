@@ -18,10 +18,14 @@
 
 package org.wso2.carbon.ibus.mediation.cheetah.outbound;
 
+import org.wso2.carbon.ibus.mediation.cheetah.flow.AbstractMediator;
+import org.wso2.carbon.messaging.CarbonCallback;
+import org.wso2.carbon.messaging.CarbonMessage;
+
 /**
  * A class that represents endpoint details
  */
-public class OutboundEndpoint {
+public class OutboundEndpoint extends AbstractMediator {
 
 
     private int timeOut;
@@ -42,5 +46,10 @@ public class OutboundEndpoint {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws Exception {
+        return true;
     }
 }
