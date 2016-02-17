@@ -54,14 +54,14 @@ public class WUMLDeployer implements Deployer {
 
     private static final Logger logger = LoggerFactory.getLogger(WUMLDeployer.class);
 
-    public static final String CAMEL_CONFIGS_DIRECTORY = "wuml";
+    public static final String EXTERNAL_DSL_CONFIGS_DIRECTORY = "wuml";
 
 
     @Override
     public void init() {
         artifactType = new ArtifactType<String>("puml");
         try {
-            directoryLocation = new URL("file:" + CAMEL_CONFIGS_DIRECTORY);
+            directoryLocation = new URL("file:" + EXTERNAL_DSL_CONFIGS_DIRECTORY);
         } catch (MalformedURLException e) {
             logger.error("Error while initializing directoryLocation" + directoryLocation.getPath(), e);
         }
