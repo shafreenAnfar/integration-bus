@@ -22,8 +22,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.ConfigurationBuilder;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.DSLLoader;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.WUMLConfigurationBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.WUMLLoader;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.JavaConfigurationBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.DSLLoader;
 import org.wso2.carbon.messaging.TransportSender;
 
 
@@ -52,17 +54,29 @@ public class CheetahServiceComponent {
 
     @Reference(
             name = "java-dsl",
-            service = ConfigurationBuilder.class,
+            service = JavaConfigurationBuilder.class,
             cardinality = ReferenceCardinality.OPTIONAL,
             policy = ReferencePolicy.DYNAMIC,
             unbind = "removeJavaDSL"
     )
-    protected void addJavaDSL(ConfigurationBuilder dsl) {
+    protected void addJavaDSL(JavaConfigurationBuilder dsl) {
         DSLLoader.loadDSL(dsl);
     }
 
-    protected void removeJavaDSL(ConfigurationBuilder dsl) {
+    protected void removeJavaDSL(JavaConfigurationBuilder dsl) {
     }
 
+    @Reference(
+            name = "wuml-dsl",
+            service = WUMLConfigurationBuilder.class,
+            cardinality = ReferenceCardinality.OPTIONAL,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "removeWumlDSL"
+    )
+    protected void addWumlDSL(WUMLConfigurationBuilder dsl) {
+        WUMLLoader.loadDSL(dsl);
+    }
 
+    protected void removeWumlDSL(WUMLConfigurationBuilder dsl) {
+    }
 }

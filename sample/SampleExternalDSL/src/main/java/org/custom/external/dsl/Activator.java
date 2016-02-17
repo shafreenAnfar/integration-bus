@@ -16,18 +16,19 @@
  * under the License.
  */
 
-package org.custom.dsl;
+package org.custom.external.dsl;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.JavaConfigurationBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.WUMLConfigurationBuilder;
+
 
 /**
  * Bundle Activator
  */
 public class Activator implements BundleActivator {
     public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(JavaConfigurationBuilder.class, new MyDSL(), null);
+        bundleContext.registerService(WUMLConfigurationBuilder.class, new MyDSL(bundleContext), null);
     }
 
     public void stop(BundleContext bundleContext) throws Exception {

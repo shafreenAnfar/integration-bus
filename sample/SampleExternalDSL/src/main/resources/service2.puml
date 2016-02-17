@@ -1,0 +1,64 @@
+@startuml
+
+participant integrationflowlicense : IntegrationFlow("License_Renewal_use_case")
+
+participant inboundendpointhttp1 : InboundEndpoint(protocol("http"),port(6060),context("/foo"))
+
+participant pipelineptt : Pipeline("message_flow_1")
+
+participant pipelineerrorhandling : Pipeline("error_handling_flow")
+
+participant outboundendpointecho : OutboundEndpoint(protocol("http"),host("http://localhost:9090/INS"))
+
+inboundendpointhttp1 -> pipelineptt : "request"
+
+process_message("filter",configs("xpath://test","inline:true"))
+
+process_message("call",configs("user:test","password:chana"))
+
+pipelineptt -> outboundendpointecho : "Validate_policy"
+
+outboundendpointecho -> pipelineptt : "Validation_response"
+
+ref pipelineerrorhandling
+
+par
+    process_message("filter",configs("xpath://test","inline:true"))
+    process_message("call",configs("user:test","password:chana"))
+    ref pipelineerrorhandling
+    
+else
+    process_message("call",configs("user:test","password:chana"))
+    process_message("call",configs("user:test","password:chana"))
+    
+else
+    process_message("call",configs("user:test","password:chana"))
+    process_message("call",configs("user:test","password:chana"))
+
+end
+
+alt (xpath://response/status=="success")
+    process_message("filter",configs())
+    process_message("call",configs())
+    
+else
+    process_message("respond",configs())
+end
+
+loop (xpath://certs)
+    process_message("filter",configs())
+    process_message("call",configs())
+end
+
+group transactional
+    process_message("filter",configs("xpath://test","inline:true"))
+    process_message("call",configs("user:test","password:chana"))
+    pipelineptt -> outboundendpointecho : "Validate_policy"
+    outboundendpointecho -> pipelineptt : "Validation_response"
+end
+
+process_message("call",configs())
+
+pipelineptt -> inboundendpointhttp1 : "response"
+
+@enduml

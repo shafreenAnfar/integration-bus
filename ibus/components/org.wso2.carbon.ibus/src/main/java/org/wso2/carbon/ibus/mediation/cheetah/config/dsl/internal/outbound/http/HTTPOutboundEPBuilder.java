@@ -16,24 +16,39 @@
  * under the License.
  */
 
-package org.custom.dsl;
+package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.outbound.http;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.JavaConfigurationBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.outbound.protocol.http.HTTPOutboundEndpoint;
 
 /**
- * Bundle Activator
+ * HTTP Outbound Builder
  */
-public class Activator implements BundleActivator {
-    public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(JavaConfigurationBuilder.class, new MyDSL(), null);
+public class HTTPOutboundEPBuilder {
+
+
+    public static HTTPOutboundEndpoint httpOutboundEndpoint(String name, URI uri) {
+        return new HTTPOutboundEndpoint(name, uri.getUri());
+
     }
 
-    public void stop(BundleContext bundleContext) throws Exception {
 
+    public static URI uri(String uri) {
+        return new URI(uri);
     }
 
+    /**
+     * URI
+     */
+    public static class URI {
+        String uri;
 
+        private URI(String uri) {
+            this.uri = uri;
+        }
+
+        public String getUri() {
+            return uri;
+        }
+    }
 
 }

@@ -38,6 +38,8 @@ public class CallMediator extends AbstractMediator {
 
     private String outboundEPKey;
 
+    public CallMediator() {};
+
     public CallMediator(String outboundEPKey) {
         this.outboundEPKey = outboundEPKey;
     }
