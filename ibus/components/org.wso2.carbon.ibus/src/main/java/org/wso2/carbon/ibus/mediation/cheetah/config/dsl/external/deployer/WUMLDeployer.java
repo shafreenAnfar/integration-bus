@@ -18,22 +18,21 @@
 
 package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.deployer;
 
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.ibus.mediation.cheetah.config.CheetahConfigRegistry;
 import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.WUMLConfigurationBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.WUMLBaseListenerImpl;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated.WUMLLexer;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated.WUMLParser;
 import org.wso2.carbon.kernel.deployment.Artifact;
 import org.wso2.carbon.kernel.deployment.ArtifactType;
 import org.wso2.carbon.kernel.deployment.Deployer;
 import org.wso2.carbon.kernel.deployment.exception.CarbonDeploymentException;
-
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated.WUMLLexer;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated.WUMLParser;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -71,9 +70,11 @@ public class WUMLDeployer implements Deployer {
     @Override
     public Object deploy(Artifact artifact) throws CarbonDeploymentException {
         File file = artifact.getFile();
+        InputStream inputStream = null;
 
         try {
-            InputStream inputStream = new FileInputStream(file);
+
+            inputStream = new FileInputStream(file);
 
 
             CharStream cs = new ANTLRInputStream(inputStream);
@@ -103,6 +104,14 @@ public class WUMLDeployer implements Deployer {
             logger.error("Error when creating input stream out of file " + file.getName(), e);
         } catch (IOException e) {
             logger.error("Error when creating input stream out of file " + file.getName(), e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    logger.error("Cannot close the Input Stream", e);
+                }
+            }
         }
 
 
