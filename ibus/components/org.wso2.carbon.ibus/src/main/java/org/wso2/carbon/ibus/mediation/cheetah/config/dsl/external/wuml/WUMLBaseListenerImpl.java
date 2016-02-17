@@ -56,6 +56,10 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
         this.integrationFlow = integrationFlow;
     }
 
+    public WUMLConfigurationBuilder.IntegrationFlow getIntegrationFlow() {
+        return integrationFlow;
+    }
+
     @Override
     public void exitScript(WUMLParser.ScriptContext ctx) {
         super.exitScript(ctx);

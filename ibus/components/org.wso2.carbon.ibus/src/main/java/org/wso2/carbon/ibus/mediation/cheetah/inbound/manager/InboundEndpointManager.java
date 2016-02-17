@@ -16,39 +16,39 @@
  * under the License.
  */
 
-package org.wso2.carbon.ibus.mediation.cheetah.inbound.deployer;
+package org.wso2.carbon.ibus.mediation.cheetah.inbound.manager;
 
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.InboundEndpoint;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.protocols.http.HTTPInboundEP;
-import org.wso2.carbon.kernel.deployment.Artifact;
-import org.wso2.carbon.kernel.deployment.ArtifactType;
-import org.wso2.carbon.kernel.deployment.exception.CarbonDeploymentException;
-import org.wso2.carbon.messaging.ArtifactDeployer;
 import org.wso2.carbon.messaging.TransportListener;
+import org.wso2.carbon.messaging.TransportListenerManager;
 
-import java.net.URL;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * An InboundEndpoint Deployer class
+ * An InboundEndpoint Manager class
  */
-public class InboundEndpointDeployer implements ArtifactDeployer {
+public class InboundEndpointManager implements TransportListenerManager {
 
 
     private Map<String, TransportListener> listenerMap = new ConcurrentHashMap<>();
 
     private Map<String, InboundEndpoint> earlyInbounds = new ConcurrentHashMap<>();
 
-    private static InboundEndpointDeployer inboundEndpointDeployer = new InboundEndpointDeployer();
+    private static InboundEndpointManager inboundEndpointDeployer = new InboundEndpointManager();
 
-    public static InboundEndpointDeployer getInstance() {
+    public static InboundEndpointManager getInstance() {
         return inboundEndpointDeployer;
     }
 
-    private InboundEndpointDeployer() {
+    private InboundEndpointManager() {
+    }
 
-
+    @Override
+    public TransportListener getTransportListener(String s) {
+        return null;
     }
 
     @Override
@@ -62,42 +62,6 @@ public class InboundEndpointDeployer implements ArtifactDeployer {
         }
     }
 
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    public Object deploy(Artifact artifact) throws CarbonDeploymentException {
-        InboundEndpoint inboundEndpoint = createInboundEndpoint(artifact);
-        deploy(inboundEndpoint);
-
-        return null;
-    }
-
-    @Override
-    public void undeploy(Object o) throws CarbonDeploymentException {
-
-    }
-
-    @Override
-    public Object update(Artifact artifact) throws CarbonDeploymentException {
-        return null;
-    }
-
-    @Override
-    public URL getLocation() {
-        return null;
-    }
-
-    @Override
-    public ArtifactType getArtifactType() {
-        return null;
-    }
-
-    public InboundEndpoint createInboundEndpoint(Artifact artifact) {
-        return null;
-    }
 
     public synchronized void deploy(InboundEndpoint inboundEndpoint) {
         if (listenerMap.size() == 0) {

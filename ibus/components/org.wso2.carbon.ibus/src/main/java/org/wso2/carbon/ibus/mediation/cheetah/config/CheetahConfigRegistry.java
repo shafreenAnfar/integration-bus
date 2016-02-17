@@ -22,7 +22,7 @@ package org.wso2.carbon.ibus.mediation.cheetah.config;
 
 import org.wso2.carbon.ibus.mediation.cheetah.flow.Pipeline;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.InboundEndpoint;
-import org.wso2.carbon.ibus.mediation.cheetah.inbound.deployer.InboundEndpointDeployer;
+import org.wso2.carbon.ibus.mediation.cheetah.inbound.manager.InboundEndpointManager;
 import org.wso2.carbon.ibus.mediation.cheetah.outbound.OutboundEndpoint;
 
 import java.util.ArrayList;
@@ -89,7 +89,7 @@ public class CheetahConfigRegistry {
 
     public void registerInboundEndpoint(InboundEndpoint inboundEndpoint) {
         inboundEndpoints.put(inboundEndpoint.getName(), inboundEndpoint);
-        InboundEndpointDeployer.getInstance().deploy(inboundEndpoint);
+        InboundEndpointManager.getInstance().deploy(inboundEndpoint);
 
         //Inform Observers
         for (ConfigRegistryObserver observer : observers) {
