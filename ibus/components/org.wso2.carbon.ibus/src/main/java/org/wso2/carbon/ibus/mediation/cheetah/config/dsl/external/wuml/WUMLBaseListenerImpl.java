@@ -261,7 +261,4 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     }
 
 
-    public WUMLConfigurationBuilder.IntegrationFlow getIntegrationFlow() {
-        return integrationFlow;
-    }
 }
