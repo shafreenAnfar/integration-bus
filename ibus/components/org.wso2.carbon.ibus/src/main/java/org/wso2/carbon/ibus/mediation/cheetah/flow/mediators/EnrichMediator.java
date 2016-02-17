@@ -17,7 +17,10 @@
  */
 package org.wso2.carbon.ibus.mediation.cheetah.flow.mediators;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.AbstractMediator;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.Mediator;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
@@ -25,8 +28,14 @@ import org.wso2.carbon.messaging.CarbonMessage;
  * Basic Enrich mediator implementation
  */
 public class EnrichMediator extends AbstractMediator {
+    private static final Logger log = LoggerFactory.getLogger(EnrichMediator.class);
+
     @Override
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws Exception {
-        return true;
+        log.info("Message is received at Enrich mediator");
+        Mediator nextMediator = getNext();
+        if(nextMediator != null) {
+            nextMediator.receive(carbonMessage, carbonCallback);
+        }        return true;
     }
 }

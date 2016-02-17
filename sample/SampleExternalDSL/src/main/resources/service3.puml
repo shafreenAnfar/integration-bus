@@ -1,32 +1,14 @@
-/*
- * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
- *
- * WSO2 Inc. licenses this file to you under the Apache License,
- * Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-
 @startuml
 
 participant integrationflowlicense : IntegrationFlow("License_Renewal_use_case")
 
-participant inboundendpointhttp1 : InboundEndpoint(protocol("http"),port(6060),context("/foo"))
+participant inboundendpointhttp1 : InboundEndpoint(protocol("http"),port(8280),context("/foo"))
 
 participant pipelineptt : Pipeline("message_flow_1")
 
 participant pipelineerrorhandling : Pipeline("error_handling_flow")
 
-participant outboundendpoint1 : OutboundEndpoint(protocol("http"),host("http://localhost:9091/INS"))
+participant outboundendpoint1 : OutboundEndpoint(protocol("http"),host("http://localhost:9000/services/SimpleStockQuoteService"))
 
 participant outboundendpoint2 : OutboundEndpoint(protocol("http"),host("http://localhost:9092/INS"))
 
@@ -38,11 +20,15 @@ process_message("enrich",configs("xpath://test","inline:true"))
 
 process_message("log",configs("user:test","password:chana"))
 
+process_message("call",configs("outboundendpoint1"))
+
 pipelineptt -> outboundendpoint1 : "Validate_policy"
 
 outboundendpoint1 -> pipelineptt : "Validation_response"
 
 process_message("transform",configs("user:test","password:chana"))
+
+process_message("respond",configs())
 
 pipelineptt -> inboundendpointhttp1 : "Final_Response"
 

@@ -17,7 +17,10 @@
  */
 package org.wso2.carbon.ibus.mediation.cheetah.flow.mediators;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.AbstractMediator;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.Mediator;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
@@ -25,8 +28,15 @@ import org.wso2.carbon.messaging.CarbonMessage;
  * Basic implementation of transform mediator
  */
 public class TransformMediator extends AbstractMediator {
+    private static final Logger log = LoggerFactory.getLogger(TransformMediator.class);
+
     @Override
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws Exception {
+        log.info("Message received at TransformMediator");
+        Mediator nextMediator = getNext();
+        if(nextMediator != null) {
+            nextMediator.receive(carbonMessage, carbonCallback);
+        }
         return true;
     }
 }
