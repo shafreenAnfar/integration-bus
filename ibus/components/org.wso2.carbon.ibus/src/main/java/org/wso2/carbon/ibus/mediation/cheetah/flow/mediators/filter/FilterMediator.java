@@ -40,6 +40,7 @@ public class FilterMediator extends AbstractMediator implements FlowController {
 
     private Condition condition;
 
+    public FilterMediator() {};
 
     public FilterMediator(Condition condition) {
         this.condition = condition;

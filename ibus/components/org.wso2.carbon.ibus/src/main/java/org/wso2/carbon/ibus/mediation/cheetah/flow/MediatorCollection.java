@@ -29,7 +29,7 @@ public class MediatorCollection {
     private List<Mediator> mediators;
 
     public MediatorCollection() {
-        mediators = new ArrayList<>();
+        mediators = new ArrayList<Mediator>();
     }
 
     public Mediator getFirstMediator() {

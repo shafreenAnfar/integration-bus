@@ -1,0 +1,67 @@
+/*
+ * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+@startuml
+
+participant integrationflowlicense : IntegrationFlow("License_Renewal_use_case")
+
+participant inboundendpointhttp1 : InboundEndpoint(protocol("http"),port(6060),context("/foo"))
+
+participant pipelineptt : Pipeline("message_flow_1")
+
+participant pipelineerrorhandling : Pipeline("error_handling_flow")
+
+participant outboundendpoint1 : OutboundEndpoint(protocol("http"),host("http://localhost:9091/INS"))
+
+participant outboundendpoint2 : OutboundEndpoint(protocol("http"),host("http://localhost:9092/INS"))
+
+participant outboundendpoint3 : OutboundEndpoint(protocol("http"),host("http://localhost:9093/INS"))
+
+inboundendpointhttp1 -> pipelineptt : "request"
+
+process_message("filter",configs("xpath://test","inline:true"))
+
+process_message("call",configs("user:test","password:chana"))
+
+pipelineptt -> outboundendpoint1 : "Validate_policy"
+
+outboundendpoint1 -> pipelineptt : "Validation_response"
+
+ref pipelineerrorhandling
+
+
+alt (xpath://response/status=="success")
+    process_message("call",configs())
+    pipelineptt -> outboundendpoint2 : "Validate_policy"
+    outboundendpoint2 -> pipelineptt : "Validate_response"
+
+else
+    process_message("call",configs())
+    pipelineptt -> outboundendpoint3 : "Validate_policy"
+    outboundendpoint3 -> pipelineptt : "Validate_response"
+end
+
+loop (xpath://certs)
+    process_message("filter",configs())
+    process_message("call",configs())
+end
+
+pipelineptt -> inboundendpointhttp1 : "Final_Response"
+
+
+@enduml

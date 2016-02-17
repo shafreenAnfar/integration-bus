@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
+import java.util.ArrayList;
+
 /**
  * A Class representing collection of Mediators
  */
@@ -34,6 +36,11 @@ public class Pipeline {
     MediatorCollection mediators;
 
     private static final Logger log = LoggerFactory.getLogger(Pipeline.class);
+
+    public Pipeline(String name) {
+        this.name = name;
+        this.mediators = new MediatorCollection();
+    }
 
     public Pipeline(String name, MediatorCollection mediators) {
         this.mediators = mediators;
@@ -48,6 +55,10 @@ public class Pipeline {
             log.error("Error while mediating", e);
         }
         return true;
+    }
+
+    public void addMediator(Mediator mediator) {
+          mediators.addMediator(mediator);
     }
 
     public String getName() {
