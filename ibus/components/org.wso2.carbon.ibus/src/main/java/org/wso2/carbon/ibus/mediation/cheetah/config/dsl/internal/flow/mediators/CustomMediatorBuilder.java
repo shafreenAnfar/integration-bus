@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.flow.mediators;
+package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators;
 
 import org.wso2.carbon.ibus.mediation.cheetah.flow.Mediator;
 
