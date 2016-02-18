@@ -18,6 +18,8 @@
 
 package org.wso2.carbon.ibus.mediation.cheetah.inbound.manager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.InboundEndpoint;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.protocols.http.HTTPInboundEP;
 import org.wso2.carbon.messaging.TransportListener;
@@ -32,6 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class InboundEndpointManager implements TransportListenerManager {
 
+    private static final Logger logger = LoggerFactory.getLogger(InboundEndpointManager.class);
 
     private Map<String, TransportListener> listenerMap = new ConcurrentHashMap<>();
 
@@ -75,23 +78,37 @@ public class InboundEndpointManager implements TransportListenerManager {
             String host = ((HTTPInboundEP) inboundEndpoint).getHost();
             String name = inboundEndpoint.getName();
             TransportListener transportListener = listenerMap.get("netty-gw");
-            InboundEndpoint depInbounbound = deployedInbounds.get(name);
-
-            if (depInbounbound != null) {
-                //if already deployed and updating port or host
-                if (!(((HTTPInboundEP) depInbounbound).getHost().equals(host)) &&
-                    ((HTTPInboundEP) depInbounbound).getPort() == port) {
-                    transportListener.stopListening(((HTTPInboundEP) depInbounbound).getHost(),
-                                                    ((HTTPInboundEP) depInbounbound).getPort());
-                    deployedInbounds.remove(name);
-                } else {
-                    // if not updating port or host no need to update transport listener
-                    deployedInbounds.put(name, inboundEndpoint);
-                    return;
-                }
-            }
             if (transportListener != null) {
+                InboundEndpoint depInbounbound = deployedInbounds.get(name);
+
+                if (depInbounbound != null) {
+                    //if already deployed and updating port or host
+                    if (!((((HTTPInboundEP) depInbounbound).getHost().equals(host)) &&
+                          ((HTTPInboundEP) depInbounbound).getPort() == port)) {
+                        transportListener.stopListening(((HTTPInboundEP) depInbounbound).getHost(),
+                                                        ((HTTPInboundEP) depInbounbound).getPort());
+                        deployedInbounds.remove(name);
+                    } else {
+                        // if not updating port or host no need to update transport listener
+                        deployedInbounds.put(name, inboundEndpoint);
+                        return;
+                    }
+                } else {
+                    //reusing already open ports
+                    for (Map.Entry entry : deployedInbounds.entrySet()) {
+                        if (port == (((HTTPInboundEP) entry.getValue()).getPort()) &&
+                            (((HTTPInboundEP) entry.getValue()).getHost().equals(host))) {
+                            deployedInbounds.put(name, inboundEndpoint);
+                            logger.info("Reusing already open port " + port + " in host " + host + " for " +
+                                        " Inbound Endpoint " + name);
+                            return;
+                        }
+
+                    }
+                }
+
                 transportListener.listen(host, port);
+                deployedInbounds.put(name, inboundEndpoint);
             } else {
                 earlyInbounds.put(inboundEndpoint.getName(), inboundEndpoint);
             }

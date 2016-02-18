@@ -123,6 +123,7 @@ public class CheetahConfigRegistry {
     public void unregisterInboundEndpoint(InboundEndpoint inboundEndpoint) {
 
         inboundEndpoints.remove(inboundEndpoint.getName());
+        InboundEndpointManager.getInstance().undeploy(inboundEndpoint);
 
         //Inform Observers
         for (ConfigRegistryObserver observer : observers) {
