@@ -41,6 +41,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A class responsible for read the WUML files and deploy them to the runtime Object model.
@@ -50,6 +52,8 @@ public class WUMLDeployer implements Deployer {
 
     private ArtifactType artifactType;
     private URL directoryLocation;
+
+    private Map<String, ESBConfigHolder> artifactMap = new HashMap<>();
 
     private static final Logger logger = LoggerFactory.getLogger(WUMLDeployer.class);
 
@@ -70,13 +74,49 @@ public class WUMLDeployer implements Deployer {
     @Override
     public Object deploy(Artifact artifact) throws CarbonDeploymentException {
         File file = artifact.getFile();
-        InputStream inputStream = null;
 
         try {
+            InputStream inputStream = new FileInputStream(file);
+            updateESBConfig(file.getName(), inputStream);
+        } catch (FileNotFoundException e) {
+            logger.error("Error While Creating InputStream from file " + file.getName());
+        }
 
-            inputStream = new FileInputStream(file);
 
+        return artifact.getFile().getName();
+    }
 
+    @Override
+    public void undeploy(Object o) throws CarbonDeploymentException {
+        ESBConfigHolder configHolder = artifactMap.remove((String) o);
+        CheetahConfigRegistry.getInstance().removeESBConfig(configHolder);
+    }
+
+    @Override
+    public Object update(Artifact artifact) throws CarbonDeploymentException {
+        File file = artifact.getFile();
+        try {
+            InputStream inputStream = new FileInputStream(file);
+            updateESBConfig(file.getName(), inputStream);
+        } catch (FileNotFoundException e) {
+            logger.error("Error while creating inputStream from file " + file.getName());
+        }
+
+        return artifact.getFile().getName();
+    }
+
+    @Override
+    public URL getLocation() {
+        return directoryLocation;
+    }
+
+    @Override
+    public ArtifactType getArtifactType() {
+        return artifactType;
+    }
+
+    private void updateESBConfig(String key, InputStream inputStream) {
+        try {
             CharStream cs = new ANTLRInputStream(inputStream);
 
             // Passing the input to the lexer to create tokens
@@ -97,46 +137,21 @@ public class WUMLDeployer implements Deployer {
             WUMLConfigurationBuilder.IntegrationFlow integrationFlow = wumlBaseListener.getIntegrationFlow();
             ESBConfigHolder esbConfigHolder = integrationFlow.getEsbConfigHolder();
             if (esbConfigHolder != null) {
+                artifactMap.put(key, esbConfigHolder);
                 CheetahConfigRegistry.getInstance().addESBConfig(esbConfigHolder);
             }
 
-        } catch (FileNotFoundException e) {
-            logger.error("Error when creating input stream out of file " + file.getName(), e);
         } catch (IOException e) {
-            logger.error("Error when creating input stream out of file " + file.getName(), e);
+            logger.error("Error while creating cheeta object model", e);
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    logger.error("Cannot close the Input Stream", e);
+                    logger.error("Cannot close the input stream", e);
                 }
             }
         }
-
-
-        return artifact.getFile().getName();
     }
-
-    @Override
-    public void undeploy(Object o) throws CarbonDeploymentException {
-
-    }
-
-    @Override
-    public Object update(Artifact artifact) throws CarbonDeploymentException {
-        return null;
-    }
-
-    @Override
-    public URL getLocation() {
-        return directoryLocation;
-    }
-
-    @Override
-    public ArtifactType getArtifactType() {
-        return artifactType;
-    }
-
 
 }

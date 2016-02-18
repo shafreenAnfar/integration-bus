@@ -37,6 +37,8 @@ public class InboundEndpointManager implements TransportListenerManager {
 
     private Map<String, InboundEndpoint> earlyInbounds = new ConcurrentHashMap<>();
 
+    private Map<String, InboundEndpoint> deployedInbounds = new ConcurrentHashMap<>();
+
     private static InboundEndpointManager inboundEndpointDeployer = new InboundEndpointManager();
 
     public static InboundEndpointManager getInstance() {
@@ -71,12 +73,39 @@ public class InboundEndpointManager implements TransportListenerManager {
         if (inboundEndpoint instanceof HTTPInboundEP) {
             int port = ((HTTPInboundEP) inboundEndpoint).getPort();
             String host = ((HTTPInboundEP) inboundEndpoint).getHost();
+            String name = inboundEndpoint.getName();
             TransportListener transportListener = listenerMap.get("netty-gw");
+            InboundEndpoint depInbounbound = deployedInbounds.get(name);
+
+            if (depInbounbound != null) {
+                //if already deployed and updating port or host
+                if (!(((HTTPInboundEP) depInbounbound).getHost().equals(host)) &&
+                    ((HTTPInboundEP) depInbounbound).getPort() == port) {
+                    transportListener.stopListening(((HTTPInboundEP) depInbounbound).getHost(),
+                                                    ((HTTPInboundEP) depInbounbound).getPort());
+                    deployedInbounds.remove(name);
+                } else {
+                    // if not updating port or host no need to update transport listener
+                    deployedInbounds.put(name, inboundEndpoint);
+                    return;
+                }
+            }
             if (transportListener != null) {
                 transportListener.listen(host, port);
             } else {
                 earlyInbounds.put(inboundEndpoint.getName(), inboundEndpoint);
             }
         }
+    }
+
+
+    public void undeploy(InboundEndpoint inboundEndpoint) {
+        deployedInbounds.remove(inboundEndpoint.getName());
+        TransportListener transportListener = listenerMap.get("netty-gw");
+        if (inboundEndpoint instanceof HTTPInboundEP && transportListener != null) {
+            transportListener.stopListening(((HTTPInboundEP) inboundEndpoint).getHost(),
+                                            ((HTTPInboundEP) inboundEndpoint).getPort());
+        }
+
     }
 }
