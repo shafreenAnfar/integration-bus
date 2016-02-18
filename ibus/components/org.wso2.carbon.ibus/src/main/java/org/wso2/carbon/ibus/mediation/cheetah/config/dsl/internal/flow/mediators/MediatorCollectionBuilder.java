@@ -38,10 +38,8 @@ public class MediatorCollectionBuilder {
     }
 
 
-    public MediatorCollectionBuilder respond() {
+    public void respond() {
         mediatorCollection.addMediator(RespondMediatorBuilder.respond());
-        return this;
-
     }
 
     public MediatorCollectionBuilder customMediator(Mediator mediator) {

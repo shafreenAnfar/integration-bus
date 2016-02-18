@@ -52,10 +52,11 @@ public class MyDSL extends JavaConfigurationBuilder {
 
         router.inboundEndpoint().
                    http("inboundEndpoint1", port(8280), context("/sample/request")).
-                   pipeline("pipeline1").
+                   pipeline("pipeline1").onError("epipe").
                    filter(condition(source("routeId", Scope.Transport), pattern("r1"))).
                    then(call("outboundEp1")).
-                   otherwise(call("outboundEp2")).respond();
+                   otherwise(call("outboundEp2")).
+                   respond();
 
         /** Customize route
          router.inboundEndpoint().
@@ -66,6 +67,7 @@ public class MyDSL extends JavaConfigurationBuilder {
          respond();
          */
 
+        router.pipeline("ePipe").respond();
 
         router.outboundEndpoint(httpOutboundEndpoint("outboundEp1", uri("http://localhost:9000/service")));
 
