@@ -34,6 +34,10 @@ public class HTTPInboundEP extends InboundEndpoint {
 
     private int port;
 
+    private String host = "localhost";
+
+    private String bindListenerId;
+
     private static final Logger log = LoggerFactory.getLogger(InboundEndpoint.class);
 
     public HTTPInboundEP(String name, int port) {
@@ -51,6 +55,22 @@ public class HTTPInboundEP extends InboundEndpoint {
 
     public int getPort() {
         return port;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getBindListenerId() {
+        return bindListenerId;
+    }
+
+    public void setBindListenerId(String bindListenerId) {
+        this.bindListenerId = bindListenerId;
     }
 
     public boolean canReceive(CarbonMessage cMsg) {

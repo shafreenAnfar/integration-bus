@@ -19,9 +19,9 @@
 package org.wso2.carbon.ibus.mediation.cheetah.config;
 
 
-
 import org.wso2.carbon.ibus.mediation.cheetah.flow.Pipeline;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.InboundEndpoint;
+import org.wso2.carbon.ibus.mediation.cheetah.inbound.manager.InboundEndpointManager;
 import org.wso2.carbon.ibus.mediation.cheetah.outbound.OutboundEndpoint;
 
 import java.util.ArrayList;
@@ -61,6 +61,11 @@ public class CheetahConfigRegistry {
         updateArtifacts(config);
     }
 
+    public void removeESBConfig(ESBConfigHolder configHolder) {
+        configurations.remove(configHolder.getName());
+        unDeployArtifacts(configHolder);
+    }
+
     public ESBConfigHolder getESBConfig(String name) {
         return configurations.get(name);
     }
@@ -86,8 +91,28 @@ public class CheetahConfigRegistry {
 
     }
 
+    private void unDeployArtifacts(ESBConfigHolder esbConfigHolder) {
+        //For Inbound Endpoint
+        InboundEndpoint inboundEndpoint = esbConfigHolder.getInboundEndpoint();
+        if (inboundEndpoint != null) {
+            unregisterInboundEndpoint(inboundEndpoint);
+        }
+
+        //For Pipelines
+        for (Pipeline pipeline : esbConfigHolder.getPipelines().values()) {
+            unregisterPipeline(pipeline);
+        }
+
+        //For Outbound Endpoints
+        for (OutboundEndpoint outboundEndpoint : esbConfigHolder.getOutboundEndpoints().values()) {
+            unregisterOutboundEndpoint(outboundEndpoint);
+        }
+
+    }
+
     public void registerInboundEndpoint(InboundEndpoint inboundEndpoint) {
         inboundEndpoints.put(inboundEndpoint.getName(), inboundEndpoint);
+        InboundEndpointManager.getInstance().deploy(inboundEndpoint);
 
         //Inform Observers
         for (ConfigRegistryObserver observer : observers) {
@@ -98,6 +123,7 @@ public class CheetahConfigRegistry {
     public void unregisterInboundEndpoint(InboundEndpoint inboundEndpoint) {
 
         inboundEndpoints.remove(inboundEndpoint.getName());
+        InboundEndpointManager.getInstance().undeploy(inboundEndpoint);
 
         //Inform Observers
         for (ConfigRegistryObserver observer : observers) {
@@ -122,6 +148,10 @@ public class CheetahConfigRegistry {
         pipelineMap.put(pipeline.getName(), pipeline);
     }
 
+    public void unregisterPipeline(Pipeline pipeline) {
+        pipelineMap.remove(pipeline.getName());
+    }
+
     public Pipeline getPipeline(String name) {
         return pipelineMap.get(name);
     }
@@ -133,5 +163,10 @@ public class CheetahConfigRegistry {
     public void registerOutboundEndpoint(OutboundEndpoint outboundEndpoint) {
         outBoundEndpointMap.put(outboundEndpoint.getName(), outboundEndpoint);
     }
+
+    public void unregisterOutboundEndpoint(OutboundEndpoint outboundEndpoint) {
+        outBoundEndpointMap.remove(outboundEndpoint);
+    }
+
 
 }

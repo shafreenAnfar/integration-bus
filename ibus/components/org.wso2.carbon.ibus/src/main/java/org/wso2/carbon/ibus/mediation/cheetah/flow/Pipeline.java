@@ -21,10 +21,11 @@ package org.wso2.carbon.ibus.mediation.cheetah.flow;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.ibus.mediation.cheetah.Constants;
+import org.wso2.carbon.ibus.mediation.cheetah.config.CheetahConfigRegistry;
+import org.wso2.carbon.ibus.mediation.cheetah.exception.CheetahErrorHandler;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
-
-import java.util.ArrayList;
 
 /**
  * A Class representing collection of Mediators
@@ -34,6 +35,10 @@ public class Pipeline {
     private String name;
 
     MediatorCollection mediators;
+
+    MediatorCollection errorHandlerMediators;
+
+    private String errorPipeline;
 
     private static final Logger log = LoggerFactory.getLogger(Pipeline.class);
 
@@ -50,6 +55,20 @@ public class Pipeline {
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) {
 
         try {
+            if (errorPipeline != null) {
+                Pipeline ePipeline = CheetahConfigRegistry.getInstance().getPipeline(errorPipeline);
+                if (ePipeline == null) {
+                    log.error("Cannot load pipeline defined as " + errorPipeline);
+                    return false;
+                } else {
+                    errorHandlerMediators = ePipeline.getMediators();
+                    if (errorHandlerMediators != null && errorHandlerMediators.getMediators().size() > 0) {
+                        carbonMessage.getFaultHandlerStack().push
+                                   (new CheetahErrorHandler(Constants.CHEETAH_ERROR_HANDLER, errorHandlerMediators));
+                    }
+                }
+            }
+
             mediators.getFirstMediator().receive(carbonMessage, carbonCallback);
         } catch (Exception e) {
             log.error("Error while mediating", e);
@@ -58,7 +77,7 @@ public class Pipeline {
     }
 
     public void addMediator(Mediator mediator) {
-          mediators.addMediator(mediator);
+        mediators.addMediator(mediator);
     }
 
     public String getName() {
@@ -66,4 +85,11 @@ public class Pipeline {
     }
 
 
+    public void setErrorPipeline(String errorPipeline) {
+        this.errorPipeline = errorPipeline;
+    }
+
+    public MediatorCollection getMediators() {
+        return mediators;
+    }
 }
