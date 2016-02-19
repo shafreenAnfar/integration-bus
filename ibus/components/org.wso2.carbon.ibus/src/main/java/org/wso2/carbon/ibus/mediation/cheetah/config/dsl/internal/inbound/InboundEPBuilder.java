@@ -21,7 +21,6 @@ package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound;
 import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.JavaConfigurationBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.PipelineBuilder;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.InboundEndpoint;
 
 /**
@@ -35,8 +34,12 @@ public class InboundEPBuilder {
     JavaConfigurationBuilder.IntegrationFlow integrationFlow;
 
 
-    public static InboundEPBuilder inboundEndpoint(ESBConfigHolder parentConfig,
-                                                   JavaConfigurationBuilder.IntegrationFlow integrationFlow) {
+    public static InboundEPBuilder inboundEndpoint(String name, ESBConfigHolder parentConfig,
+                                                   JavaConfigurationBuilder.IntegrationFlow integrationFlow,
+                                                   InboundEndpoint inboundEndpoint) {
+        inboundEndpoint.setName(name);
+        parentConfig.setInboundEndpoint(inboundEndpoint);
+
         return new InboundEPBuilder(parentConfig, integrationFlow);
     }
 
@@ -46,21 +49,6 @@ public class InboundEPBuilder {
         this.integrationFlow = integrationFlow;
     }
 
-    public InboundEPBuilder http(String name, HTTPInboundEPBuilder.Port port, HTTPInboundEPBuilder.Context context) {
-
-        inboundEndpoint =
-                   HTTPInboundEPBuilder.http(name, port, context).getHttpInboundEP();
-        inboundEndpoint.setPipeline(pipeline);
-        parentConfig.setInboundEndpoint(inboundEndpoint);
-        return this;
-    }
-
-    public InboundEPBuilder custom(InboundEndpoint inboundEndpoint) {
-        this.inboundEndpoint = inboundEndpoint;
-        inboundEndpoint.setPipeline(pipeline);
-        parentConfig.setInboundEndpoint(inboundEndpoint);
-        return this;
-    }
 
 
     public PipelineBuilder pipeline(String pipeline) {

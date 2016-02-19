@@ -20,6 +20,7 @@ package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal;
 
 
 import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;
+import org.wso2.carbon.ibus.mediation.cheetah.inbound.InboundEndpoint;
 import org.wso2.carbon.ibus.mediation.cheetah.outbound.OutboundEndpoint;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.PipelineBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.InboundEPBuilder;
@@ -54,8 +55,8 @@ public abstract class JavaConfigurationBuilder {
         }
 
         /* For Inbound */
-        public InboundEPBuilder inboundEndpoint() {
-            return InboundEPBuilder.inboundEndpoint(esbConfigHolder, this);
+        public InboundEPBuilder inboundEndpoint(String name, InboundEndpoint inboundEndpoint) {
+            return InboundEPBuilder.inboundEndpoint(name, esbConfigHolder, this, inboundEndpoint);
         }
 
 

@@ -27,18 +27,12 @@ public class HTTPInboundEPBuilder {
 
     private HTTPInboundEP httpInboundEP;
 
-    public static HTTPInboundEPBuilder http(String name, Port port, Context context) {
-        return new HTTPInboundEPBuilder(name, port, context);
+    public static HTTPInboundEP http(Port port, Context context) {
+        HTTPInboundEP inboundEP = new HTTPInboundEP(port.getPort());
+        inboundEP.setContext(context.getContext());
+        return inboundEP;
     }
 
-    private HTTPInboundEPBuilder(String name, Port port, Context context) {
-        httpInboundEP = new HTTPInboundEP(name, port.getPort());
-        httpInboundEP.setContext(context.getContext());
-    }
-
-    public HTTPInboundEP getHttpInboundEP() {
-        return httpInboundEP;
-    }
 
     public static Context context(String context) {
         return new Context(context);
@@ -78,7 +72,6 @@ public class HTTPInboundEPBuilder {
             return context;
         }
     }
-
 
 
 }

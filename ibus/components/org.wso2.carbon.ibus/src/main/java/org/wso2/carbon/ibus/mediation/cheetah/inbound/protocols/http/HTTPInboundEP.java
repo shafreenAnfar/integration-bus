@@ -40,8 +40,12 @@ public class HTTPInboundEP extends InboundEndpoint {
 
     private static final Logger log = LoggerFactory.getLogger(InboundEndpoint.class);
 
+    public HTTPInboundEP(int port) {
+        this.port = port;
+    }
+
     public HTTPInboundEP(String name, int port) {
-        super(name);
+        setName(name);
         this.port = port;
     }
 

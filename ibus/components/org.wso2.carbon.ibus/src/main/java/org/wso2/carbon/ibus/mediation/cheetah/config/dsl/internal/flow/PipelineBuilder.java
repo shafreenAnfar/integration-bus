@@ -55,7 +55,7 @@ public class PipelineBuilder {
         return mediatorCollectionBuilder;
     }
 
-    public MediatorCollectionBuilder customMediator(Mediator mediator) {
+    public MediatorCollectionBuilder process(Mediator mediator) {
         mediatorCollectionBuilder.getMediatorCollection().addMediator(mediator);
         return mediatorCollectionBuilder;
     }

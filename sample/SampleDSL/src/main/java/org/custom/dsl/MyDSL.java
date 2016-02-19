@@ -35,9 +35,10 @@ import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.me
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.FilterMediatorBuilder.pattern;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.FilterMediatorBuilder.source;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder.context;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder.port;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder.*;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.outbound.http.HTTPOutboundEPBuilder.httpOutboundEndpoint;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.outbound.http.HTTPOutboundEPBuilder.uri;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.CustomMediatorBuilder.*;
 
 
 /**
@@ -50,22 +51,21 @@ public class MyDSL extends JavaConfigurationBuilder {
         IntegrationFlow router = integrationFlow("MessageRouter");
 
 
-        router.inboundEndpoint().
-                   http("inboundEndpoint1", port(8280), context("/sample/request")).
+        router.inboundEndpoint("inboundEndpoint1", http(port(8280), context("/sample/request"))).
                    pipeline("pipeline1").onError("epipe").
                    filter(condition(source("routeId", Scope.Transport), pattern("r1"))).
                    then(call("outboundEp1")).
                    otherwise(call("outboundEp2")).
                    respond();
 
-        /** Customize route
-         router.inboundEndpoint().
-         custom(new MyInbound("test1", port(8280))).
-         pipeline("pipeline1").
-         customMediator(new MyCustomMediator()).
-         call("outboundEp1").
-         respond();
-         */
+
+//         router.inboundEndpoint().
+//         custom(new MyInbound("test1", port(8280))).
+//         pipeline("pipeline1").
+//         process(new MyCustomMediator()).
+//         call("outboundEp1").
+//         respond();
+
 
         router.pipeline("ePipe").respond();
 
