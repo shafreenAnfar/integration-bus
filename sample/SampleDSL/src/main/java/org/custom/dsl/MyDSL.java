@@ -58,6 +58,18 @@ public class MyDSL extends JavaConfigurationBuilder {
                    otherwise(call("outboundEp2")).
                    respond();
 
+
+        /** New Format
+
+        router.inboundEndpoint("inboundEndpoint1", http(port(8280), context("/sample/request"))).
+                pipeline("pipeline1", onError("epipe")).
+                filter(condition(source("routeId", Scope.Transport), pattern("r1"))).
+                then(process(mymediator()).call("outboundEp1")).
+                otherwise(call("outboundEp2")).
+                respond();
+
+         */
+
         /** Customize route
          router.inboundEndpoint().
          custom(new MyInbound("test1", port(8280))).
