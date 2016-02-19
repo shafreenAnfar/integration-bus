@@ -30,13 +30,27 @@ import org.wso2.carbon.messaging.CarbonMessage;
 public class LogMediator extends AbstractMediator {
 
     private static final Logger log = LoggerFactory.getLogger(LogMediator.class);
+    private String logMessage = "Message received at LogMediator";
+
+    public LogMediator(String logMessage) {
+        this.logMessage = logMessage;
+    }
 
     @Override
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws Exception {
-        log.info("Message received at LogMediator");
+        log.info(logMessage);
         Mediator nextMediator = getNext();
         if(nextMediator != null) {
             nextMediator.receive(carbonMessage, carbonCallback);
         }        return true;
+    }
+
+
+    public String getLogMessage() {
+        return logMessage;
+    }
+
+    public void setLogMessage(String logMessage) {
+        this.logMessage = logMessage;
     }
 }

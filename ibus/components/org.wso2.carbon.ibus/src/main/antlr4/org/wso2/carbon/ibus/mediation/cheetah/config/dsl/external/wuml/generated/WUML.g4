@@ -112,7 +112,7 @@ parElseBlock
 /* -> ALT block rules */
 
 ifStatement
-    : ALT WS expression NEWLINE
+    : ALT WS conditionStatement NEWLINE
       NEWLINE? ifMultiThenBlock
       END
     ;
@@ -141,6 +141,12 @@ loopStatement
 refStatement
     : REF WS PIPELINENAME NEWLINE?;
 
+conditionStatement
+    : conditionDef;
+
+conditionDef: CONDITIONX LPAREN SOURCEDEF COMMA_SYMBOL PATTERNDEF RPAREN;
+
+
 commentStatement
     : COMMENT;
 
@@ -152,7 +158,17 @@ expression
 
 /* LEXER: keyword rules */
 
+COMMENT
+    :  '/*' .*? '*/'
+    ;
 
+SOURCEDEF: SOURCE LPAREN SOURCETEXT COMMA_SYMBOL SOURCESCOPE RPAREN;
+
+PATTERNDEF: PATTERN LPAREN STRINGX RPAREN;
+
+fragment SOURCETEXT: STRINGX;
+
+fragment SOURCESCOPE: STRINGX;
 
 PROTOCOLDEF: PROTOCOL LPAREN STRINGX RPAREN;
 
@@ -167,6 +183,8 @@ HOSTDEF: HOST LPAREN URLSTRINGX RPAREN;
 CONFIGSDEF: CONFIGS LPAREN (CONFIGPARAMS COMMA_SYMBOL)* (CONFIGPARAMS)* RPAREN;
 
 EXPRESSIONX: EXPRESSION;
+CONDITIONX: CONDITION;
+
 
 TIMEOUTDEF: TIMEOUT LPAREN NUMBER RPAREN;
 
@@ -187,6 +205,7 @@ PROCESS_MESSAGEX: PROCESS_MESSAGE;
 MEDIATORNAMESTRINGX: MEDIATORNAMESTRING;
 STRINGX: STRING;
 URLSTRINGX: URLSTRING;
+
 
 
 fragment STRING: DOUBLEQUOTES IDENTIFIER DOUBLEQUOTES;
@@ -326,10 +345,6 @@ NUMBER
 
 URL: ([a-zA-Z/\?&] | COLON | [0-9])+;
 
-COMMENT
-    :  '/*' .*? '*/'
-    ;
-
 CONTINUATION
     : CONTINUATION_SYMBOL ~[\r\n]* NEWLINE -> skip ;
 
@@ -355,6 +370,9 @@ fragment CONTEXT: C O N T E X T;
 fragment TIMEOUT: T I M E O U T;
 fragment HOST: H O S T;
 fragment CONFIGS: C O N F I G S;
+fragment CONDITION: C O N D I T I O N;
+fragment SOURCE: S O U R C E;
+fragment PATTERN: P A T T E R N;
 fragment PROCESS_MESSAGE: 'process_message';
 
 fragment CALL: C A L L;

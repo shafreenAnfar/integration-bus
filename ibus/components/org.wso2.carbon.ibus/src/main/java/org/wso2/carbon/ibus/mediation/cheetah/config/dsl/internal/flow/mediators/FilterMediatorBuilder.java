@@ -41,7 +41,7 @@ public class FilterMediatorBuilder {
     }
 
     public static Source source(String key, Scope scope) {
-        return new Source(scope, key);
+        return new Source(key, scope);
     }
 
     public static Pattern pattern(String regex) {

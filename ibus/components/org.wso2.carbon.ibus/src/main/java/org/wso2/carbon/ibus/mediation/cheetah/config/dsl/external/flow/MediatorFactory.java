@@ -37,11 +37,11 @@ public class MediatorFactory {
      * @return mediator
      */
 
-    public static Mediator getMediator(MediatorType mediatorType) {
+    public static Mediator getMediator(MediatorType mediatorType, String configs) {
         Mediator mediator = null;
         switch (mediatorType) {
             case call:
-                mediator = new CallMediator();
+                mediator = new CallMediator(configs);
                 break;
 
             case filter:
@@ -52,7 +52,7 @@ public class MediatorFactory {
                 mediator = new RespondMediator();
                 break;
             case log:
-                mediator = new LogMediator();
+                mediator = new LogMediator(configs);
                 break;
             case enrich:
                 mediator = new EnrichMediator();

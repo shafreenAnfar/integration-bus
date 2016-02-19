@@ -20,10 +20,7 @@ package org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.AbstractMediator;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.FlowController;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.FlowControllerCallback;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.MediatorCollection;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.*;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.evaluator.Evaluator;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
@@ -54,6 +51,14 @@ public class FilterMediator extends AbstractMediator implements FlowController {
     public FilterMediator addotherwiseMediators(MediatorCollection mediatorCollection) {
         childOtherwiseMediatorList = mediatorCollection;
         return this;
+    }
+
+    public void addThenMediator(Mediator mediator) {
+        childThenMediatorList.addMediator(mediator);
+    }
+
+    public void addOtherwiseMediator(Mediator mediator) {
+        childOtherwiseMediatorList.addMediator(mediator);
     }
 
 

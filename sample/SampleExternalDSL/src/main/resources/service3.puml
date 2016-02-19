@@ -10,7 +10,7 @@ participant pipelineerrorhandling : Pipeline("error_handling_flow")
 
 participant outboundendpoint1 : OutboundEndpoint(protocol("http"),host("http://localhost:9000/services/SimpleStockQuoteService"))
 
-participant outboundendpoint2 : OutboundEndpoint(protocol("http"),host("http://localhost:9092/INS"))
+participant outboundendpoint2 : OutboundEndpoint(protocol("http"),host("http://localhost:9001/services/SimpleStockQuoteService"))
 
 participant outboundendpoint3 : OutboundEndpoint(protocol("http"),host("http://localhost:9093/INS"))
 
@@ -18,8 +18,22 @@ inboundendpointhttp1 -> pipelineptt : "request"
 
 process_message("enrich",configs("xpath://test","inline:true"))
 
-process_message("log",configs("user:test","password:chana"))
+process_message("log",configs("1111111111111111"))
 
+alt (xpath://response/status=="success")
+    process_message("log",configs("222222222222"))
+    process_message("call",configs("outboundendpoint1"))
+    pipelineptt -> outboundendpoint1 : "Validate_policy"
+    outboundendpoint1 -> pipelineptt : "Validate_response"
+
+else
+    process_message("log",configs("3333333333333333"))
+    process_message("call",configs("outboundendpoint2"))
+    pipelineptt -> outboundendpoint2 : "Validate_policy"
+    outboundendpoint2 -> pipelineptt : "Validate_response"
+end
+
+process_message("log",configs("4444444444444"))
 process_message("call",configs("outboundendpoint1"))
 
 pipelineptt -> outboundendpoint1 : "Validate_policy"

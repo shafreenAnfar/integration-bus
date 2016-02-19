@@ -29,7 +29,7 @@ public class Source {
     private String key;
 
 
-    public Source(Scope scope, String key) {
+    public Source(String key, Scope scope) {
         this.scope = scope;
         this.key = key;
     }

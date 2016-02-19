@@ -57,7 +57,7 @@ public class HTTPInboundEPDispatcher implements Dispatcher, ConfigRegistryObserv
     @Override
     public boolean dispatch(CarbonMessage cMsg, CarbonCallback callback) {
 
-        int port = 8280; // TODO: Get the port from cMsg
+        int port = (int)cMsg.getProperty("LISTENER_PORT"); // TODO: Get the port from cMsg
 
         ArrayList<HTTPInboundEP> endpointsOnPort = httpEPRegistry.get(port);
         if (endpointsOnPort == null) {

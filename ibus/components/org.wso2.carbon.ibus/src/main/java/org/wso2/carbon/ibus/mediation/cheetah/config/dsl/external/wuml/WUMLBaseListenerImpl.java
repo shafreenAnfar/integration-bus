@@ -30,12 +30,16 @@ import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated.WUMLParser;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.Mediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.Pipeline;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.CallMediator;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Condition;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.FilterMediator;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Scope;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Source;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.InboundEndpoint;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.protocols.http.HTTPInboundEP;
 import org.wso2.carbon.ibus.mediation.cheetah.outbound.OutboundEndpoint;
 
 import java.util.Stack;
+import java.util.regex.Pattern;
 
 /**
  * Implementation class of the ANTLR generated listener class
@@ -46,6 +50,9 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
 
     WUMLConfigurationBuilder.IntegrationFlow integrationFlow;
     Stack<String> pipelineStack = new Stack<String>();
+    Stack<FilterMediator> filterMediatorStack = new Stack<FilterMediator>();
+    boolean ifMultiThenBlockStarted = false;
+    boolean ifElseBlockStarted = false;
 
     public WUMLBaseListenerImpl() {
         this.integrationFlow = new WUMLConfigurationBuilder.IntegrationFlow("default");
@@ -162,11 +169,19 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     public void exitProcessmessageDef(WUMLParser.ProcessmessageDefContext ctx) {
         String mediatorName = StringParserUtil.getValueWithinDoubleQuotes(ctx.MEDIATORNAMESTRINGX().getText());
         String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.CONFIGSDEF().getText());
-        Mediator mediator = MediatorFactory.getMediator(MediatorType.valueOf(mediatorName));
-        if(mediator instanceof CallMediator) {
-            ((CallMediator) mediator).setOutboundEPKey(configurations);
+        Mediator mediator = MediatorFactory.getMediator(MediatorType.valueOf(mediatorName), configurations);
+        if(ifMultiThenBlockStarted) {
+            filterMediatorStack.peek().addThenMediator(mediator);
+
+        } else if(ifElseBlockStarted) {
+            filterMediatorStack.peek().addOtherwiseMediator(mediator);
+
+        } else {
+//            String mediatorName = StringParserUtil.getValueWithinDoubleQuotes(ctx.MEDIATORNAMESTRINGX().getText());
+//            String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.CONFIGSDEF().getText());
+//            Mediator mediator = MediatorFactory.getMediator(MediatorType.valueOf(mediatorName), configurations);
+            integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
         }
-        integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
         super.exitProcessmessageDef(ctx);
     }
 
@@ -226,16 +241,49 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
 
     @Override
     public void exitIfStatement(WUMLParser.IfStatementContext ctx) {
+        //ctx.expression().EXPRESSIONX()
+        ifMultiThenBlockStarted = false;
+        ifElseBlockStarted = false;
+        if (!filterMediatorStack.isEmpty()) {
+            filterMediatorStack.pop();
+        }
         super.exitIfStatement(ctx);
     }
 
     @Override
+    public void exitConditionStatement(WUMLParser.ConditionStatementContext ctx) {
+        String sourceDefinition = StringParserUtil.getValueWithinBrackets(ctx.conditionDef().SOURCEDEF().getText());
+        String[] stringDefs = sourceDefinition.split(",");
+        Source source = new Source(StringParserUtil.getValueWithinDoubleQuotes(stringDefs[0]), Scope.valueOf(StringParserUtil.getValueWithinDoubleQuotes(stringDefs[1])));
+        Condition condition = new Condition(source, Pattern.compile(StringParserUtil.getValueWithinDoubleQuotes(ctx.conditionDef().PATTERNDEF().getText())));
+        FilterMediator filterMediator = new FilterMediator(condition);
+        integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(filterMediator);
+        filterMediatorStack.push(filterMediator);
+        super.exitConditionStatement(ctx);
+    }
+
+    @Override
+    public void enterIfMultiThenBlock(WUMLParser.IfMultiThenBlockContext ctx) {
+        ifMultiThenBlockStarted = true;
+        super.enterIfMultiThenBlock(ctx);
+    }
+
+    @Override
+    public void enterIfElseBlock(WUMLParser.IfElseBlockContext ctx) {
+        ifMultiThenBlockStarted = false;
+        ifElseBlockStarted = true;
+        super.enterIfElseBlock(ctx);
+    }
+
+    @Override
     public void exitIfMultiThenBlock(WUMLParser.IfMultiThenBlockContext ctx) {
+        ifMultiThenBlockStarted = false;
         super.exitIfMultiThenBlock(ctx);
     }
 
     @Override
     public void exitIfElseBlock(WUMLParser.IfElseBlockContext ctx) {
+        ifElseBlockStarted = false;
         super.exitIfElseBlock(ctx);
     }
 
