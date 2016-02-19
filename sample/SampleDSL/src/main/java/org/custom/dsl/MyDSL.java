@@ -19,7 +19,6 @@
 package org.custom.dsl;
 
 
-
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.AbstractMediator;
 
@@ -59,12 +58,16 @@ public class MyDSL extends JavaConfigurationBuilder {
                    respond();
 
 
-//         router.inboundEndpoint().
-//         custom(new MyInbound("test1", port(8280))).
-//         pipeline("pipeline1").
-//         process(new MyCustomMediator()).
-//         call("outboundEp1").
-//         respond();
+        /** New Format
+
+         router.inboundEndpoint("inboundEndpoint1", http(port(8280), context("/sample/request"))).
+         pipeline("pipeline1", onError("epipe")).
+         filter(condition(source("routeId", Scope.Transport), pattern("r1"))).
+         then(process(mymediator()).call("outboundEp1")).
+         otherwise(call("outboundEp2")).
+         respond();
+
+         */
 
 
         router.pipeline("ePipe").respond();
