@@ -16,20 +16,15 @@
  * under the License.
  */
 
-package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators;
+package org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.Fault;
 
-import org.wso2.carbon.ibus.mediation.cheetah.flow.Mediator;
 
 /**
- * A class that responsible for  add customer mediator to the execution line
+ * A class represents error details
  */
-public class CustomMediatorBuilder {
+public class ErrorDetail {
 
-
-    public static MediatorCollectionBuilder process(Mediator mediator) {
-        MediatorCollectionBuilder mediatorCollectionBuilder = new MediatorCollectionBuilder();
-        mediatorCollectionBuilder.getMediatorCollection().addMediator(mediator);
-        return mediatorCollectionBuilder;
-    }
+    private String code;
+    private String reason;
 
 }

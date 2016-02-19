@@ -21,7 +21,6 @@ package org.wso2.carbon.ibus.mediation.cheetah.inbound;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.ibus.mediation.cheetah.config.CheetahConfigRegistry;
-import org.wso2.carbon.ibus.mediation.cheetah.exception.CheetahErrorHandler;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
@@ -37,10 +36,6 @@ public abstract class InboundEndpoint {
     private String pipeline;
 
 
-    public InboundEndpoint(String name) {
-        this.name = name;
-    }
-
     public String getName() {
         return name;
     }
@@ -53,19 +48,23 @@ public abstract class InboundEndpoint {
         this.pipeline = pipeline;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     /**
      * Check whether Carbon message can be processed with this endpoint
      *
-     * @param   cMsg  Carbon Message
-     * @return  Check whether Carbon message can be processed with this endpoint
+     * @param cMsg Carbon Message
+     * @return Check whether Carbon message can be processed with this endpoint
      */
     public abstract boolean canReceive(CarbonMessage cMsg);
 
     /**
      * Process the message
      *
-     * @param cMsg   Carbon Message
-     * @param callback  Callback to execute response flow
+     * @param cMsg     Carbon Message
+     * @param callback Callback to execute response flow
      * @return whether forward processing is successful
      */
     public boolean receive(CarbonMessage cMsg, CarbonCallback callback) {
