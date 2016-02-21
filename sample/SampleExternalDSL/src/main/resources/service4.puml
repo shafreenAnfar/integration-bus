@@ -6,8 +6,6 @@ participant inboundendpointhttp1 : InboundEndpoint(protocol("http"),port(8280),c
 
 participant pipeline1 : Pipeline("message_flow_1")
 
-participant pipelineerrorhandling : Pipeline("error_handling_flow")
-
 participant outboundendpoint1 : OutboundEndpoint(protocol("http"),host("http://localhost:9000/services/SimpleStockQuoteService"))
 
 participant outboundendpoint2 : OutboundEndpoint(protocol("http"),host("http://localhost:9001/services/SimpleStockQuoteService"))

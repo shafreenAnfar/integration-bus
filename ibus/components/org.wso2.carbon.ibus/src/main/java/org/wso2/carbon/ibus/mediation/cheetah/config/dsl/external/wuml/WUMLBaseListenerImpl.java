@@ -185,6 +185,27 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
         super.exitProcessmessageDef(ctx);
     }
 
+
+    @Override
+    public void exitMessageProcessingDef(WUMLParser.MessageProcessingDefContext ctx) {
+        String mediatorName = ctx.MEDIATORNAME().getText();
+        String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.ARGUMENTLISTDEF().getText());
+        Mediator mediator = MediatorFactory.getMediator(MediatorType.valueOf(mediatorName), configurations);
+        if(ifMultiThenBlockStarted) {
+            filterMediatorStack.peek().addThenMediator(mediator);
+
+        } else if(ifElseBlockStarted) {
+            filterMediatorStack.peek().addOtherwiseMediator(mediator);
+
+        } else {
+//            String mediatorName = StringParserUtil.getValueWithinDoubleQuotes(ctx.MEDIATORNAMESTRINGX().getText());
+//            String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.CONFIGSDEF().getText());
+//            Mediator mediator = MediatorFactory.getMediator(MediatorType.valueOf(mediatorName), configurations);
+            integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
+        }
+        super.exitMessageProcessingDef(ctx);
+    }
+
     @Override
     public void exitProcessingStatement(WUMLParser.ProcessingStatementContext ctx) {
         super.exitProcessingStatement(ctx);
