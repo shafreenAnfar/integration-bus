@@ -42,7 +42,7 @@ public class MediatorCollectionBuilder {
         mediatorCollection.addMediator(RespondMediatorBuilder.respond());
     }
 
-    public MediatorCollectionBuilder customMediator(Mediator mediator) {
+    public MediatorCollectionBuilder process(Mediator mediator) {
         mediatorCollection.addMediator(mediator);
         return this;
     }
