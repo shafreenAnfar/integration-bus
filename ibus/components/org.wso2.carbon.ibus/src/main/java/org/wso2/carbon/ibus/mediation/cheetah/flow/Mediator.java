@@ -31,10 +31,12 @@ public interface Mediator {
 
     public void setNext(Mediator nextMediator);
 
-    public Mediator getNext();
+    public boolean hasNext();
+
+    public boolean next(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
+            throws Exception;
 
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws
                                                                                               Exception;
-
     public void setConfigs(String configs);
 }

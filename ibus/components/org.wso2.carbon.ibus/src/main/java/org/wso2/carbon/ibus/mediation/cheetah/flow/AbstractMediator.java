@@ -19,6 +19,9 @@
 package org.wso2.carbon.ibus.mediation.cheetah.flow;
 
 
+import org.wso2.carbon.messaging.CarbonCallback;
+import org.wso2.carbon.messaging.CarbonMessage;
+
 /**
  * Abstract implementation of Mediator
  */
@@ -26,8 +29,16 @@ public abstract class AbstractMediator implements Mediator {
 
     Mediator nextMediator = null;
 
-    public Mediator getNext() {
-        return nextMediator;
+    public boolean hasNext() {
+        return nextMediator != null;
+    }
+
+    public boolean next(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
+            throws Exception {
+        if (hasNext()) {
+            return nextMediator.receive(carbonMessage, carbonCallback);
+        }
+        return false;
     }
 
     public void setNext(Mediator nextMediator) {

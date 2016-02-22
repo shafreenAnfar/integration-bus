@@ -41,9 +41,9 @@ public class FlowControllerCallback implements CarbonCallback {
     @Override
     public void done(CarbonMessage carbonMessage) {
 
-        if (mediator.getNext() != null) { // If Mediator has a sibling after this
+        if (mediator.hasNext()) { // If Mediator has a sibling after this
             try {
-                mediator.getNext().receive(carbonMessage, parentCallback);
+                mediator.next(carbonMessage, parentCallback);
             } catch (Exception e) {
                 log.error("Error while mediating", e);
             }

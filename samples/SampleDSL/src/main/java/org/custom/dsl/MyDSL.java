@@ -90,8 +90,7 @@ public class MyDSL extends JavaConfigurationBuilder {
         @Override
         public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws Exception {
             System.out.println("###############################My Custom Mediator###########################");
-            getNext().receive(carbonMessage, carbonCallback);
-            return false;
+            return next(carbonMessage, carbonCallback);
         }
     }
 }

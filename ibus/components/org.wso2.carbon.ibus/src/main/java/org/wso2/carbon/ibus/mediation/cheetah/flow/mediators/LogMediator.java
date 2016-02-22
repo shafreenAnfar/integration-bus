@@ -47,10 +47,7 @@ public class LogMediator extends AbstractMediator {
     @Override
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws Exception {
         log.info(logMessage);
-        Mediator nextMediator = getNext();
-        if(nextMediator != null) {
-            nextMediator.receive(carbonMessage, carbonCallback);
-        }        return true;
+        return next(carbonMessage, carbonCallback);
     }
 
     public void setConfigs(String configs) {

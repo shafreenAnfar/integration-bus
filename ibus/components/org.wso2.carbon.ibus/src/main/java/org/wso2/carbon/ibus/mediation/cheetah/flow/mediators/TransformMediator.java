@@ -38,10 +38,6 @@ public class TransformMediator extends AbstractMediator {
     @Override
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws Exception {
         log.info("Message received at TransformMediator");
-        Mediator nextMediator = getNext();
-        if(nextMediator != null) {
-            nextMediator.receive(carbonMessage, carbonCallback);
-        }
-        return true;
+        return next(carbonMessage, carbonCallback);
     }
 }
