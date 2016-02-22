@@ -34,4 +34,8 @@ public abstract class AbstractMediator implements Mediator {
         this.nextMediator = nextMediator;
     }
 
+    public void setConfigs(String configs) {
+        //Do nothing
+    }
+
 }

@@ -63,6 +63,11 @@ public class FilterMediator extends AbstractMediator implements FlowController {
 
 
     @Override
+    public String getName() {
+        return "filter";
+    }
+
+    @Override
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
                throws Exception {
 

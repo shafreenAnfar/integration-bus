@@ -31,6 +31,11 @@ public class EnrichMediator extends AbstractMediator {
     private static final Logger log = LoggerFactory.getLogger(EnrichMediator.class);
 
     @Override
+    public String getName() {
+        return "enrich";
+    }
+
+    @Override
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws Exception {
         log.info("Message is received at Enrich mediator");
         Mediator nextMediator = getNext();

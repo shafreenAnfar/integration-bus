@@ -15,9 +15,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.carbon.ibus.mediation.cheetah.flow.mediators;
+package org.custom;
 
-import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.AbstractMediator;
@@ -26,37 +25,37 @@ import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
 /**
- * Basic implementation of log mediator
+ * Sample Custom Mediator
  */
-public class LogMediator extends AbstractMediator {
+public class SampleCustomMediator extends AbstractMediator {
 
-    private static final Logger log = LoggerFactory.getLogger(LogMediator.class);
-    private String logMessage = "Message received at LogMediator";
+    private static final Logger log = LoggerFactory.getLogger(SampleCustomMediator.class);
+    private String logMessage = "Message received at Custom Sample Mediator";
 
-    public LogMediator(String logMessage) {
-        this.logMessage = logMessage;
-    }
-
-    public LogMediator() {}
-
-    @Override
-    public String getName() {
-        return "log";
-    }
-
-    @Override
-    public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws Exception {
-        log.info(logMessage);
-        Mediator nextMediator = getNext();
-        if(nextMediator != null) {
-            nextMediator.receive(carbonMessage, carbonCallback);
-        }        return true;
+    public SampleCustomMediator() {
     }
 
     public void setConfigs(String configs) {
         logMessage = configs;
-
     }
+
+    @Override
+    public String getName() {
+        return "SampleCustomMediator";
+    }
+
+    @Override
+    public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws Exception {
+
+        log.info(logMessage);
+
+        Mediator nextMediator = getNext();
+        if(nextMediator != null) {
+            nextMediator.receive(carbonMessage, carbonCallback);
+        }
+        return true;
+    }
+
 
     public String getLogMessage() {
         return logMessage;

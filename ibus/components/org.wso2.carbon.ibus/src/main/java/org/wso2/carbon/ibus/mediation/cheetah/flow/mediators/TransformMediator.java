@@ -31,6 +31,11 @@ public class TransformMediator extends AbstractMediator {
     private static final Logger log = LoggerFactory.getLogger(TransformMediator.class);
 
     @Override
+    public String getName() {
+        return "transform";
+    }
+
+    @Override
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws Exception {
         log.info("Message received at TransformMediator");
         Mediator nextMediator = getNext();

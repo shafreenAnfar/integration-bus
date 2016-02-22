@@ -169,7 +169,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     public void exitProcessmessageDef(WUMLParser.ProcessmessageDefContext ctx) {
         String mediatorName = StringParserUtil.getValueWithinDoubleQuotes(ctx.MEDIATORNAMESTRINGX().getText());
         String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.CONFIGSDEF().getText());
-        Mediator mediator = MediatorFactory.getMediator(MediatorType.valueOf(mediatorName), configurations);
+        Mediator mediator = MediatorFactory.getInstance().getMediator(mediatorName, configurations);
         if(ifMultiThenBlockStarted) {
             filterMediatorStack.peek().addThenMediator(mediator);
 
@@ -190,7 +190,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     public void exitMessageProcessingDef(WUMLParser.MessageProcessingDefContext ctx) {
         String mediatorName = ctx.MEDIATORNAME().getText();
         String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.ARGUMENTLISTDEF().getText());
-        Mediator mediator = MediatorFactory.getMediator(MediatorType.valueOf(mediatorName), configurations);
+        Mediator mediator = MediatorFactory.getInstance().getMediator(mediatorName, configurations);
         if(ifMultiThenBlockStarted) {
             filterMediatorStack.peek().addThenMediator(mediator);
 

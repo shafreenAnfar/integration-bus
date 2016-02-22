@@ -28,6 +28,11 @@ import org.wso2.carbon.messaging.CarbonMessage;
  */
 public class RespondMediator extends AbstractMediator {
     @Override
+    public String getName() {
+        return "respond";
+    }
+
+    @Override
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
             throws Exception {
 

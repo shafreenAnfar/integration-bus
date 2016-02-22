@@ -45,6 +45,11 @@ public class FaultMediator extends AbstractMediator {
 
 
     @Override
+    public String getName() {
+        return "fault";
+    }
+
+    @Override
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws Exception {
         Throwable throwable = (Throwable) carbonMessage.getProperty(Constants.ERROR_EXCEPTION);
        String className = throwable.getClass().getName();

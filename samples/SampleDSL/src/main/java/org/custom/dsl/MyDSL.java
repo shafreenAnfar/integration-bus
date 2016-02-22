@@ -83,6 +83,11 @@ public class MyDSL extends JavaConfigurationBuilder {
     private class MyCustomMediator extends AbstractMediator {
 
         @Override
+        public String getName() {
+            return "MyCustomMediator";
+        }
+
+        @Override
         public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws Exception {
             System.out.println("###############################My Custom Mediator###########################");
             getNext().receive(carbonMessage, carbonCallback);

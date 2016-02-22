@@ -27,10 +27,14 @@ import org.wso2.carbon.messaging.CarbonMessage;
  */
 public interface Mediator {
 
+    public String getName();
+
     public void setNext(Mediator nextMediator);
 
     public Mediator getNext();
 
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws
                                                                                               Exception;
+
+    public void setConfigs(String configs);
 }

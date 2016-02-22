@@ -44,14 +44,22 @@ public class CallMediator extends AbstractMediator {
     public CallMediator() {
     }
 
-    ;
-
     public CallMediator(String outboundEPKey) {
         this.outboundEPKey = outboundEPKey;
     }
 
     public CallMediator(OutboundEndpoint outboundEndpoint) {
         this.outboundEndpoint = outboundEndpoint;
+    }
+
+    public void setConfigs(String configs) {
+        outboundEPKey = configs;
+    }
+
+
+    @Override
+    public String getName() {
+        return "call";
     }
 
     @Override

@@ -18,6 +18,8 @@
 package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.flow;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.Mediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.CallMediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.EnrichMediator;
@@ -25,45 +27,93 @@ import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.LogMediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.RespondMediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.TransformMediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.FilterMediator;
+import sun.misc.Service;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Factory class to generate mediators according to the provided type
  */
 public class MediatorFactory {
 
+
+    private static Map<String, Class> mediatorClassMap = new HashMap<String, Class>();
+
+    private static final Logger log = LoggerFactory.getLogger(MediatorFactory.class);
+
+    private final static MediatorFactory instance  = new MediatorFactory();
+
+    private MediatorFactory() {
+        loadMediators();
+    }
+
+    public static MediatorFactory getInstance() {
+        return instance;
+    }
+
+    private final Class[] mediators = {
+            CallMediator.class,
+            FilterMediator.class,
+            RespondMediator.class,
+            LogMediator.class,
+            EnrichMediator.class,
+            TransformMediator.class
+    };
+
+
     /**
      * Factory method to get a mediator object from name
      * @param mediatorType type of the mediator
      * @return mediator
      */
-
-    public static Mediator getMediator(MediatorType mediatorType, String configs) {
+    public Mediator getMediator(String mediatorType, String configs) {
         Mediator mediator = null;
-        switch (mediatorType) {
-            case call:
-                mediator = new CallMediator(configs);
-                break;
 
-            case filter:
-                mediator = new FilterMediator();
-                break;
+        Class c = mediatorClassMap.get(mediatorType);
 
-            case respond:
-                mediator = new RespondMediator();
-                break;
-            case log:
-                mediator = new LogMediator(configs);
-                break;
-            case enrich:
-                mediator = new EnrichMediator();
-                break;
-            case transform:
-                mediator = new TransformMediator();
-                break;
-            default:
-                break;
+        if (c != null) {
+            try {
+                mediator = (Mediator) c.newInstance();
+                mediator.setConfigs(configs);
+            } catch (Exception e) {
+                log.error("Error while instantiation of " + mediatorType);
+            }
+
+        } else {
+            log.error("Mediator implementation not found for " + mediatorType);
         }
+
         return mediator;
     }
+
+
+    private void loadMediators() {
+        for (Class c : mediators) {
+            try {
+                Mediator med = (Mediator) c.newInstance();
+                mediatorClassMap.put(med.getName(), c);
+            } catch (Exception e) {
+                log.error("Error while loading mediators to MediatorFactory");
+            }
+        }
+        // now iterate through the available pluggable mediators
+        registerExtensions();
+    }
+
+
+    private void registerExtensions() {
+
+        Iterator it = Service.providers(Mediator.class);
+        while (it.hasNext()) {
+            Mediator mediator = (Mediator) it.next();
+            String name = mediator.getName();
+            mediatorClassMap.put(name, mediator.getClass());
+            if (log.isDebugEnabled()) {
+                log.debug("Added Mediator Extension" + mediator.getClass() + " to handle " + name);
+            }
+        }
+    }
+
 
 }

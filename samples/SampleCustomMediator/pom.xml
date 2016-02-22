@@ -26,9 +26,9 @@
         <version>2</version>
     </parent>
 
-    <name>Sample External DSL</name>
-    <groupId>org.sample.external.dsl</groupId>
-    <artifactId>SampleExternalDSL</artifactId>
+    <name>Sample Custom Mediator</name>
+    <groupId>org.custom</groupId>
+    <artifactId>SampleCustomMediator</artifactId>
     <version>1.0</version>
     <packaging>bundle</packaging>
 
@@ -63,23 +63,6 @@
     <build>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>org.antlr</groupId>
-                    <artifactId>antlr4-maven-plugin</artifactId>
-                    <version>4.5.1</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>antlr4</goal>
-                            </goals>
-                            <configuration>
-                                <!--<sourceDirectory>${antlr.dir}</sourceDirectory>-->
-                                <listener>true</listener>
-                                <visitor>false</visitor>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
                 <!-- Compiler -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -98,11 +81,6 @@
 
         <plugins>
             <plugin>
-                <groupId>org.antlr</groupId>
-                <artifactId>antlr4-maven-plugin</artifactId>
-                <version>4.5.1</version>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
@@ -111,16 +89,14 @@
     </build>
 
     <properties>
-        <bundle.activator>org.custom.external.dsl.Activator</bundle.activator>
+        <fragment.host>org.wso2.carbon.ibus</fragment.host>
+
         <export.package>
-            org.custom.external.dsl.*;version="1.0.0"
+            org.custom.*;version="1.0.0"
         </export.package>
         <import.package>
             org.osgi.framework.*;version="${osgi.framework.import.version.range}",
             org.sample.dsl.*;version="1.0.0",
-            org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated.*,
-            org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.*,
-            org.antlr.v4.runtime.*,
             org.wso2.carbon.ibus.mediation.cheetah.*,
         </import.package>
 
