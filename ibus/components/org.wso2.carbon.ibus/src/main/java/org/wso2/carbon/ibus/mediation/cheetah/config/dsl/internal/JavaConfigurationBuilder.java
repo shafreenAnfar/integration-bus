@@ -23,8 +23,8 @@ import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.InboundEndpoint;
 import org.wso2.carbon.ibus.mediation.cheetah.outbound.OutboundEndpoint;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.PipelineBuilder;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.InboundEPBuilder;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.outbound.OutboundEndpointBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.inbound.InboundEPBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.outbound.OutboundEndpointBuilder;
 
 /**
  * A class that used to create entire configuration.Anyone can extend this and overwrite configure method with
