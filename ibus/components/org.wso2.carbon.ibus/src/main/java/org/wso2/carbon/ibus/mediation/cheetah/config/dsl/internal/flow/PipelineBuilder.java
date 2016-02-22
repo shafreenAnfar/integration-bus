@@ -34,45 +34,23 @@ import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Condition;
 /**
  * A class Pipeline Builder
  */
-public class PipelineBuilder {
+public class PipelineBuilder extends MediatorCollectionBuilder {
 
     private Pipeline pipeline;
-
-    private MediatorCollectionBuilder mediatorCollectionBuilder;
 
     public static PipelineBuilder pipeline(String name, ESBConfigHolder parentConfig) {
         return new PipelineBuilder(name, parentConfig);
     }
 
     private PipelineBuilder(String name, ESBConfigHolder parentConfig) {
-        mediatorCollectionBuilder = new MediatorCollectionBuilder();
-        pipeline = new Pipeline(name, mediatorCollectionBuilder.getMediatorCollection());
+        super();
+        pipeline = new Pipeline(name, super.getMediatorCollection());
         parentConfig.addPipeline(pipeline);
-    }
-
-    public MediatorCollectionBuilder call(String endpointKey) {
-        mediatorCollectionBuilder.getMediatorCollection().addMediator(new CallMediator(endpointKey));
-        return mediatorCollectionBuilder;
-    }
-
-    public MediatorCollectionBuilder process(Mediator mediator) {
-        mediatorCollectionBuilder.getMediatorCollection().addMediator(mediator);
-        return mediatorCollectionBuilder;
     }
 
     public MediatorCollectionBuilder onError(String errorPipeline) {
         pipeline.setErrorPipeline(errorPipeline);
-        return this.mediatorCollectionBuilder;
+        return this;
     }
-
-    public void respond() {
-        mediatorCollectionBuilder.getMediatorCollection().addMediator(RespondMediatorBuilder.respond());
-    }
-
-
-    public FilterMediatorBuilder.ThenMediatorBuilder filter(Condition condition) {
-        return FilterMediatorBuilder.filter(condition, mediatorCollectionBuilder);
-    }
-
 
 }

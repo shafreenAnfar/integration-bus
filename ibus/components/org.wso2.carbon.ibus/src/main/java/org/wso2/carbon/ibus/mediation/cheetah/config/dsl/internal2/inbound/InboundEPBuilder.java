@@ -28,7 +28,6 @@ import org.wso2.carbon.ibus.mediation.cheetah.inbound.InboundEndpoint;
  */
 public class InboundEPBuilder {
 
-    InboundEndpoint inboundEndpoint;
     ESBConfigHolder parentConfig;
     String pipeline;
     JavaConfigurationBuilder.IntegrationFlow integrationFlow;
@@ -54,8 +53,8 @@ public class InboundEPBuilder {
     public PipelineBuilder pipeline(String pipeline) {
         this.pipeline = pipeline;
 
-        if (inboundEndpoint != null) {
-            inboundEndpoint.setPipeline(pipeline);
+        if (parentConfig.getInboundEndpoint() != null) {
+            parentConfig.getInboundEndpoint().setPipeline(pipeline);
         }
         return integrationFlow.pipeline(pipeline);
     }
