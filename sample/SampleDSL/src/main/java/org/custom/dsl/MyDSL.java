@@ -19,7 +19,7 @@
 package org.custom.dsl;
 
 
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.inbound.http.HTTPInboundEPBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.AbstractMediator;
 
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.JavaConfigurationBuilder;
@@ -33,11 +33,10 @@ import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.me
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.FilterMediatorBuilder.condition;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.FilterMediatorBuilder.pattern;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.FilterMediatorBuilder.source;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder.context;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder.*;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.outbound.http.HTTPOutboundEPBuilder.httpOutboundEndpoint;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.outbound.http.HTTPOutboundEPBuilder.uri;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.CustomMediatorBuilder.*;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.inbound.http.HTTPInboundEPBuilder.context;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.inbound.http.HTTPInboundEPBuilder.*;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.outbound.http.HTTPOutboundEPBuilder.httpOutboundEndpoint;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.outbound.http.HTTPOutboundEPBuilder.uri;
 
 
 /**

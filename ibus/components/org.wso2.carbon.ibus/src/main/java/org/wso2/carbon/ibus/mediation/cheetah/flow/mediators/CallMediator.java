@@ -39,15 +39,24 @@ public class CallMediator extends AbstractMediator {
 
     private String outboundEPKey;
 
-    public CallMediator() {};
+    private OutboundEndpoint outboundEndpoint;
+
+    public CallMediator() {
+    }
+
+    ;
 
     public CallMediator(String outboundEPKey) {
         this.outboundEPKey = outboundEPKey;
     }
 
+    public CallMediator(OutboundEndpoint outboundEndpoint) {
+        this.outboundEndpoint = outboundEndpoint;
+    }
+
     @Override
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
-            throws Exception {
+               throws Exception {
         processRequest(carbonMessage);
 
         CarbonCallback callback = new FlowControllerCallback(carbonCallback, this);
@@ -77,9 +86,22 @@ public class CallMediator extends AbstractMediator {
     }
 
     private void processRequest(CarbonMessage carbonMessage) throws MalformedURLException {
-        OutboundEndpoint outboundEndpoint = CheetahConfigRegistry.getInstance().getOutboundEndpoint(outboundEPKey);
+        if (outboundEndpoint == null) {
+            OutboundEndpoint outboundEndpoint = CheetahConfigRegistry.getInstance().getOutboundEndpoint(outboundEPKey);
 
-        if (outboundEndpoint != null) {
+            if (outboundEndpoint != null) {
+                if (outboundEndpoint instanceof HTTPOutboundEndpoint) {
+                    //TODO: Implement this properly at the endpoint level.
+                    //TODO: Call mediator is not suppose to handle protocol
+
+                    URL url = new URL(((HTTPOutboundEndpoint) outboundEndpoint).getUri());
+                    String host = url.getHost();
+                    int port = (url.getPort() == -1) ? 80 : url.getPort();
+                    String urls = url.getPath();
+                    setCarbonHeadersToBackendRequest(carbonMessage, host, port, urls);
+                }
+            }
+        } else {
             if (outboundEndpoint instanceof HTTPOutboundEndpoint) {
                 //TODO: Implement this properly at the endpoint level.
                 //TODO: Call mediator is not suppose to handle protocol

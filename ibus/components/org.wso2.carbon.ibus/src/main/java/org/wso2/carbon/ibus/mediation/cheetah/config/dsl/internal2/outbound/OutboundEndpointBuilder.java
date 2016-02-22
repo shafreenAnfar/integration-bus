@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.outbound;
+package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.outbound;
 
 
 import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;

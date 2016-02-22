@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http;
+package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.inbound.http;
 
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.protocols.http.HTTPInboundEP;
 
