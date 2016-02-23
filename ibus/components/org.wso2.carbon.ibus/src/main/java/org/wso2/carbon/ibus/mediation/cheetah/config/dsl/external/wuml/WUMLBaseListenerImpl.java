@@ -96,6 +96,13 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     }
 
     @Override
+    public void exitTitleStatement(WUMLParser.TitleStatementContext ctx) {
+        //Create the integration flow when definition is found
+        integrationFlow = new WUMLConfigurationBuilder.IntegrationFlow(ctx.IDENTIFIER().getText());
+        super.exitTitleStatement(ctx);
+    }
+
+    @Override
     public void exitInboundEndpointDefStatement(WUMLParser.InboundEndpointDefStatementContext ctx) {
         String protocolName = StringParserUtil.getValueWithinDoubleQuotes(ctx.inboundEndpointDef().
                 PROTOCOLDEF().getText());
@@ -216,6 +223,19 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
 
     @Override
     public void exitInvokeToTarget(WUMLParser.InvokeToTargetContext ctx) {
+        Mediator mediator = MediatorFactory.getInstance().getMediator("call", ctx.OUTBOUNDENDPOINTNAME().getText());
+        if(ifMultiThenBlockStarted) {
+            filterMediatorStack.peek().addThenMediator(mediator);
+
+        } else if(ifElseBlockStarted) {
+            filterMediatorStack.peek().addOtherwiseMediator(mediator);
+
+        } else {
+//            String mediatorName = StringParserUtil.getValueWithinDoubleQuotes(ctx.MEDIATORNAMESTRINGX().getText());
+//            String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.CONFIGSDEF().getText());
+//            Mediator mediator = MediatorFactory.getMediator(MediatorType.valueOf(mediatorName), configurations);
+            integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
+        }
         pipelineStack.pop();
         super.exitInvokeToTarget(ctx);
     }
@@ -229,6 +249,19 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
 
     @Override
     public void exitInvokeToSource(WUMLParser.InvokeToSourceContext ctx) {
+        Mediator mediator = MediatorFactory.getInstance().getMediator("respond", null);
+        if(ifMultiThenBlockStarted) {
+            filterMediatorStack.peek().addThenMediator(mediator);
+
+        } else if(ifElseBlockStarted) {
+            filterMediatorStack.peek().addOtherwiseMediator(mediator);
+
+        } else {
+//            String mediatorName = StringParserUtil.getValueWithinDoubleQuotes(ctx.MEDIATORNAMESTRINGX().getText());
+//            String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.CONFIGSDEF().getText());
+//            Mediator mediator = MediatorFactory.getMediator(MediatorType.valueOf(mediatorName), configurations);
+            integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
+        }
         pipelineStack.pop();
         super.exitInvokeToSource(ctx);
     }

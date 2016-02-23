@@ -33,7 +33,8 @@ statementList
     : ( statement NEWLINE+ )* ;
 
 statement
-    : participantStatement
+    : titleStatement
+    | participantStatement
     | processingStatement
     | routingStatement
     | parallelStatement
@@ -46,6 +47,9 @@ statement
 
 
 /* PARSER: built-in command rules */
+
+titleStatement
+    : INTEGRATIONFLOWX WS+ COLON WS+ IDENTIFIER;
 
 participantStatement
     : integrationFlowDefStatement
@@ -260,8 +264,8 @@ WHILE : W H I L E ;
 STARTUMLX: STARTUML;
 ENDUMLX: ENDUML;
 
-fragment STARTUML: '@startuml';
-fragment ENDUML: '@enduml';
+fragment STARTUML: '@start';
+fragment ENDUML: '@end';
 
 PARTICIPANT: P A R T I C I P A N T;
 
