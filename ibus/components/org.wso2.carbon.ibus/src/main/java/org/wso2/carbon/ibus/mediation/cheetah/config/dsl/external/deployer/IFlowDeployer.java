@@ -45,9 +45,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A class responsible for read the WUML files and deploy them to the runtime Object model.
+ * A class responsible for read the .iflow files and deploy them to the runtime Object model.
  */
-public class WUMLDeployer implements Deployer {
+public class IFlowDeployer implements Deployer {
 
     private ArtifactType artifactType;
 
@@ -55,13 +55,13 @@ public class WUMLDeployer implements Deployer {
 
     private Map<String, ESBConfigHolder> artifactMap = new HashMap<>();
 
-    private static final Logger logger = LoggerFactory.getLogger(WUMLDeployer.class);
+    private static final Logger logger = LoggerFactory.getLogger(IFlowDeployer.class);
 
-    public static final String EXTERNAL_DSL_CONFIGS_DIRECTORY = "wuml";
+    public static final String EXTERNAL_DSL_CONFIGS_DIRECTORY = "integration-flows";
 
     @Override
     public void init() {
-        artifactType = new ArtifactType<String>("puml");
+        artifactType = new ArtifactType<String>("iflow");
         try {
             directoryLocation = new URL("file:" + EXTERNAL_DSL_CONFIGS_DIRECTORY);
         } catch (MalformedURLException e) {

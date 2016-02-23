@@ -20,7 +20,7 @@ import org.osgi.framework.BundleContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.ibus.mediation.cheetah.CheetahMessageProcessor;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.deployer.WUMLDeployer;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.deployer.IFlowDeployer;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.DispatcherRegistry;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.manager.InboundEndpointManager;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.protocols.http.HTTPInboundEPDispatcher;
@@ -45,7 +45,7 @@ public class Activator implements BundleActivator {
             bundleContext.registerService(CarbonMessageProcessor.class, engine, null);
             bundleContext.registerService(TransportListenerManager.class,
                                           InboundEndpointManager.getInstance(), null);
-            bundleContext.registerService(Deployer.class, new WUMLDeployer(), null);
+            bundleContext.registerService(Deployer.class, new IFlowDeployer(), null);
 
             //Registering dispatchers
             DispatcherRegistry.getInstance().registerDispatcher("http", HTTPInboundEPDispatcher.getInstance());

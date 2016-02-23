@@ -1,33 +1,33 @@
 @startuml
 
-participant integrationflowRouter : IntegrationFlow("Message_Reouter")
+participant integrationflowRouter : IntegrationFlow("Message_Router")
 
-participant inboundendpointListener : InboundEndpoint(protocol("http"), port(8080), context("/router"))
+participant inboundendpointListener : InboundEndpoint(protocol("http"),port(8080),context("/router"))
 
 participant pipeline1 : Pipeline("router_flow")
 
-participant outboundendpoint1 : OutboundEndpoint(protocol("http"), host("http://localhost:8280/backend1"))
+participant outboundendpoint1 : OutboundEndpoint(protocol("http"),host("http://localhost:8280/backend1"))
 
-participant outboundendpoint2 : OutboundEndpoint(protocol("http"), host("http://localhost:8280/backend2"))
+participant outboundendpoint2 : OutboundEndpoint(protocol("http"),host("http://localhost:8280/backend2"))
 
 inboundendpointListener -> pipeline1 : "request"
 
-log("## Before Filter")
+log("Before.Filter")
 
-alt condition(source("routeId", "Transport"), pattern("r1"))
-    log("Filter : True")
+alt condition(source("routeId","Transport"),pattern("r1"))
+    log("Filter.True")
     call("outboundendpoint1")
-    pipeline1 -> outboundendpoint1 : "Request to Backend1"
-    outboundendpoint1 -> pipeline1 : "Response from Backend1"
+    pipeline1 -> outboundendpoint1 : "Request_to_Backend1"
+    outboundendpoint1 -> pipeline1 : "Response_from_Backend1"
 
 else
-    log("Filter : False")
+    log("Filter.False")
     call("outboundendpoint1")
-    pipeline1 -> outboundendpoint2 : "Request to Backend2"
-    outboundendpoint2 -> pipeline1 : "Response from Backend2"
+    pipeline1 -> outboundendpoint2 : "Request_to_Backend2"
+    outboundendpoint2 -> pipeline1 : "Response_from_Backend2"
 end
 
-log("## After Filter")
+log("After.Filter")
 respond()
 
 pipeline1 -> inboundendpointListener : "Final_Response"
