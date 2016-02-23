@@ -40,57 +40,27 @@ import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.outbou
 
 
 /**
- * Sample DSL
+ * Sample Internal DSL
  */
 public class MyDSL extends JavaConfigurationBuilder {
 
     public IntegrationFlow configure() {
 
-        IntegrationFlow router = integrationFlow("MessageRouter");
+        IntegrationFlow router = integrationFlow("Message_Router");
 
-
-        router.inboundEndpoint("inboundEndpoint1", http(port(8280), context("/sample/request"))).
-                   pipeline("pipeline1").
+        router.inboundEndpoint("inboundEndpoint1", http(port(8280), context("/router"))).
+               pipeline("pipeline1").
                    filter(condition(source("routeId", Scope.Transport), pattern("r1"))).
                    then(call("outboundEp1")).
                    otherwise(call("outboundEp2")).
                    respond();
 
-        router.outboundEndpoint(httpOutboundEndpoint("outboundEp1", uri("http://localhost:9000/service")));
+        router.outboundEndpoint(httpOutboundEndpoint("outboundEp1", uri("http://localhost:8280/backend1")));
 
-        router.outboundEndpoint(httpOutboundEndpoint("outboundEp2", uri("http://204.13.85.5:5050/service")));
-
-        router.outboundEndpoint(httpOutboundEndpoint("outboundEp3", uri("http://204.13.85.6:5050/service")));
+        router.outboundEndpoint(httpOutboundEndpoint("outboundEp2", uri("http://localhost:8280/backend2")));
 
         return router;
 
     }
 
-
-    private class MyInbound extends HTTPInboundEP {
-
-        public MyInbound(String name, HTTPInboundEPBuilder.Port port) {
-            super(name, port.getPort());
-        }
-
-        @Override
-        public boolean canReceive(CarbonMessage cMsg) {
-            return true;
-        }
-    }
-
-
-    private class MyCustomMediator extends AbstractMediator {
-
-        @Override
-        public String getName() {
-            return "MyCustomMediator";
-        }
-
-        @Override
-        public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws Exception {
-            System.out.println("###############################My Custom Mediator###########################");
-            return next(carbonMessage, carbonCallback);
-        }
-    }
 }
