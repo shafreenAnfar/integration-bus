@@ -38,7 +38,7 @@ public class Activator implements BundleActivator {
     public void start(BundleContext bundleContext) throws Exception {
 
         try {
-            log.info("Starting Cheetah...!");
+            log.info("Starting Integration Bus...!");
 
             //Creating the processor and registering the service
             CheetahMessageProcessor engine = new CheetahMessageProcessor();
