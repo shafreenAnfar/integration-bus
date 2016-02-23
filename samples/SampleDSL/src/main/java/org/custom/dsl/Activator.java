@@ -27,7 +27,7 @@ import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.IntegrationSo
  */
 public class Activator implements BundleActivator {
     public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(IntegrationSolution.class, new IntegrationSolutionOne(), null);
+        bundleContext.registerService(IntegrationSolution.class, new Router(), null);
     }
 
     public void stop(BundleContext bundleContext) throws Exception {

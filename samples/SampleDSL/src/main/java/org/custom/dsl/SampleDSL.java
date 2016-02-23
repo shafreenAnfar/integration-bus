@@ -40,9 +40,9 @@ import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.me
 
 
 /**
- * Sample Internal DSL
+ * Sample Internal DSL in method 1
  */
-public class MyDSL extends JavaConfigurationBuilder {
+public class SampleDSL extends JavaConfigurationBuilder {
 
     public IntegrationFlow configure() {
 
