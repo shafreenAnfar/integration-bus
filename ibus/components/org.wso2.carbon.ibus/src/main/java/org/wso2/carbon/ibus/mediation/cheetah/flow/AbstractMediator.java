@@ -18,21 +18,34 @@
 
 package org.wso2.carbon.ibus.mediation.cheetah.flow;
 
-
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
 /**
- * Abstract implementation of Mediator
+ * Base class for all the mediators. All the mediators must be extended from this base class
  */
 public abstract class AbstractMediator implements Mediator {
 
+    /* Pointer for the next sibling in the pipeline*/
     Mediator nextMediator = null;
 
+    /**
+     * Check whether a sibling is present after this in the pipeline
+     *
+     * @return whether a sibling is present after this
+     */
     public boolean hasNext() {
         return nextMediator != null;
     }
 
+    /**
+     * Invoke the next sibling in the pipeline
+     *
+     * @param carbonMessage Carbon message
+     * @param carbonCallback    Incoming Callback
+     * @return whether mediation is proceeded
+     * @throws Exception
+     */
     public boolean next(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
             throws Exception {
         if (hasNext()) {
@@ -41,10 +54,21 @@ public abstract class AbstractMediator implements Mediator {
         return false;
     }
 
+    /**
+     * Set the pointer to the next sibling in the pipeline
+     *
+     * @param nextMediator Next sibling mediator in the pipeline
+     */
     public void setNext(Mediator nextMediator) {
         this.nextMediator = nextMediator;
     }
 
+    /**
+     * TODO: We need a more better way to do this
+     * Set Mediator Configurations
+     *
+     * @param configs configuration parameter
+     */
     public void setConfigs(String configs) {
         //Do nothing
     }
