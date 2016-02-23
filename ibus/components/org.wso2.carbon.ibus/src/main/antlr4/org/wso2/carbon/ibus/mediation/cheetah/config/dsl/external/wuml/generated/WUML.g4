@@ -344,9 +344,9 @@ fragment POSTSCIPRT
     : ( 'a'..'z' | 'A'..'Z' | DIGIT | '_')*;
 
 IDENTIFIER
-    : ( 'a'..'z' | 'A'..'Z' ) ( 'a'..'z' | 'A'..'Z' | DIGIT | '_')* ;
+    : ( 'a'..'z' | 'A'..'Z' ) ( 'a'..'z' | 'A'..'Z' | DIGIT | '_')+ ;
 
-fragment CONFIGPARAMS: ([a-zA-Z\?] | COLON | [0-9] | '$' | '.' | '@' | SINGLEQUOTES | DOUBLEQUOTES | '{' | '}' | AMP_SYMBOL | AMPAMP_SYMBOL | CARET_SYMBOL | COMMA_SYMBOL | COMMENT_SYMBOL | CONTINUATION_SYMBOL | EQ_SYMBOL | GE_SYMBOL | GT_SYMBOL | LE_SYMBOL | LT_SYMBOL | MINUS_SYMBOL | NE_SYMBOL | PLUS_SYMBOL | STAR_SYMBOL | SLASH_SYMBOL )+;
+fragment CONFIGPARAMS: (WS | [a-zA-Z\?] | COLON | [0-9] | '$' | '.' | '@' | SINGLEQUOTES | DOUBLEQUOTES | '{' | '}' | AMP_SYMBOL | AMPAMP_SYMBOL | CARET_SYMBOL | COMMA_SYMBOL | COMMENT_SYMBOL | CONTINUATION_SYMBOL | EQ_SYMBOL | GE_SYMBOL | GT_SYMBOL | LE_SYMBOL | LT_SYMBOL | MINUS_SYMBOL | NE_SYMBOL | PLUS_SYMBOL | STAR_SYMBOL | SLASH_SYMBOL )+;
 
 NUMBER
     : ( '0' | '1'..'9' DIGIT*) ('.' DIGIT+ )? ;

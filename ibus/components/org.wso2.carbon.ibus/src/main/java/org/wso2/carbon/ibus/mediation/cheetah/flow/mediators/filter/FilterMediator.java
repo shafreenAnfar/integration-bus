@@ -47,6 +47,8 @@ public class FilterMediator extends AbstractMediator implements FlowController {
 
     public FilterMediator(Condition condition) {
         this.condition = condition;
+        this.source = condition.getSource();
+        this.pattern = condition.getPattern();
     }
 
     public FilterMediator(Source source, Pattern pattern) {
