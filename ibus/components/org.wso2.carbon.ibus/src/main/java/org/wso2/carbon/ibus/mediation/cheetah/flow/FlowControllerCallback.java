@@ -24,11 +24,14 @@ import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
 /**
- * Engine Callback
+ * Callback related to FlowController Mediators
  */
 public class FlowControllerCallback implements CarbonCallback {
 
+    /* Incoming callback */
     CarbonCallback parentCallback;
+
+    /* Flow Controller Mediator */
     Mediator mediator;
 
     private static final Logger log = LoggerFactory.getLogger(FlowControllerCallback.class);
@@ -45,13 +48,12 @@ public class FlowControllerCallback implements CarbonCallback {
             try {
                 mediator.next(carbonMessage, parentCallback);
             } catch (Exception e) {
-                log.error("Error while mediating", e);
+                log.error("Error while mediating from Callback", e);
             }
         } else if (parentCallback instanceof FlowControllerCallback) {
             //If no siblings handover message to the requester
             parentCallback.done(carbonMessage);
         }
-
     }
 
     public Mediator getMediator() {
@@ -62,7 +64,4 @@ public class FlowControllerCallback implements CarbonCallback {
         return parentCallback;
     }
 
-    public void setParentCallback(CarbonCallback parentCallback) {
-        this.parentCallback = parentCallback;
-    }
 }

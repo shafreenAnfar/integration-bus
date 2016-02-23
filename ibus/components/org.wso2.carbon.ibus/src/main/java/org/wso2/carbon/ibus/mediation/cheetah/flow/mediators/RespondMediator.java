@@ -24,9 +24,10 @@ import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
 /**
- * Respond Mediator
+ * Mediator responsible for sending the response from pipeline back to client
  */
 public class RespondMediator extends AbstractMediator {
+
     @Override
     public String getName() {
         return "respond";
@@ -38,12 +39,12 @@ public class RespondMediator extends AbstractMediator {
 
         CarbonCallback parentCallback = carbonCallback;
 
+        // Traverse and find the top most callback coming from transport level
         while (parentCallback instanceof FlowControllerCallback) {
             parentCallback = ((FlowControllerCallback) parentCallback).getParentCallback();
         }
 
         parentCallback.done(carbonMessage);
-
         return true;
     }
 }

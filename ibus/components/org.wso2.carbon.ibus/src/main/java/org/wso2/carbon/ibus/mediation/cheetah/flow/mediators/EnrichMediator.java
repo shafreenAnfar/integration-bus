@@ -26,6 +26,7 @@ import org.wso2.carbon.messaging.CarbonMessage;
 
 /**
  * Basic Enrich mediator implementation
+ * TODO: Not implemented yet
  */
 public class EnrichMediator extends AbstractMediator {
     private static final Logger log = LoggerFactory.getLogger(EnrichMediator.class);

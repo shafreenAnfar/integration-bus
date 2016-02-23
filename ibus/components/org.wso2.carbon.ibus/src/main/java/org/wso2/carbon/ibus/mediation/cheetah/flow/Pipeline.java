@@ -34,8 +34,10 @@ public class Pipeline {
 
     private String name;
 
+    /* Mediator collection */
     MediatorCollection mediators;
 
+    /* Error handling mediator collection */
     MediatorCollection errorHandlerMediators;
 
     private String errorPipeline;
@@ -55,25 +57,27 @@ public class Pipeline {
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) {
 
         try {
+            // For Error handling
             if (errorPipeline != null) {
                 Pipeline ePipeline = CheetahConfigRegistry.getInstance().getPipeline(errorPipeline);
                 if (ePipeline == null) {
                     log.error("Cannot load pipeline defined as " + errorPipeline);
                     return false;
-                } else {
-                    errorHandlerMediators = ePipeline.getMediators();
-                    if (errorHandlerMediators != null && errorHandlerMediators.getMediators().size() > 0) {
-                        carbonMessage.getFaultHandlerStack().push
-                                   (new CheetahErrorHandler(Constants.CHEETAH_ERROR_HANDLER, errorHandlerMediators));
-                    }
                 }
+
+                errorHandlerMediators = ePipeline.getMediators();
+                if (errorHandlerMediators != null && errorHandlerMediators.getMediators().size() > 0) {
+                    carbonMessage.getFaultHandlerStack().push
+                            (new CheetahErrorHandler(Constants.CHEETAH_ERROR_HANDLER, errorHandlerMediators));
+                }
+
             }
 
-            mediators.getFirstMediator().receive(carbonMessage, carbonCallback);
+            return mediators.getFirstMediator().receive(carbonMessage, carbonCallback);
         } catch (Exception e) {
             log.error("Error while mediating", e);
+            return false;
         }
-        return true;
     }
 
     public void addMediator(Mediator mediator) {
@@ -83,7 +87,6 @@ public class Pipeline {
     public String getName() {
         return name;
     }
-
 
     public void setErrorPipeline(String errorPipeline) {
         this.errorPipeline = errorPipeline;

@@ -41,8 +41,8 @@ public abstract class AbstractMediator implements Mediator {
     /**
      * Invoke the next sibling in the pipeline
      *
-     * @param carbonMessage Carbon message
-     * @param carbonCallback    Incoming Callback
+     * @param carbonMessage  Carbon message
+     * @param carbonCallback Incoming Callback
      * @return whether mediation is proceeded
      * @throws Exception
      */

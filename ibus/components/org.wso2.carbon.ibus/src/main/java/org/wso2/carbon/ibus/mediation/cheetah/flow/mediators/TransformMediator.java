@@ -26,6 +26,7 @@ import org.wso2.carbon.messaging.CarbonMessage;
 
 /**
  * Basic implementation of transform mediator
+ * TODO: Not implemented yet
  */
 public class TransformMediator extends AbstractMediator {
     private static final Logger log = LoggerFactory.getLogger(TransformMediator.class);

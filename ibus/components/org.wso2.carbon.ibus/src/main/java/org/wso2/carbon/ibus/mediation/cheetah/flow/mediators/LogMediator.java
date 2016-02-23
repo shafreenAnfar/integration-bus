@@ -17,20 +17,20 @@
  */
 package org.wso2.carbon.ibus.mediation.cheetah.flow.mediators;
 
-import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.AbstractMediator;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.Mediator;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
 /**
  * Basic implementation of log mediator
+ * TODO: Not implemented yet
  */
 public class LogMediator extends AbstractMediator {
 
     private static final Logger log = LoggerFactory.getLogger(LogMediator.class);
+
     private String logMessage = "Message received at LogMediator";
 
     public LogMediator(String logMessage) {
@@ -55,11 +55,4 @@ public class LogMediator extends AbstractMediator {
 
     }
 
-    public String getLogMessage() {
-        return logMessage;
-    }
-
-    public void setLogMessage(String logMessage) {
-        this.logMessage = logMessage;
-    }
 }

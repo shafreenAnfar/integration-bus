@@ -41,12 +41,12 @@ public class HTTPOutboundEndpoint extends OutboundEndpoint {
             throws Exception {
         processRequest(carbonMessage);
 
-        CarbonCallback callback = new FlowControllerCallback(carbonCallback, this);
-        ServiceContextHolder.getInstance().getSender().send(carbonMessage, callback);
+        ServiceContextHolder.getInstance().getSender().send(carbonMessage, carbonCallback);
         return false;
     }
 
-    private void setCarbonHeadersToBackendRequest(CarbonMessage request, String host, int port, String urls) {
+    private void setCarbonHeadersToBackendRequest(CarbonMessage request, String host, int port,
+                                                  String urls) {
 
         if (request != null) {
 
@@ -67,11 +67,11 @@ public class HTTPOutboundEndpoint extends OutboundEndpoint {
     }
 
     private void processRequest(CarbonMessage carbonMessage) throws MalformedURLException {
-                URL url = new URL(uri);
-                String host = url.getHost();
-                int port = (url.getPort() == -1) ? 80 : url.getPort();
-                String urls = url.getPath();
-                setCarbonHeadersToBackendRequest(carbonMessage, host, port, urls);
+        URL url = new URL(uri);
+        String host = url.getHost();
+        int port = (url.getPort() == -1) ? 80 : url.getPort();
+        String urls = url.getPath();
+        setCarbonHeadersToBackendRequest(carbonMessage, host, port, urls);
 
     }
 

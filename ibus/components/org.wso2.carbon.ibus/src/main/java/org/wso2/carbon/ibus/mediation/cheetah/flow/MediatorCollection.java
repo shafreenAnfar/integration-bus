@@ -22,25 +22,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * PLaceHolder for chain of mediators
+ * Place Holder for chain of mediators
  */
 public class MediatorCollection {
 
+    /* List of Mediators */
     private List<Mediator> mediators;
 
     public MediatorCollection() {
         mediators = new ArrayList<Mediator>();
     }
 
+    /**
+     * Get the first mediator in the collection
+     *
+     * @return first mediator of the collection
+     */
     public Mediator getFirstMediator() {
         return mediators.get(0);
     }
 
-
+    /**
+     * Get all the mediators
+     *
+     * @return all the mediators
+     */
     public List<Mediator> getMediators() {
         return mediators;
     }
 
+    /**
+     * Add a mediator to the collection
+     *
+     * @param mediator mediator to be added
+     */
     public void addMediator(Mediator mediator) {
         int lastIndex = mediators.size() - 1;
         if (lastIndex >= 0) {
