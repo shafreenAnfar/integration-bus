@@ -70,6 +70,9 @@
             <directory>carbon-home/deployment/integration-flows</directory>
             <outputDirectory>deployment/integration-flows</outputDirectory>
             <fileMode>644</fileMode>
+            <excludes>
+                <exclude>empty.txt</exclude>
+            </excludes>
         </fileSet>
     </fileSets>
 

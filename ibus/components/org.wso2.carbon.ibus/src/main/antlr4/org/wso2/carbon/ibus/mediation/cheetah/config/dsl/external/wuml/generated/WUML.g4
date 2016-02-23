@@ -264,8 +264,8 @@ WHILE : W H I L E ;
 STARTUMLX: STARTUML;
 ENDUMLX: ENDUML;
 
-fragment STARTUML: '@start';
-fragment ENDUML: '@end';
+fragment STARTUML: '@startuml';
+fragment ENDUML: '@enduml';
 
 PARTICIPANT: P A R T I C I P A N T;
 

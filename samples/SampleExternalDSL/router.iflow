@@ -16,19 +16,16 @@ log("Before.Filter")
 
 alt condition(source("routeId","Transport"),pattern("r1"))
     log("Filter.True")
-    call("outboundendpoint1")
     pipeline1 -> outboundendpoint1 : "Request_to_Backend1"
     outboundendpoint1 -> pipeline1 : "Response_from_Backend1"
 
 else
     log("Filter.False")
-    call("outboundendpoint2")
     pipeline1 -> outboundendpoint2 : "Request_to_Backend2"
     outboundendpoint2 -> pipeline1 : "Response_from_Backend2"
 end
 
 log("After.Filter")
-respond()
 
 pipeline1 -> inboundendpointListener : "Final_Response"
 
