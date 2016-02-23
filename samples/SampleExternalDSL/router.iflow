@@ -22,7 +22,7 @@ alt condition(source("routeId","Transport"),pattern("r1"))
 
 else
     log("Filter.False")
-    call("outboundendpoint1")
+    call("outboundendpoint2")
     pipeline1 -> outboundendpoint2 : "Request_to_Backend2"
     outboundendpoint2 -> pipeline1 : "Response_from_Backend2"
 end
