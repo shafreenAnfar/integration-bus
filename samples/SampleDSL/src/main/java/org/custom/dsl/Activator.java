@@ -20,14 +20,14 @@ package org.custom.dsl;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.JavaConfigurationBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.IntegrationSolution;
 
 /**
  * Bundle Activator
  */
 public class Activator implements BundleActivator {
     public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(JavaConfigurationBuilder.class, new MyDSL(), null);
+        bundleContext.registerService(IntegrationSolution.class, new IntegrationSolutionOne(), null);
     }
 
     public void stop(BundleContext bundleContext) throws Exception {

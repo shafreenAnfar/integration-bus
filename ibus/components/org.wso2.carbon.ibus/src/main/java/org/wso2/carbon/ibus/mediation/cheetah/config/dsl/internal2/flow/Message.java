@@ -20,11 +20,20 @@ package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.flow;
 
 
 import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.flow.mediators.filter.FilterMediatorBuilder;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.MediatorCollection;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.Pipeline;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.CallMediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.RespondMediator;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Source;
 import org.wso2.carbon.ibus.mediation.cheetah.outbound.OutboundEndpoint;
 
+import java.util.regex.Pattern;
+
+
+/**
+ * A class which represents the Message in a DSL
+ */
 public class Message {
 
     private String name;
@@ -32,6 +41,13 @@ public class Message {
     private Pipeline pipeline;
 
     private ESBConfigHolder esbConfigHolder;
+
+    protected MediatorCollection mediatorCollection;
+
+    public Message(String name, MediatorCollection mediatorCollection) {
+        this.name = name;
+        this.mediatorCollection = mediatorCollection;
+    }
 
     public Message(String name, ESBConfigHolder esbConfigHolder) {
         this.name = name;
@@ -46,13 +62,31 @@ public class Message {
 
     public Message call(OutboundEndpoint outboundEndpoint) {
         CallMediator callMediator = new CallMediator(outboundEndpoint);
-        pipeline.addMediator(callMediator);
+        if (pipeline != null) {
+            pipeline.addMediator(callMediator);
+        } else if (mediatorCollection != null) {
+            mediatorCollection.addMediator(callMediator);
+        }
+
         return this;
+    }
+
+    public FilterMediatorBuilder.ThenMediatorBuilder filter(Source source, Pattern pattern) {
+        if (pipeline != null) {
+            return FilterMediatorBuilder.filter(source, pattern, this, pipeline.getMediators());
+        } else if (mediatorCollection != null) {
+            return FilterMediatorBuilder.filter(source, pattern, this, mediatorCollection);
+        }
+        return null;
     }
 
     public Message respond() {
         RespondMediator respondMediator = new RespondMediator();
-        pipeline.addMediator(respondMediator);
+        if (pipeline != null) {
+            pipeline.addMediator(respondMediator);
+        } else if (mediatorCollection != null) {
+            mediatorCollection.addMediator(respondMediator);
+        }
         return this;
     }
 

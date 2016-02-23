@@ -24,6 +24,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.JavaConfigurationBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.DSLLoader;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.IntegrationSolution;
 import org.wso2.carbon.messaging.TransportSender;
 
 
@@ -52,12 +53,12 @@ public class CheetahServiceComponent {
 
     @Reference(
             name = "java-dsl",
-            service = JavaConfigurationBuilder.class,
+            service = IntegrationSolution.class,
             cardinality = ReferenceCardinality.OPTIONAL,
             policy = ReferencePolicy.DYNAMIC,
             unbind = "removeJavaDSL"
     )
-    protected void addJavaDSL(JavaConfigurationBuilder dsl) {
+    protected void addJavaDSL(IntegrationSolution dsl) {
         DSLLoader.loadDSL(dsl);
     }
 

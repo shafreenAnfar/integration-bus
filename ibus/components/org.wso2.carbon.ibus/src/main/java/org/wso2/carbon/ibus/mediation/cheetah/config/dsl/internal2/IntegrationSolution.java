@@ -21,10 +21,12 @@ package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2;
 
 import org.wso2.carbon.ibus.mediation.cheetah.config.CheetahConfigRegistry;
 import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.flow.Message;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.DSLLoader;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.flow.MessageFlow;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.outbound.http.HTTPOutboundEPBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.InboundEndpoint;
 import org.wso2.carbon.ibus.mediation.cheetah.outbound.OutboundEndpoint;
+import org.wso2.carbon.ibus.mediation.cheetah.outbound.protocol.http.HTTPOutboundEndpoint;
 
 /**
  * A class that represents the IntegrationSolution
@@ -34,7 +36,7 @@ public abstract class IntegrationSolution {
     private ESBConfigHolder esbConfigHolder;
 
 
-    public abstract void configure();
+    public abstract ESBConfigHolder configure();
 
 
     private String getClassName() {
@@ -42,10 +44,10 @@ public abstract class IntegrationSolution {
     }
 
 
-    public OutboundEndpoint defineHTTPOutboundEndpoint(OutboundEndpoint outboundEndpoint) {
-
-        getEsbConfigHolder().addOutboundEndpoint(outboundEndpoint);
-        return outboundEndpoint;
+    public OutboundEndpoint defineHTTPOutboundEndpoint(String name, HTTPOutboundEPBuilder.URI uri) {
+        HTTPOutboundEndpoint httpOutboundEndpoint = HTTPOutboundEPBuilder.httpOutboundEndpoint(name, uri);
+        getEsbConfigHolder().addOutboundEndpoint(httpOutboundEndpoint);
+        return httpOutboundEndpoint;
     }
 
     public MessageFlow defineMessageFlow(String name) {
@@ -53,19 +55,22 @@ public abstract class IntegrationSolution {
     }
 
     public MessageTunnel receiveFrom(InboundEndpoint inboundEndpoint) {
+        esbConfigHolder.setInboundEndpoint(inboundEndpoint);
         return new MessageTunnel(inboundEndpoint);
     }
 
 
     private ESBConfigHolder getEsbConfigHolder() {
-        if (esbConfigHolder == null && !(CheetahConfigRegistry.getInstance().getESBConfig(getClassName()) == null)) {
-            esbConfigHolder = CheetahConfigRegistry.getInstance().getESBConfig(getClassName());
-            return esbConfigHolder;
-        } else {
+        if (esbConfigHolder == null) {
             esbConfigHolder = new ESBConfigHolder(getClassName());
-            return esbConfigHolder;
+
         }
 
+        return esbConfigHolder;
+    }
+
+    public ESBConfigHolder getConfiguration() {
+        return esbConfigHolder;
     }
 
     /**

@@ -19,9 +19,11 @@
 package org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.evaluator;
 
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Condition;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Source;
 import org.wso2.carbon.messaging.CarbonMessage;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * A Util class responsible for evaluate carbon message according to condition
@@ -29,12 +31,12 @@ import java.util.Map;
 public class Evaluator {
 
 
-    public static boolean isHeaderMatched(CarbonMessage carbonMessage, Condition condition) {
+    public static boolean isHeaderMatched(CarbonMessage carbonMessage, Source source, Pattern pattern) {
 
         Map<String, String> map = carbonMessage.getHeaders();
 
-        if (map.containsKey(condition.getSource().getKey())) {
-            return condition.getPattern().matcher(map.get(condition.getSource().getKey())).matches();
+        if (map.containsKey(source.getKey())) {
+            return pattern.matcher(map.get(source.getKey())).matches();
         }
         return false;
     }
