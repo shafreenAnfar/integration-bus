@@ -21,6 +21,8 @@ package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.ibus.mediation.cheetah.config.CheetahConfigRegistry;
+import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;
+import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.IntegrationSolution;
 
 /**
  * This loads the JAVA DSLs
@@ -29,15 +31,15 @@ public class DSLLoader {
 
     private static final Logger log = LoggerFactory.getLogger(DSLLoader.class);
 
-    public static void loadDSL(JavaConfigurationBuilder javaConfigurationBuilder) {
+    public static void loadDSL(IntegrationSolution javaConfigurationBuilder) {
         if (log.isDebugEnabled()) {
             log.debug("Loading Java DSL..");
         }
         // Call the DSL
-        JavaConfigurationBuilder.IntegrationFlow config = javaConfigurationBuilder.configure();
+       ESBConfigHolder esbConfigHolder = javaConfigurationBuilder.configure();
 
         // Register the configuration
-        CheetahConfigRegistry.getInstance().addESBConfig(config.getEsbConfigHolder());
+       CheetahConfigRegistry.getInstance().addESBConfig(esbConfigHolder);
 
     }
 

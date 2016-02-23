@@ -19,16 +19,9 @@
 package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow;
 
 
-import org.wso2.carbon.ibus.mediation.cheetah.config.CheetahConfigRegistry;
 import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.FilterMediatorBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.MediatorCollectionBuilder;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.RespondMediatorBuilder;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.Mediator;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.MediatorCollection;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.Pipeline;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.CallMediator;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Condition;
 
 
 /**

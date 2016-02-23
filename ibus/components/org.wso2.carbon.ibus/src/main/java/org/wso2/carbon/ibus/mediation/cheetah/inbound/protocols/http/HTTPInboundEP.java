@@ -94,4 +94,8 @@ public class HTTPInboundEP extends InboundEndpoint {
         return true;
     }
 
+    @Override
+    public String getName() {
+        return host+port;
+    }
 }

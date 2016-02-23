@@ -25,6 +25,8 @@ import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.evaluator.Ev
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
+import java.util.regex.Pattern;
+
 /**
  * Filter Mediator
  */
@@ -35,12 +37,21 @@ public class FilterMediator extends AbstractMediator implements FlowController {
     private MediatorCollection childThenMediatorList = new MediatorCollection();
     private MediatorCollection childOtherwiseMediatorList = new MediatorCollection();
 
+    private Source source;
+
+    private Pattern pattern;
+
     private Condition condition;
 
     public FilterMediator() {};
 
     public FilterMediator(Condition condition) {
         this.condition = condition;
+    }
+
+    public FilterMediator(Source source, Pattern pattern) {
+        this.source = source;
+        this.pattern = pattern;
     }
 
     public FilterMediator addthenMediators(MediatorCollection mediatorCollection) {
@@ -71,9 +82,9 @@ public class FilterMediator extends AbstractMediator implements FlowController {
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
                throws Exception {
 
-        if (condition.getSource().getScope().equals(Scope.Transport)) {
+        if (source.getScope().equals(Scope.Transport)) {
 
-            if (Evaluator.isHeaderMatched(carbonMessage, condition)) {
+            if (Evaluator.isHeaderMatched(carbonMessage, source, pattern)) {
                 childThenMediatorList.getFirstMediator().
                            receive(carbonMessage, new FlowControllerCallback(carbonCallback, this));
             } else {
