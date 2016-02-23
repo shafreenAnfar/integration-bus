@@ -31,13 +31,10 @@ public class InboundEndpointFactory {
             case http:
                 inboundEndpoint = new HTTPInboundEP(name, port);
                 break;
-
             case jms:
                 break;
-
             case mqtt:
                 break;
-
             default:
                 break;
         }

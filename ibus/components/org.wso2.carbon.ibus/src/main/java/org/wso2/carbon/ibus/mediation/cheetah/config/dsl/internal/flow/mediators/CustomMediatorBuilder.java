@@ -25,7 +25,6 @@ import org.wso2.carbon.ibus.mediation.cheetah.flow.Mediator;
  */
 public class CustomMediatorBuilder {
 
-
     public static MediatorCollectionBuilder process(Mediator mediator) {
         MediatorCollectionBuilder mediatorCollectionBuilder = new MediatorCollectionBuilder();
         mediatorCollectionBuilder.getMediatorCollection().addMediator(mediator);

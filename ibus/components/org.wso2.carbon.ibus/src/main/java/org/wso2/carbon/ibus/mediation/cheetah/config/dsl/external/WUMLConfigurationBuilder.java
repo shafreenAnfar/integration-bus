@@ -19,7 +19,6 @@ package org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external;
 
 import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;
 
-
 /**
  * A class that used to create entire configuration.Anyone can extend this and overwrite configure method with
  * relevant configuration

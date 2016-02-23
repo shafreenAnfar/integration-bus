@@ -59,7 +59,6 @@ public abstract class JavaConfigurationBuilder {
             return InboundEPBuilder.inboundEndpoint(name, esbConfigHolder, this, inboundEndpoint);
         }
 
-
         /* For Outbound */
         public OutboundEndpointBuilder outboundEndpoint(OutboundEndpoint outboundEndpoint) {
             return OutboundEndpointBuilder.outboundEndpoint(outboundEndpoint, esbConfigHolder);

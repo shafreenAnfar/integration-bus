@@ -30,11 +30,10 @@ import java.util.regex.Pattern;
  */
 public class FilterMediatorBuilder {
 
-
-    public static ThenMediatorBuilder filter(Condition condition, MediatorCollectionBuilder mediatorCollectionBuilder) {
+    public static ThenMediatorBuilder filter(Condition condition,
+                                             MediatorCollectionBuilder mediatorCollectionBuilder) {
         return new ThenMediatorBuilder(new FilterMediator(condition), mediatorCollectionBuilder);
     }
-
 
     public static Condition condition(Source source, Pattern pattern) {
         return new Condition(source, pattern);
@@ -48,7 +47,6 @@ public class FilterMediatorBuilder {
         return Pattern.compile(regex);
     }
 
-
     /**
      * A util class
      */
@@ -57,16 +55,14 @@ public class FilterMediatorBuilder {
         private FilterMediator filterMediator;
         private MediatorCollectionBuilder mediatorCollectionBuilder;
 
-
-        public ThenMediatorBuilder(FilterMediator filterMediator, MediatorCollectionBuilder mediatorCollectionBuilder) {
+        public ThenMediatorBuilder(FilterMediator filterMediator,
+                                   MediatorCollectionBuilder mediatorCollectionBuilder) {
             this.filterMediator = filterMediator;
             this.mediatorCollectionBuilder = mediatorCollectionBuilder;
         }
 
         public OtherwiseMediatorBuilder then(MediatorCollectionBuilder mediatorCollection) {
             filterMediator.addthenMediators(mediatorCollection.getMediatorCollection());
-
-
             return new OtherwiseMediatorBuilder(filterMediator, mediatorCollectionBuilder);
         }
     }
@@ -79,21 +75,17 @@ public class FilterMediatorBuilder {
         private FilterMediator filterMediator;
         private MediatorCollectionBuilder mediatorCollectionBuilder;
 
-
         public OtherwiseMediatorBuilder(FilterMediator filterMediator,
                                         MediatorCollectionBuilder mediatorCollectionBuilder) {
             this.filterMediator = filterMediator;
             this.mediatorCollectionBuilder = mediatorCollectionBuilder;
-
         }
-
 
         public MediatorCollectionBuilder otherwise(MediatorCollectionBuilder collectionBuilder) {
             filterMediator.addotherwiseMediators(collectionBuilder.getMediatorCollection());
             mediatorCollectionBuilder.getMediatorCollection().addMediator(filterMediator);
             return mediatorCollectionBuilder;
         }
-
     }
 
 }

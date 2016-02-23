@@ -49,8 +49,8 @@ import java.util.Map;
  */
 public class WUMLDeployer implements Deployer {
 
-
     private ArtifactType artifactType;
+
     private URL directoryLocation;
 
     private Map<String, ESBConfigHolder> artifactMap = new HashMap<>();
@@ -58,7 +58,6 @@ public class WUMLDeployer implements Deployer {
     private static final Logger logger = LoggerFactory.getLogger(WUMLDeployer.class);
 
     public static final String EXTERNAL_DSL_CONFIGS_DIRECTORY = "wuml";
-
 
     @Override
     public void init() {
@@ -68,7 +67,6 @@ public class WUMLDeployer implements Deployer {
         } catch (MalformedURLException e) {
             logger.error("Error while initializing directoryLocation" + directoryLocation.getPath(), e);
         }
-
     }
 
     @Override
@@ -81,7 +79,6 @@ public class WUMLDeployer implements Deployer {
         } catch (FileNotFoundException e) {
             logger.error("Error While Creating InputStream from file " + file.getName());
         }
-
 
         return artifact.getFile().getName();
     }
@@ -131,7 +128,6 @@ public class WUMLDeployer implements Deployer {
             WUMLBaseListenerImpl wumlBaseListener = new WUMLBaseListenerImpl();
 
             parser.addParseListener(wumlBaseListener);
-
             parser.script();
 
             WUMLConfigurationBuilder.IntegrationFlow integrationFlow = wumlBaseListener.getIntegrationFlow();
@@ -142,13 +138,13 @@ public class WUMLDeployer implements Deployer {
             }
 
         } catch (IOException e) {
-            logger.error("Error while creating cheeta object model", e);
+            logger.error("Error while creating Cheetah object model", e);
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    logger.error("Cannot close the input stream", e);
+                    logger.error("Error while closing the input stream", e);
                 }
             }
         }

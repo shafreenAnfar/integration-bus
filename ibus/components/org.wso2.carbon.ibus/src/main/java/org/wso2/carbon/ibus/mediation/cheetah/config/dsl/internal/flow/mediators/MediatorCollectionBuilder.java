@@ -28,15 +28,12 @@ import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Condition;
  */
 public class MediatorCollectionBuilder {
 
-
     private MediatorCollection mediatorCollection;
-
 
     public MediatorCollectionBuilder call(String endpointKey) {
         mediatorCollection.addMediator(new CallMediator(endpointKey));
         return this;
     }
-
 
     public void respond() {
         mediatorCollection.addMediator(RespondMediatorBuilder.respond());
@@ -46,7 +43,6 @@ public class MediatorCollectionBuilder {
         mediatorCollection.addMediator(mediator);
         return this;
     }
-
 
     public FilterMediatorBuilder.ThenMediatorBuilder filter(Condition condition) {
         return FilterMediatorBuilder.filter(condition, this);

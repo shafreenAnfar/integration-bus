@@ -22,15 +22,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.WUMLConfigurationBuilder;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.WUMLLoader;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.JavaConfigurationBuilder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.DSLLoader;
 import org.wso2.carbon.messaging.TransportSender;
 
 
 /**
- * Service component for gate way.
+ * Service component for IntegrationBus.
  */
 @Component(
         name = "CheetahServiceComponent",

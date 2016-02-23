@@ -28,8 +28,6 @@ import org.wso2.carbon.kernel.deployment.Deployer;
 import org.wso2.carbon.messaging.CarbonMessageProcessor;
 import org.wso2.carbon.messaging.TransportListenerManager;
 
-import java.io.File;
-
 /**
  * OSGi Bundle Activator of the Cheetah Carbon component.
  */
@@ -45,7 +43,8 @@ public class Activator implements BundleActivator {
             //Creating the processor and registering the service
             CheetahMessageProcessor engine = new CheetahMessageProcessor();
             bundleContext.registerService(CarbonMessageProcessor.class, engine, null);
-            bundleContext.registerService(TransportListenerManager.class, InboundEndpointManager.getInstance(), null);
+            bundleContext.registerService(TransportListenerManager.class,
+                                          InboundEndpointManager.getInstance(), null);
             bundleContext.registerService(Deployer.class, new WUMLDeployer(), null);
 
             //Registering dispatchers
@@ -59,8 +58,6 @@ public class Activator implements BundleActivator {
     }
 
     public void stop(BundleContext bundleContext) throws Exception {
-
     }
-
 
 }

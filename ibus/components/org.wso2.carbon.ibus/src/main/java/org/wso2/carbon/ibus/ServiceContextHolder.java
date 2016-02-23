@@ -31,9 +31,7 @@ public class ServiceContextHolder {
 
     private Map<String, TransportSender> transportSenders = new HashMap<>();
 
-
     private ServiceContextHolder() {
-
     }
 
     private static ServiceContextHolder instance = new ServiceContextHolder();
@@ -43,7 +41,6 @@ public class ServiceContextHolder {
     }
 
     public void addTransportSender(TransportSender transportSender) {
-
         transportSenders.put(transportSender.getId(), transportSender);
     }
 

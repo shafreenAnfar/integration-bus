@@ -32,13 +32,10 @@ public class OutboundEndpointFactory {
             case http:
                 outboundEndpoint = new HTTPOutboundEndpoint(name, uri);
                 break;
-
             case jms:
                 break;
-
             case mqtt:
                 break;
-
             default:
                 break;
         }

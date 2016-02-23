@@ -22,7 +22,6 @@ import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.WUMLConfigurat
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.inbound.InboundEndpointFactory;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.inbound.InboundEndpointType;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.flow.MediatorFactory;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.flow.MediatorType;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.outbound.OutboundEndpointFactory;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.outbound.OutboundEndpointType;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.StringParserUtil;
@@ -44,9 +43,7 @@ import java.util.regex.Pattern;
 /**
  * Implementation class of the ANTLR generated listener class
  */
-
 public class WUMLBaseListenerImpl extends WUMLBaseListener {
-
 
     WUMLConfigurationBuilder.IntegrationFlow integrationFlow;
     Stack<String> pipelineStack = new Stack<String>();
@@ -58,10 +55,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
         this.integrationFlow = new WUMLConfigurationBuilder.IntegrationFlow("default");
     }
 
-    ;
-
     public WUMLBaseListenerImpl(WUMLConfigurationBuilder.IntegrationFlow integrationFlow) {
-
         this.integrationFlow = integrationFlow;
     }
 
@@ -170,16 +164,13 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
         String mediatorName = StringParserUtil.getValueWithinDoubleQuotes(ctx.MEDIATORNAMESTRINGX().getText());
         String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.CONFIGSDEF().getText());
         Mediator mediator = MediatorFactory.getInstance().getMediator(mediatorName, configurations);
-        if(ifMultiThenBlockStarted) {
+        if (ifMultiThenBlockStarted) {
             filterMediatorStack.peek().addThenMediator(mediator);
 
-        } else if(ifElseBlockStarted) {
+        } else if (ifElseBlockStarted) {
             filterMediatorStack.peek().addOtherwiseMediator(mediator);
 
         } else {
-//            String mediatorName = StringParserUtil.getValueWithinDoubleQuotes(ctx.MEDIATORNAMESTRINGX().getText());
-//            String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.CONFIGSDEF().getText());
-//            Mediator mediator = MediatorFactory.getMediator(MediatorType.valueOf(mediatorName), configurations);
             integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
         }
         super.exitProcessmessageDef(ctx);
@@ -191,16 +182,13 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
         String mediatorName = ctx.MEDIATORNAME().getText();
         String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.ARGUMENTLISTDEF().getText());
         Mediator mediator = MediatorFactory.getInstance().getMediator(mediatorName, configurations);
-        if(ifMultiThenBlockStarted) {
+        if (ifMultiThenBlockStarted) {
             filterMediatorStack.peek().addThenMediator(mediator);
 
-        } else if(ifElseBlockStarted) {
+        } else if (ifElseBlockStarted) {
             filterMediatorStack.peek().addOtherwiseMediator(mediator);
 
         } else {
-//            String mediatorName = StringParserUtil.getValueWithinDoubleQuotes(ctx.MEDIATORNAMESTRINGX().getText());
-//            String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.CONFIGSDEF().getText());
-//            Mediator mediator = MediatorFactory.getMediator(MediatorType.valueOf(mediatorName), configurations);
             integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
         }
         super.exitMessageProcessingDef(ctx);
@@ -275,8 +263,13 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     public void exitConditionStatement(WUMLParser.ConditionStatementContext ctx) {
         String sourceDefinition = StringParserUtil.getValueWithinBrackets(ctx.conditionDef().SOURCEDEF().getText());
         String[] stringDefs = sourceDefinition.split(",");
-        Source source = new Source(StringParserUtil.getValueWithinDoubleQuotes(stringDefs[0]), Scope.valueOf(StringParserUtil.getValueWithinDoubleQuotes(stringDefs[1])));
-        Condition condition = new Condition(source, Pattern.compile(StringParserUtil.getValueWithinDoubleQuotes(ctx.conditionDef().PATTERNDEF().getText())));
+        Source source = new Source(StringParserUtil.getValueWithinDoubleQuotes(stringDefs[0]),
+                                   Scope.valueOf(StringParserUtil.getValueWithinDoubleQuotes(stringDefs[1])));
+        Condition condition =
+                new Condition(source,
+                              Pattern.compile(
+                                      StringParserUtil.getValueWithinDoubleQuotes(
+                                              ctx.conditionDef().PATTERNDEF().getText())));
         FilterMediator filterMediator = new FilterMediator(condition);
         integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(filterMediator);
         filterMediatorStack.push(filterMediator);

@@ -87,7 +87,6 @@ public class MediatorFactory {
         return mediator;
     }
 
-
     private void loadMediators() {
         for (Class c : mediators) {
             try {
@@ -101,9 +100,10 @@ public class MediatorFactory {
         registerExtensions();
     }
 
-
+    /**
+     * Register Mediators from external bundles
+     */
     private void registerExtensions() {
-
         Iterator it = Service.providers(Mediator.class);
         while (it.hasNext()) {
             Mediator mediator = (Mediator) it.next();
