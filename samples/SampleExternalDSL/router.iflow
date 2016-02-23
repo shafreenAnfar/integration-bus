@@ -1,6 +1,6 @@
 @startuml
 
-participant integrationflowRouter : IntegrationFlow("Message_Router")
+IntegrationFlow : Message_Router
 
 participant inboundendpointListener : InboundEndpoint(protocol("http"),port(8080),context("/router"))
 
