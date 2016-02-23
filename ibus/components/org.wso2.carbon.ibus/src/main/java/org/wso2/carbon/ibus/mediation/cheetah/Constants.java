@@ -21,5 +21,5 @@ package org.wso2.carbon.ibus.mediation.cheetah;
 
 public class Constants {
 
-    public static final String CHEETAH_ERROR_HANDLER ="CHEETAH_ERROR_HANDLER";
+    public static final String CHEETAH_ERROR_HANDLER = "CHEETAH_ERROR_HANDLER";
 }

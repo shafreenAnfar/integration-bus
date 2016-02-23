@@ -37,9 +37,6 @@ public class Activator implements BundleActivator {
 
     private static final Logger log = LoggerFactory.getLogger(Activator.class);
 
-    public static final String CHEETAH_DSL_CONFIGS_DIRECTORY = "conf" + File.separator + "cheetah"
-                                                               + File.separator + "dsl";
-
     public void start(BundleContext bundleContext) throws Exception {
 
         try {

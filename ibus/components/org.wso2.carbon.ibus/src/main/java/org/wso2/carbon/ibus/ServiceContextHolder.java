@@ -52,7 +52,7 @@ public class ServiceContextHolder {
     }
 
     public TransportSender getSender() {
-        //todo need to write a logic to identify the correct sender
+        //TODO: need to write a logic to identify the correct sender
         Map.Entry<String, TransportSender> senderEntry = transportSenders.entrySet().iterator().next();
         return senderEntry.getValue();
     }

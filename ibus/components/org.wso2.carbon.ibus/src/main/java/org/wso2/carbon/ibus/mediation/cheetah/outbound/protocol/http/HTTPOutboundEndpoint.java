@@ -40,49 +40,31 @@ public class HTTPOutboundEndpoint extends OutboundEndpoint {
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
             throws Exception {
         processRequest(carbonMessage);
-
         ServiceContextHolder.getInstance().getSender().send(carbonMessage, carbonCallback);
         return false;
     }
 
-    private void setCarbonHeadersToBackendRequest(CarbonMessage request, String host, int port,
-                                                  String urls) {
+    private void processRequest(CarbonMessage cMsg) throws MalformedURLException {
 
-        if (request != null) {
-
-            request.setProperty(Constants.HOST, host);
-            request.setProperty(Constants.PORT, port);
-
-
-            request.setProperty(Constants.TO, urls);
-
-
-            if (port != 80) {
-                request.getHeaders().put(Constants.HTTP_HOST, host + ":" + port);
-            } else {
-                request.getHeaders().put(Constants.HTTP_HOST, host);
-            }
-
-        }
-    }
-
-    private void processRequest(CarbonMessage carbonMessage) throws MalformedURLException {
         URL url = new URL(uri);
         String host = url.getHost();
         int port = (url.getPort() == -1) ? 80 : url.getPort();
-        String urls = url.getPath();
-        setCarbonHeadersToBackendRequest(carbonMessage, host, port, urls);
+        String urlPath = url.getPath();
 
+        cMsg.setProperty(Constants.HOST, host);
+        cMsg.setProperty(Constants.PORT, port);
+        cMsg.setProperty(Constants.TO, urlPath);
+
+        if (port != 80) {
+            cMsg.getHeaders().put(Constants.HTTP_HOST, host + ":" + port);
+        } else {
+            cMsg.getHeaders().put(Constants.HTTP_HOST, host);
+        }
     }
 
     public HTTPOutboundEndpoint(String name, String uri) {
         super(name);
         this.uri = uri;
     }
-
-    public String getUri() {
-        return uri;
-    }
-
 
 }

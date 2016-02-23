@@ -66,17 +66,4 @@ public class CheetahServiceComponent {
     protected void removeJavaDSL(JavaConfigurationBuilder dsl) {
     }
 
-    @Reference(
-            name = "wuml-dsl",
-            service = WUMLConfigurationBuilder.class,
-            cardinality = ReferenceCardinality.OPTIONAL,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "removeWumlDSL"
-    )
-    protected void addWumlDSL(WUMLConfigurationBuilder dsl) {
-        WUMLLoader.loadDSL(dsl);
-    }
-
-    protected void removeWumlDSL(WUMLConfigurationBuilder dsl) {
-    }
 }
