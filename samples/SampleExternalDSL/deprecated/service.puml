@@ -1,6 +1,6 @@
 @startuml
 
-participant integrationflowlicense : IntegrationFlow("Message_Filter_New")
+IntegrationFlow : SampleFlow
 
 participant inboundendpointhttp1 : InboundEndpoint(protocol("http"),port(8290),context("/sample/request"))
 
@@ -12,22 +12,22 @@ participant outboundendpoint2 : OutboundEndpoint(protocol("http"),host("http://l
 
 inboundendpointhttp1 -> pipeline1 : "request"
 
-log("before.filter")
+log("before the filter")
 
-alt condition(source("routeId","Transport"),pattern("r1"))
-    log("filter.true")
+alt condition(source("$header.routeId"),pattern("r1"))
+    log("filter condition is true")
     call("outboundendpoint1")
     pipeline1 -> outboundendpoint1 : "Validate_policy"
     outboundendpoint1 -> pipeline1 : "Validate_response"
 
 else
-    log("filter.false")
+    log("filter condition is false")
     call("outboundendpoint2")
     pipeline1 -> outboundendpoint2 : "Validate_policy"
     outboundendpoint2 -> pipeline1 : "Validate_response"
 end
 
-log("after.filter")
+log("after the filter")
 respond()
 
 pipeline1 -> inboundendpointhttp1 : "Final_Response"

@@ -1,4 +1,4 @@
-@start
+@startuml
 
 IntegrationFlow : SampleFlow1
 
@@ -30,4 +30,4 @@ log("after.filter")
 pipeline1 -> inboundendpointhttp1 : "Final_Response"
 
 
-@end
+@enduml

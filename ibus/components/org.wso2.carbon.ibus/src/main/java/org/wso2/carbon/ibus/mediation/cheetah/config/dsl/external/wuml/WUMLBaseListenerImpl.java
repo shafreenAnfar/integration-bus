@@ -294,10 +294,8 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
 
     @Override
     public void exitConditionStatement(WUMLParser.ConditionStatementContext ctx) {
-        String sourceDefinition = StringParserUtil.getValueWithinBrackets(ctx.conditionDef().SOURCEDEF().getText());
-        String[] stringDefs = sourceDefinition.split(",");
-        Source source = new Source(StringParserUtil.getValueWithinDoubleQuotes(stringDefs[0]),
-                                   Scope.valueOf(StringParserUtil.getValueWithinDoubleQuotes(stringDefs[1])));
+        String sourceDefinition = StringParserUtil.getValueWithinDoubleQuotes(ctx.conditionDef().SOURCEDEF().getText());
+        Source source = new Source(sourceDefinition);
         Condition condition =
                 new Condition(source,
                               Pattern.compile(
