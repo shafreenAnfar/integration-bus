@@ -23,6 +23,7 @@ import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.IntegrationSo
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.flow.Message;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Scope;
 import org.wso2.carbon.ibus.mediation.cheetah.outbound.OutboundEndpoint;
+
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.flow.mediators.filter.FilterMediatorBuilder.pattern;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.flow.mediators.filter.FilterMediatorBuilder.source;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.inbound.http.HTTPInboundEPBuilder.context;
@@ -44,14 +45,15 @@ public class Router extends IntegrationSolution {
         OutboundEndpoint outboundEndpoint2 = defineHTTPOutboundEndpoint("outbound1",
                                                                         uri("http://localhost:8280/backend2"));
 
-        Message m = receiveFrom(http(port(7777), context("/router"))).
-                          directTo(defineMessageFlow("pipeline1")).getMessage();
+        Message message = receiveFrom(http(port(7777), context("/router"))).
+                   directTo(defineMessageFlow("pipeline1")).getMessage();
 
-        m.filter(source("routeId", Scope.Transport), pattern("r1")).
-                         then().
-                              call(outboundEndpoint).end().
-                         otherwise().
-                              call(outboundEndpoint2).end().
+        message.
+                   filter(source("$header.routeId"), pattern("r1")).
+                   then().
+                   call(outboundEndpoint).end().
+                   otherwise().
+                   call(outboundEndpoint2).end().
                    respond();
 
         return getConfiguration();

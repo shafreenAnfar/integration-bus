@@ -28,10 +28,21 @@ public class Source {
 
     private String key;
 
+    private String value;
+
 
     public Source(String key, Scope scope) {
         this.scope = scope;
         this.key = key;
+    }
+
+    public Source(String value) {
+        this.value = value;
+        if (this.value.contains("$header")) {
+            key = this.value.substring(this.value.indexOf(".") + 1);
+            scope = Scope.HEADER;
+        }
+
     }
 
     public Scope getScope() {
