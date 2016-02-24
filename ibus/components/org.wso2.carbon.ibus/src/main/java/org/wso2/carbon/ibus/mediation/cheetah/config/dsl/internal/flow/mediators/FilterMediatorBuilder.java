@@ -30,9 +30,9 @@ import java.util.regex.Pattern;
  */
 public class FilterMediatorBuilder {
 
-    public static ThenMediatorBuilder filter(Condition condition,
+    public static ThenMediatorBuilder filter(Source source, Pattern pattern,
                                              MediatorCollectionBuilder mediatorCollectionBuilder) {
-        return new ThenMediatorBuilder(new FilterMediator(condition), mediatorCollectionBuilder);
+        return new ThenMediatorBuilder(new FilterMediator(source, pattern), mediatorCollectionBuilder);
     }
 
     public static Condition condition(Source source, Pattern pattern) {

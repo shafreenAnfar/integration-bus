@@ -22,6 +22,9 @@ import org.wso2.carbon.ibus.mediation.cheetah.flow.Mediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.MediatorCollection;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.CallMediator;
 import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Condition;
+import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Source;
+
+import java.util.regex.Pattern;
 
 /**
  * A class that responsible for build collection of mediators
@@ -44,8 +47,8 @@ public class MediatorCollectionBuilder {
         return this;
     }
 
-    public FilterMediatorBuilder.ThenMediatorBuilder filter(Condition condition) {
-        return FilterMediatorBuilder.filter(condition, this);
+    public FilterMediatorBuilder.ThenMediatorBuilder filter(Source source, Pattern pattern) {
+        return FilterMediatorBuilder.filter(source, pattern, this);
     }
 
     public MediatorCollectionBuilder() {
