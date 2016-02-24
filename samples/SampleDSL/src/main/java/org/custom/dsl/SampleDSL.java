@@ -50,7 +50,7 @@ public class SampleDSL extends JavaConfigurationBuilder {
 
         router.inboundEndpoint("inboundEndpoint1", http(port(8280), context("/router"))).
                pipeline("pipeline1").
-                   filter(condition(source("routeId", Scope.Transport), pattern("r1"))).
+                   filter(condition(source("$header.routeId"), pattern("r1"))).
                    then(call("outboundEp1")).
                    otherwise(call("outboundEp2")).
                    respond();

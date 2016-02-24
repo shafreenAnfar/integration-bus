@@ -23,7 +23,7 @@ package org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter;
  */
 public enum Scope {
 
-    Transport,
+    HEADER,
     MessageBody,
     MessageHeader
 

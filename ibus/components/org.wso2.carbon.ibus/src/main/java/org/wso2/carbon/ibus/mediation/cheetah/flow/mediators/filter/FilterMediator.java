@@ -84,7 +84,7 @@ public class FilterMediator extends AbstractMediator implements FlowController {
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
                throws Exception {
 
-        if (source.getScope().equals(Scope.Transport)) {
+        if (source.getScope().equals(Scope.HEADER)) {
 
             if (Evaluator.isHeaderMatched(carbonMessage, source, pattern)) {
                 childThenMediatorList.getFirstMediator().
