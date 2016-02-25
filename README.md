@@ -28,3 +28,21 @@ Samples are available at samples/JavaDSLSamples directory.
 A sample can be built using maven and the outcome is an osgi bundle which need to be deployed to 
  <CARBON_HOME>/osgi/dropins directory
 
+
+
+Architecture
+------------
+
+<b>High Level Architecture</b>
+
+![alt tag](docs/gw-architecture.png)
+
+
+<b>Engine Architecture</b>
+
+![alt tag](docs/engine-architecture.png)
+
+<b>Configuration Model</b>
+
+![alt tag](docs/config-model.png)
+
