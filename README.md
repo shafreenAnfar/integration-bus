@@ -2,9 +2,6 @@
 
 This is a temporary repo for Integration Bus (Next Generation of WSO2 ESB) work.
 
-Sample Java DSL is available at sample/SampleDSL which can be built using maven.
-After building the sample an osgi bundle is getting generated at target which we can copy to the <CARBON_HOME>/osgi/dropins directory
-
 
 Steps for Building
 ------------------
@@ -15,3 +12,11 @@ Steps for Building
 2 https://github.com/isururanawaka/carbon-transports branch : dynamicportbinding
 
 3 Build master branch of this
+
+
+Running Samples
+---------------
+
+Sample Integration Flow configuration is available at samples/SampleExternalDSL.
+
+Configuration can be deployed by dropping the file to  <CARBON_HOME>/deployment/integration-flows/ directory.
