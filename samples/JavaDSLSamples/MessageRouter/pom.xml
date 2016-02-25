@@ -21,14 +21,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wso2</groupId>
-        <artifactId>wso2</artifactId>
-        <version>2</version>
+        <groupId>org.wso2.carbon.ibus</groupId>
+        <artifactId>org.wso2.carbon.ibus.samples</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <name>Sample Java DSL</name>
-    <groupId>org.sample.dsl</groupId>
-    <artifactId>SampleDSL</artifactId>
+    <name>Message Router Java DSL Sample 1</name>
+    <groupId>org.wso2.carbon.ibus.samples.router</groupId>
+    <artifactId>MessageRouter</artifactId>
     <version>1.0</version>
     <packaging>bundle</packaging>
 
@@ -89,9 +90,9 @@
     </build>
 
     <properties>
-       <bundle.activator>org.custom.dsl.Activator</bundle.activator>
+       <bundle.activator>org.wso2.carbon.ibus.samples.router.Activator</bundle.activator>
         <export.package>
-            org.custom.dsl.*;version="1.0.0"
+            org.wso2.carbon.ibus.samples.router.*;version="1.0.0"
         </export.package>
         <import.package>
             org.osgi.framework.*;version="${osgi.framework.import.version.range}",

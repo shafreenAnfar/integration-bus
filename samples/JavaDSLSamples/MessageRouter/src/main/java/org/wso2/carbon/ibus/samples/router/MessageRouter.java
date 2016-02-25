@@ -16,19 +16,10 @@
 * under the License.
 */
 
-package org.custom.dsl;
+package org.wso2.carbon.ibus.samples.router;
 
 
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.JavaConfigurationBuilder;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.AbstractMediator;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Scope;
-import org.wso2.carbon.ibus.mediation.cheetah.inbound.protocols.http.HTTPInboundEP;
-import org.wso2.carbon.messaging.CarbonCallback;
-import org.wso2.carbon.messaging.CarbonMessage;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.flow.mediators.filter.FilterMediatorBuilder.*;
-
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.FilterMediatorBuilder.condition;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.FilterMediatorBuilder.pattern;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.FilterMediatorBuilder.source;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder.context;
@@ -42,7 +33,7 @@ import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.me
 /**
  * Sample Internal DSL in method 1
  */
-public class SampleDSL extends JavaConfigurationBuilder {
+public class MessageRouter extends JavaConfigurationBuilder {
 
     public IntegrationFlow configure() {
 

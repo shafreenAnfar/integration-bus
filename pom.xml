@@ -229,8 +229,7 @@
     <modules>
         <module>ibus/components/org.wso2.carbon.ibus</module>
         <module>ibus/features/org.wso2.carbon.ibus.feature</module>
-        <module>samples/SampleDSL</module>
-        <module>samples/SampleCustomMediator</module>
+        <module>samples</module>
         <module>product</module>
     </modules>
 </project>

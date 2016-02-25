@@ -51,7 +51,6 @@ public class SampleCustomMediator extends AbstractMediator {
 
     }
 
-
     public String getLogMessage() {
         return logMessage;
     }
