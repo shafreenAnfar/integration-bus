@@ -52,17 +52,32 @@ public class CheetahServiceComponent {
     }
 
     @Reference(
-            name = "java-dsl",
+            name = "java-dsl-1",
+            service = JavaConfigurationBuilder.class,
+            cardinality = ReferenceCardinality.OPTIONAL,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "removeJavaDSLType1"
+    )
+    protected void addJavaDSLType1(JavaConfigurationBuilder dsl) {
+        DSLLoader.loadDSLType1(dsl);
+    }
+
+    protected void removeJavaDSLType1(JavaConfigurationBuilder dsl) {
+    }
+
+
+    @Reference(
+            name = "java-dsl-2",
             service = IntegrationSolution.class,
             cardinality = ReferenceCardinality.OPTIONAL,
             policy = ReferencePolicy.DYNAMIC,
-            unbind = "removeJavaDSL"
+            unbind = "removeJavaDSLType2"
     )
-    protected void addJavaDSL(IntegrationSolution dsl) {
-        DSLLoader.loadDSL(dsl);
+    protected void addJavaDSLType2(IntegrationSolution dsl) {
+        DSLLoader.loadDSLType2(dsl);
     }
 
-    protected void removeJavaDSL(JavaConfigurationBuilder dsl) {
+    protected void removeJavaDSLType2(IntegrationSolution dsl) {
     }
 
 }

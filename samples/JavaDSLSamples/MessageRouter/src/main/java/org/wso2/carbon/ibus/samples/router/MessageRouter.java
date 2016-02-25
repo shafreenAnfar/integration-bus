@@ -39,7 +39,7 @@ public class MessageRouter extends JavaConfigurationBuilder {
 
         IntegrationFlow router = integrationFlow("Message_Router");
 
-        router.inboundEndpoint("inboundEndpoint1", http(port(8280), context("/router"))).
+        router.inboundEndpoint("inboundEndpoint1", http(port(6666), context("/router"))).
                pipeline("pipeline1").
                    filter(source("$header.routeId"), pattern("r1")).
                    then(call("outboundEp1")).

@@ -31,12 +31,35 @@ public class DSLLoader {
 
     private static final Logger log = LoggerFactory.getLogger(DSLLoader.class);
 
-    public static void loadDSL(IntegrationSolution javaConfigurationBuilder) {
+    /**
+     * Load Java DSL configuration file in type1
+     *
+     * @param javaConfigurationBuilder Java DSL
+     */
+    public static void loadDSLType1(JavaConfigurationBuilder javaConfigurationBuilder) {
         if (log.isDebugEnabled()) {
-            log.debug("Loading Java DSL..");
+            log.debug("Loading Type 1 Java DSL ..");
         }
         // Call the DSL
-       ESBConfigHolder esbConfigHolder = javaConfigurationBuilder.configure();
+        ESBConfigHolder esbConfigHolder =
+                javaConfigurationBuilder.configure().getEsbConfigHolder();
+
+        // Register the configuration
+        CheetahConfigRegistry.getInstance().addESBConfig(esbConfigHolder);
+
+    }
+
+    /**
+     * Load Java DSL configuration file in type2
+     *
+     * @param integrationSolution Java DSL
+     */
+    public static void loadDSLType2(IntegrationSolution integrationSolution) {
+        if (log.isDebugEnabled()) {
+            log.debug("Loading Type 2 Java DSL ..");
+        }
+        // Call the DSL
+       ESBConfigHolder esbConfigHolder = integrationSolution.configure();
 
         // Register the configuration
        CheetahConfigRegistry.getInstance().addESBConfig(esbConfigHolder);
