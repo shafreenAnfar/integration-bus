@@ -42,7 +42,7 @@ public class Router extends IntegrationSolution {
 
         OutboundEndpoint outboundEndpoint = defineHTTPOutboundEndpoint("outbound1",
                                                                        uri("http://localhost:8280/backend1"));
-        OutboundEndpoint outboundEndpoint2 = defineHTTPOutboundEndpoint("outbound1",
+        OutboundEndpoint outboundEndpoint2 = defineHTTPOutboundEndpoint("outbound2",
                                                                         uri("http://localhost:8280/backend2"));
 
         Message message = receiveFrom(http(port(7777), context("/router"))).
@@ -50,10 +50,10 @@ public class Router extends IntegrationSolution {
 
         message.
                    filter(source("$header.routeId"), pattern("r1")).
-                   then().
-                   call(outboundEndpoint).end().
-                   otherwise().
-                   call(outboundEndpoint2).end().
+                         then().
+                              call(outboundEndpoint).end().
+                         otherwise().
+                              call(outboundEndpoint2).end().
                    respond();
 
         return getConfiguration();

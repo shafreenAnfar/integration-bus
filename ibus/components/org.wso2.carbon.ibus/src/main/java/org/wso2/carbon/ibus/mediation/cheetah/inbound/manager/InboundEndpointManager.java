@@ -22,8 +22,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.InboundEndpoint;
 import org.wso2.carbon.ibus.mediation.cheetah.inbound.protocols.http.HTTPInboundEP;
+import org.wso2.carbon.ibus.mediation.cheetah.inbound.protocols.http.HTTPSInboundEP;
 import org.wso2.carbon.messaging.TransportListener;
 import org.wso2.carbon.messaging.TransportListenerManager;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -102,7 +104,12 @@ public class InboundEndpointManager implements TransportListenerManager {
                     }
                 }
 
-                transportListener.listen(host, port);
+                if (inboundEndpoint instanceof HTTPSInboundEP) {
+                    transportListener.listen(host, port, ((HTTPSInboundEP) inboundEndpoint).getParMap());
+                } else {
+                    transportListener.listen(host, port);
+                }
+
                 deployedInbounds.put(name, inboundEndpoint);
             } else {
                 earlyInbounds.put(inboundEndpoint.getName(), inboundEndpoint);

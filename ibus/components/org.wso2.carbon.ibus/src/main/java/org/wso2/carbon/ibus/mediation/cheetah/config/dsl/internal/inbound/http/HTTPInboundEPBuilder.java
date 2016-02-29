@@ -25,7 +25,7 @@ import org.wso2.carbon.ibus.mediation.cheetah.inbound.protocols.http.HTTPInbound
  */
 public class HTTPInboundEPBuilder {
 
-    private HTTPInboundEP httpInboundEP;
+    protected HTTPInboundEP httpInboundEP;
 
     public static HTTPInboundEP http(Port port, Context context) {
         HTTPInboundEP inboundEP = new HTTPInboundEP(port.getPort());

@@ -34,6 +34,9 @@ import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.me
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder.context;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder.http;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder.port;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPSInboundEPBuilder.keystorefile;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPSInboundEPBuilder.keystorepass;
+import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPSInboundEPBuilder.https;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.outbound.http.HTTPOutboundEPBuilder.httpOutboundEndpoint;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.outbound.http.HTTPOutboundEPBuilder.uri;
 import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.CallMediatorBuilder.*;
@@ -49,11 +52,19 @@ public class SampleDSL extends JavaConfigurationBuilder {
         IntegrationFlow router = integrationFlow("Message_Router");
 
         router.inboundEndpoint("inboundEndpoint1", http(port(8280), context("/router"))).
-               pipeline("pipeline1").
+                   pipeline("pipeline1").
                    filter(source("$header.routeId"), pattern("r1")).
                    then(call("outboundEp1")).
                    otherwise(call("outboundEp2")).
                    respond();
+
+//        router.inboundEndpoint("inboundEndpoint1", https(port(8280), context("/router"), keystorefile("pathtofile"),
+//                                                         keystorepass("passwordoffile"))).
+//                   pipeline("pipeline1").
+//                   filter(source("$header.routeId"), pattern("r1")).
+//                   then(call("outboundEp1")).
+//                   otherwise(call("outboundEp2")).
+//                   respond();
 
         router.outboundEndpoint(httpOutboundEndpoint("outboundEp1", uri("http://localhost:8280/backend1")));
 
