@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.custom.dsl;
+package org.wso2.carbon.ibus.samples.router2;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -27,13 +27,11 @@ import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.IntegrationSo
  */
 public class Activator implements BundleActivator {
     public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(IntegrationSolution.class, new Router(), null);
+        bundleContext.registerService(IntegrationSolution.class, new MessageRouter(), null);
     }
 
     public void stop(BundleContext bundleContext) throws Exception {
 
     }
-
-
 
 }

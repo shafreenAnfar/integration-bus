@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.custom.dsl;
+package org.wso2.carbon.ibus.samples.router2;
 
 import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.IntegrationSolution;
@@ -35,7 +35,7 @@ import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.outbou
 /**
  * Sample Internal DSL in  method 2
  */
-public class Router extends IntegrationSolution {
+public class MessageRouter extends IntegrationSolution {
 
     @Override
     public ESBConfigHolder configure() {

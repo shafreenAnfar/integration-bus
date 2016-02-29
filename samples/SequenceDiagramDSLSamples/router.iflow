@@ -14,7 +14,7 @@ inboundendpointListener -> pipeline1 : "request"
 
 log("Before Filter")
 
-alt condition(source("routeId","Transport"),pattern("r1"))
+alt condition(source("$header.routeId"),pattern("r1"))
     log("Filter True")
     pipeline1 -> outboundendpoint1 : "Request_to_Backend1"
     outboundendpoint1 -> pipeline1 : "Response_from_Backend1"
