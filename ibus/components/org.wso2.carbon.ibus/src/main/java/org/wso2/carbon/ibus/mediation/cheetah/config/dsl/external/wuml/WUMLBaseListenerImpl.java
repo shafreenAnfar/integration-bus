@@ -91,7 +91,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     @Override
     public void exitIntegrationFlowDefStatement(WUMLParser.IntegrationFlowDefStatementContext ctx) {
         //Create the integration flow when definition is found
-        integrationFlow = new WUMLConfigurationBuilder.IntegrationFlow(ctx.INTEGRATIONFLOWNAME().getText());
+        integrationFlow = new WUMLConfigurationBuilder.IntegrationFlow(ctx.IDENTIFIER().getText());
         super.exitIntegrationFlowDefStatement(ctx);
     }
 
@@ -110,7 +110,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
                 PORTDEF().getText()));
         String context = StringParserUtil.getValueWithinDoubleQuotes(ctx.inboundEndpointDef().CONTEXTDEF().getText());
         InboundEndpoint inboundEndpoint = InboundEndpointFactory.getInboundEndpoint(InboundEndpointType
-                .valueOf(protocolName), ctx.INBOUNDENDPOINTNAME().getText(), port);
+                .valueOf(protocolName), ctx.IDENTIFIER().getText(), port);
         if (inboundEndpoint instanceof HTTPInboundEP) {
             ((HTTPInboundEP) inboundEndpoint).setContext(context);
         }
@@ -120,7 +120,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
 
     @Override
     public void exitPipelineDefStatement(WUMLParser.PipelineDefStatementContext ctx) {
-        Pipeline pipeline = new Pipeline(ctx.PIPELINENAME().getText());
+        Pipeline pipeline = new Pipeline(ctx.IDENTIFIER().getText());
         integrationFlow.getEsbConfigHolder().addPipeline(pipeline);
         super.exitPipelineDefStatement(ctx);
     }
@@ -131,14 +131,9 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
                 PROTOCOLDEF().getText());
         String uri = StringParserUtil.getValueWithinDoubleQuotes(ctx.outboundEndpointDef().HOSTDEF().getText());
         OutboundEndpoint outboundEndpoint = OutboundEndpointFactory.getOutboundEndpoint(OutboundEndpointType
-                .valueOf(protocolName), ctx.OUTBOUNDENDPOINTNAME().getText(), uri);
+                .valueOf(protocolName), ctx.IDENTIFIER().getText(), uri);
         integrationFlow.getEsbConfigHolder().addOutboundEndpoint(outboundEndpoint);
         super.exitOutboundEndpointDefStatement(ctx);
-    }
-
-    @Override
-    public void exitMediatorDefStatement(WUMLParser.MediatorDefStatementContext ctx) {
-        super.exitMediatorDefStatement(ctx);
     }
 
     @Override
@@ -152,11 +147,6 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     }
 
     @Override
-    public void exitMediatorDef(WUMLParser.MediatorDefContext ctx) {
-        super.exitMediatorDef(ctx);
-    }
-
-    @Override
     public void exitOutboundEndpointDef(WUMLParser.OutboundEndpointDefContext ctx) {
         super.exitOutboundEndpointDef(ctx);
     }
@@ -167,26 +157,14 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     }
 
     @Override
-    public void exitProcessmessageDef(WUMLParser.ProcessmessageDefContext ctx) {
-        String mediatorName = StringParserUtil.getValueWithinDoubleQuotes(ctx.MEDIATORNAMESTRINGX().getText());
-        String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.CONFIGSDEF().getText());
-        Mediator mediator = MediatorFactory.getInstance().getMediator(mediatorName, configurations);
-        if (ifMultiThenBlockStarted) {
-            filterMediatorStack.peek().addThenMediator(mediator);
-
-        } else if (ifElseBlockStarted) {
-            filterMediatorStack.peek().addOtherwiseMediator(mediator);
-
-        } else {
-            integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
-        }
-        super.exitProcessmessageDef(ctx);
+    public void exitMediatorStatement(WUMLParser.MediatorStatementContext ctx) {
+        super.exitMediatorStatement(ctx);
     }
 
-
     @Override
-    public void exitMessageProcessingDef(WUMLParser.MessageProcessingDefContext ctx) {
-        String mediatorName = ctx.MEDIATORNAME().getText();
+    public void exitMediatorDef(WUMLParser.MediatorDefContext ctx) {
+        //String mediatorName = ctx.MEDIATORNAME().getText();
+        String mediatorName = ctx.IDENTIFIER().getText();
         String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.ARGUMENTLISTDEF().getText());
         Mediator mediator = MediatorFactory.getInstance().getMediator(mediatorName, configurations);
         if (ifMultiThenBlockStarted) {
@@ -198,12 +176,12 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
         } else {
             integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
         }
-        super.exitMessageProcessingDef(ctx);
+        super.exitMediatorDef(ctx);
     }
 
     @Override
-    public void exitProcessingStatement(WUMLParser.ProcessingStatementContext ctx) {
-        super.exitProcessingStatement(ctx);
+    public void exitConditionDef(WUMLParser.ConditionDefContext ctx) {
+        super.exitConditionDef(ctx);
     }
 
     @Override
@@ -214,7 +192,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     @Override
     public void exitInvokeFromSource(WUMLParser.InvokeFromSourceContext ctx) {
         //String inbountEndpointName = ctx.INBOUNDENDPOINTNAME().getText();
-        String pipelineName = ctx.PIPELINENAME().getText();
+        String pipelineName = ctx.IDENTIFIER(1).getText();
         integrationFlow.getEsbConfigHolder().getInboundEndpoint().setPipeline(pipelineName);
         pipelineStack.push(pipelineName);
         //activePipeline = pipelineName;
@@ -223,7 +201,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
 
     @Override
     public void exitInvokeToTarget(WUMLParser.InvokeToTargetContext ctx) {
-        Mediator mediator = MediatorFactory.getInstance().getMediator("call", ctx.OUTBOUNDENDPOINTNAME().getText());
+        Mediator mediator = MediatorFactory.getInstance().getMediator("call", ctx.IDENTIFIER(1).getText());
         if(ifMultiThenBlockStarted) {
             filterMediatorStack.peek().addThenMediator(mediator);
 
@@ -242,7 +220,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
 
     @Override
     public void exitInvokeFromTarget(WUMLParser.InvokeFromTargetContext ctx) {
-        String pipelineName = ctx.PIPELINENAME().getText();
+        String pipelineName = ctx.IDENTIFIER(1).getText();
         pipelineStack.push(pipelineName);
         super.exitInvokeFromTarget(ctx);
     }
@@ -344,7 +322,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
 
     @Override
     public void exitRefStatement(WUMLParser.RefStatementContext ctx) {
-        pipelineStack.push(ctx.PIPELINENAME().getText());
+        pipelineStack.push(ctx.IDENTIFIER().getText());
         super.exitRefStatement(ctx);
     }
 

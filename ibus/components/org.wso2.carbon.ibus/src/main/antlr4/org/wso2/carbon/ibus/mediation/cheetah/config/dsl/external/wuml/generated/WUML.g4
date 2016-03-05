@@ -20,8 +20,13 @@ grammar WUML;
 
 /* --- PARSER RULES --- */
 
+// Definition of the script
+
 script
     : ( handler | NEWLINE )* EOF;
+
+/* Definition of the handler which contains the comments, @startuml,
+statements, @enduml */
 
 handler
     : (commentStatement NEWLINE+)?
@@ -29,13 +34,15 @@ handler
           statementList
       ENDUMLX ;
 
+// Definition of the statement list in the script
 statementList
     : ( statement NEWLINE+ )* ;
 
+// Definition of different types of statements
 statement
     : titleStatement
     | participantStatement
-    | processingStatement
+    | mediatorStatement
     | routingStatement
     | parallelStatement
     | ifStatement
@@ -45,63 +52,83 @@ statement
     | commentStatement
     ;
 
-
-/* PARSER: built-in command rules */
-
+// Definition of the high level name for this message flow
 titleStatement
-    : INTEGRATIONFLOWX WS+ COLON WS+ IDENTIFIER;
+    : IDENTIFIER WS+ ASX WS+ INTEGRATIONFLOWX;
 
+/* Definition of the participating components which represents a
+lifeline in the visual representation */
 participantStatement
     : integrationFlowDefStatement
     | inboundEndpointDefStatement
     | pipelineDefStatement
     | outboundEndpointDefStatement
-    | mediatorDefStatement;
+    ;
 
+// Definition for a IntegrationFlow
 integrationFlowDefStatement
-    : PARTICIPANT WS+ INTEGRATIONFLOWNAME WS+ COLON WS+ integrationFlowDef;
+    : IDENTIFIER WS+ ASX WS+ integrationFlowDef;
 
+// Definition for a Inbound Endpoint
 inboundEndpointDefStatement
-    : PARTICIPANT WS+ INBOUNDENDPOINTNAME WS+ COLON WS+ inboundEndpointDef;
+    : IDENTIFIER WS+ ASX WS+ inboundEndpointDef;
 
+// Definition for a pipeline
 pipelineDefStatement
-    : PARTICIPANT WS+ PIPELINENAME WS+ COLON WS+ pipelineDef;
+    : IDENTIFIER WS+ ASX WS+ pipelineDef;
 
+// Definition for an Outbound Endpoint
 outboundEndpointDefStatement
-    : PARTICIPANT WS+ OUTBOUNDENDPOINTNAME WS+ COLON WS+ outboundEndpointDef;
+    : IDENTIFIER WS+ ASX WS+ outboundEndpointDef;
 
-mediatorDefStatement
-    : PARTICIPANT WS+ MEDIATORNAME WS+ COLON WS+ mediatorDef;
+// Definition of a mediator statement
+mediatorStatement : mediatorDef;
 
-processingStatement : processmessageDef | messageProcessingDef;
-
+// Integration Flow constructor statement
 integrationFlowDef: INTEGRATIONFLOWX LPAREN STRINGX RPAREN;
 
-inboundEndpointDef: INBOUNDENDPOINTX LPAREN PROTOCOLDEF COMMA_SYMBOL PORTDEF COMMA_SYMBOL CONTEXTDEF RPAREN;
+// Inbound Endpoint constructor statement
+inboundEndpointDef: INBOUNDENDPOINTX LPAREN PROTOCOLDEF COMMA_SYMBOL PORTDEF
+                    COMMA_SYMBOL CONTEXTDEF RPAREN;
 
-pipelineDef: PIPELINEX LPAREN STRINGX RPAREN;
+// Pipeline constructor statement
+pipelineDef: PIPELINEX LPAREN COMMENTSTRINGX RPAREN;
 
-mediatorDef: MEDIATORX LPAREN STRINGX RPAREN;
+// Outbound Endpoint constructor statement
+outboundEndpointDef: OUTBOUNDENDPOINTX LPAREN PROTOCOLDEF COMMA_SYMBOL
+                     HOSTDEF RPAREN;
 
-outboundEndpointDef: OUTBOUNDENDPOINTX LPAREN PROTOCOLDEF COMMA_SYMBOL HOSTDEF RPAREN;
+// Mediator constructor statement
+mediatorDef: IDENTIFIER ARGUMENTLISTDEF WS+ ASX WS+ MEDIATORX;
 
-processmessageDef: PROCESS_MESSAGEX LPAREN MEDIATORNAMESTRINGX COMMA_SYMBOL CONFIGSDEF RPAREN;
 
-messageProcessingDef: MEDIATORNAME ARGUMENTLISTDEF;
-      
 routingStatement
     : invokeFromSource
     | invokeFromTarget
     | invokeToSource
-    | invokeToTarget;
+    | invokeToTarget
+    ;
 
-invokeFromSource: INBOUNDENDPOINTNAME WS+ ARROW WS+ PIPELINENAME WS+ COLON WS+ STRINGX;
-invokeToTarget: PIPELINENAME WS+ ARROW WS+ OUTBOUNDENDPOINTNAME WS+ COLON WS+ STRINGX;
-invokeFromTarget: OUTBOUNDENDPOINTNAME WS+ ARROW WS+ PIPELINENAME WS+ COLON WS+ STRINGX;
-invokeToSource: PIPELINENAME WS+ ARROW WS+ INBOUNDENDPOINTNAME WS+ COLON WS+ STRINGX;
+invokeFromSource: IDENTIFIER WS+ ARROW1X WS+ IDENTIFIER WS+
+                  COMMENTX WS+ COMMENTSTRINGX;
+invokeToTarget: IDENTIFIER WS+ ARROW2X WS+ IDENTIFIER WS+
+                COMMENTX WS+ COMMENTSTRINGX;
+invokeFromTarget: IDENTIFIER WS+ ARROW3X WS+ IDENTIFIER WS+
+                  COMMENTX WS+ COMMENTSTRINGX;
+invokeToSource: IDENTIFIER WS+ ARROW4X WS+ IDENTIFIER WS+
+                COMMENTX WS+ COMMENTSTRINGX;
 
-/* -> PAR block rules */
 
+// Message routing statement
+/*
+routingStatement
+    : genericRoutingStatement;
+
+genericRoutingStatement: IDENTIFIER WS+ ARROW WS+ IDENTIFIER WS+ COMMENTX
+                         WS+ STRINGX;
+*/
+
+// Definition of 'par' statement for parallel execution
 parallelStatement
     : PAR NEWLINE?
       NEWLINE parMultiThenBlock
@@ -115,13 +142,17 @@ parMultiThenBlock
 parElseBlock
     : (ELSE NEWLINE statementList)+ ;
 
-/* -> ALT block rules */
-
+// Definition of 'alt' statement for if condition
 ifStatement
-    : ALT WS conditionStatement NEWLINE
+    : ALT WS WITH WS conditionStatement NEWLINE
       NEWLINE? ifMultiThenBlock
       END
     ;
+
+conditionStatement
+    : conditionDef;
+
+conditionDef: CONDITIONX LPAREN SOURCEDEF COMMA_SYMBOL PATTERNDEF RPAREN;
 
 ifMultiThenBlock
     : statementList NEWLINE (ifElseBlock)? ;
@@ -130,31 +161,28 @@ ifMultiThenBlock
 ifElseBlock
     : (ELSE NEWLINE statementList)+ ;
 
-/* -> GROUP block rules */
+// Definition of group statement
 groupStatement
     : GROUP WS IDENTIFIER NEWLINE
       NEWLINE? statementList
       END
     ;
 
-/* -> LOOP block rules */
+// Definition of loop statement
 loopStatement
     : LOOP WS expression NEWLINE
       NEWLINE? statementList
       END
     ;
-
+// Definition of reference statement
 refStatement
-    : REF WS PIPELINENAME NEWLINE?;
-
-conditionStatement
-    : conditionDef;
-
-conditionDef: CONDITIONX LPAREN SOURCEDEF COMMA_SYMBOL PATTERNDEF RPAREN;
+    : REF WS IDENTIFIER NEWLINE?;
 
 
+// Definition of internal comment statement
 commentStatement
-    : COMMENT;
+    : COMMENTST;
+
 
 expression
     : EXPRESSIONX;
@@ -164,9 +192,11 @@ expression
 
 /* LEXER: keyword rules */
 
-COMMENT
+COMMENTST
     :  '/*' .*? '*/'
     ;
+
+//ROUTINGSTATEMENTX: ROUTINGSTATEMENT;
 
 SOURCEDEF: SOURCE LPAREN CONFIGPARAMS RPAREN;
 
@@ -180,91 +210,50 @@ CONTEXTDEF: CONTEXT LPAREN URLSTRINGX RPAREN;
 
 HOSTDEF: HOST LPAREN URLSTRINGX RPAREN;
 
-//PROCESSMESSAGEDEF: PROCESS_MESSAGE LPAREN MEDIATORNAMESTRINGX COMMA_SYMBOL CONFIGSDEF RPAREN;
-
 CONFIGSDEF: CONFIGS LPAREN (CONFIGPARAMS COMMA_SYMBOL)* (CONFIGPARAMS)* RPAREN;
 
 ARGUMENTLISTDEF: LPAREN (CONFIGPARAMS COMMA_SYMBOL)* (CONFIGPARAMS)* RPAREN;
 
 EXPRESSIONX: EXPRESSION;
-CONDITIONX: CONDITION;
 
+CONDITIONX: CONDITION;
 
 TIMEOUTDEF: TIMEOUT LPAREN NUMBER RPAREN;
 
 INTEGRATIONFLOWX: INTEGRATIONFLOW;
-INBOUNDENDPOINTX: INBOUNDENDPOINT;
-PIPELINEX: PIPELINE;
-MEDIATORX: MEDIATOR;
-OUTBOUNDENDPOINTX: OUTBOUNDENDPOINT;
-PROCESS_MESSAGEX: PROCESS_MESSAGE;
-//PROTOCOLX: PROTOCOL;
-//PORTX: PORT;
-//CONTEXTX: CONTEXT;
-//HOSTX: HOST;
-//TIMEOUTX: TIMEOUT;
-//CONFIGSX: CONFIGS;
-//CONFIGPARAMSX: CONFIGPARAMS;
 
-MEDIATORNAMESTRINGX: MEDIATORNAMESTRING;
+INBOUNDENDPOINTX: INBOUNDENDPOINT;
+
+PIPELINEX: PIPELINE;
+
+MEDIATORX: MEDIATOR;
+
+OUTBOUNDENDPOINTX: OUTBOUNDENDPOINT;
+
+PROCESS_MESSAGEX: PROCESS_MESSAGE;
+
+ASX: AS;
+
+COMMENTX: COMMENT;
+
+COMMENTSTRINGX: COMMENTSTRING;
+
 STRINGX: STRING;
+
 URLSTRINGX: URLSTRING;
 
+ARROW1X: ARROW1;
+ARROW2X: ARROW2;
+ARROW3X: ARROW3;
+ARROW4X: ARROW4;
 
 
-fragment STRING: DOUBLEQUOTES IDENTIFIER DOUBLEQUOTES;
-fragment URLSTRING: DOUBLEQUOTES URL DOUBLEQUOTES;
-fragment MEDIATORNAMESTRING: DOUBLEQUOTES MEDIATORNAME DOUBLEQUOTES;
-fragment EXPRESSION: LPAREN CONFIGPARAMS RPAREN;
 
-
-//FLOWCOMMENT: DOUBLEQUOTES IDENTIFIER DOUBLEQUOTES;
-
-INTEGRATIONFLOWNAME: INTEGRATIONFLOW POSTSCIPRT;
-
-MEDIATORNAME: CALL | FILTER | RESPOND | ENRICH | LOG | TRANSFORM;
-
-INBOUNDENDPOINTNAME: INBOUNDENDPOINT POSTSCIPRT;
-
-PIPELINENAME: PIPELINE POSTSCIPRT;
-
-OUTBOUNDENDPOINTNAME: OUTBOUNDENDPOINT POSTSCIPRT;
-
-AND : A N D ;
-DIV : D I V ;
-DO : D O ;
-DOWN : D O W N ;
-EXIT: E X I T ;
-FOR: F O R ;
-FOREVER : F O R E V E R ;
-FUNCTION : F U N C T I O N ;
-GLOBAL : G L O B A L ;
-HYPERCARD : H Y P E R C A R D ;
-IF : I F ;
-IS : I S ;
-MOD : M O D ;
-NEXT : N E X T ;
-NOT : N O T ;
-ON : O N ;
-OR : O R ;
-REPEAT : R E P E A T ;
-THEN : T H E N ;
-TIMES : T I M E S ;
-TO : T O ;
-UNTIL : U N T I L ;
-WITH : W I T H ;
-WHILE : W H I L E ;
-
-/* TYPES */
+// LEXER: Keywords
 
 STARTUMLX: STARTUML;
 ENDUMLX: ENDUML;
-
-fragment STARTUML: '@startuml';
-fragment ENDUML: '@enduml';
-
 PARTICIPANT: P A R T I C I P A N T;
-
 PAR: P A R;
 ALT: A L T;
 REF: R E F;
@@ -272,35 +261,10 @@ END: E N D;
 ELSE: E L S E;
 LOOP: L O O P;
 GROUP: G R O U P;
+WITH : W I T H ;
 
 
-
-
-ACTOR: A C T O R;
-USECASE: U S E C A S E;
-CLASS: C L A S S;
-INTERFACE: I N T E R F A C E;
-ABSTRACT: A B S T R A C T;
-ENUM: E N U M;
-COMPONENT: C O M P O N E N T;
-STATE: S T A T E;
-OBJECT: O B J E C T;
-ARTIFACT: A R T I F A C T;
-FOLDER : F O L D E R;
-RECT: R E C T;
-NODE: N O D E;
-FRAME: F R A M E;
-CLOUD: C L O U D;
-DATABASE: D A T A B A S E;
-STORAGE: S T O R A G E;
-AGENT: A G E N T;
-BOUNDARY: B O U N D A R Y;
-CONTROL: C O N T R O L;
-ENTITY: E N T I T Y;
-CARD: C A R D;
-
-
-/* LEXER: symbol rules */
+// LEXER: symbol rules
 
 AMP_SYMBOL : '&' ;
 AMPAMP_SYMBOL : '&&' ;
@@ -319,13 +283,15 @@ PLUS_SYMBOL : '+' ;
 STAR_SYMBOL : '*' ;
 SLASH_SYMBOL : '/' ;
 UNDERSCORE : '-';
-
 COLON: ':';
 ARROW: '->';
-fragment DOUBLEQUOTES: '"';
+fragment ARROW1: '=>+';
+fragment ARROW2: '=>>+';
+fragment ARROW3: '=>>-';
+fragment ARROW4: '=>-';
 SINGLEQUOTES: '\'';
 
-/* LEXER: miscellanea */
+// LEXER: miscellaneaous
 
 LPAREN : '(' ;
 RPAREN : ')' ;
@@ -336,13 +302,8 @@ NEWLINE
 WS
     : ' ';
 
-fragment POSTSCIPRT
-    : ( 'a'..'z' | 'A'..'Z' | DIGIT | '_')*;
-
 IDENTIFIER
     : ( 'a'..'z' | 'A'..'Z' ) ( 'a'..'z' | 'A'..'Z' | DIGIT | '_')+ ;
-
-fragment CONFIGPARAMS: (WS | [a-zA-Z\?] | COLON | [0-9] | '$' | '.' | '@' | SINGLEQUOTES | DOUBLEQUOTES | '{' | '}' | AMP_SYMBOL | AMPAMP_SYMBOL | CARET_SYMBOL | COMMA_SYMBOL | COMMENT_SYMBOL | CONTINUATION_SYMBOL | EQ_SYMBOL | GE_SYMBOL | GT_SYMBOL | LE_SYMBOL | LT_SYMBOL | MINUS_SYMBOL | NE_SYMBOL | PLUS_SYMBOL | STAR_SYMBOL | SLASH_SYMBOL )+;
 
 NUMBER
     : ( '0' | '1'..'9' DIGIT*) ('.' DIGIT+ )? ;
@@ -352,14 +313,37 @@ URL: ([a-zA-Z/\?&] | COLON | [0-9])+;
 CONTINUATION
     : CONTINUATION_SYMBOL ~[\r\n]* NEWLINE -> skip ;
 
-
 WHITESPACE
     : [ \t]+ -> skip ;
 
-/* LEXER: fragments */
+// LEXER: fragments to evaluate only within statements
 
+//fragment ROUTINGSTATEMENT: IDENTIFIER WS+ ARROW WS+ IDENTIFIER WS+ COMMENTX
+//                           WS+ STRINGX;
+fragment STRING: DOUBLEQUOTES IDENTIFIER DOUBLEQUOTES;
+fragment URLSTRING: DOUBLEQUOTES URL DOUBLEQUOTES;
+fragment COMMENTSTRING: DOUBLEQUOTES COMMENTPARAMS DOUBLEQUOTES;
+fragment EXPRESSION: LPAREN CONFIGPARAMS RPAREN;
+fragment STARTUML: '@startuml';
+fragment ENDUML: '@enduml';
+fragment DOUBLEQUOTES: '"';
+fragment POSTSCIPRT
+    : ( 'a'..'z' | 'A'..'Z' | DIGIT | '_')*;
+fragment CONFIGPARAMS: (WS | [a-zA-Z\?] | COLON | [0-9] | '$' | '.' | '@' |
+                        SINGLEQUOTES | DOUBLEQUOTES | '{' | '}' | AMP_SYMBOL |
+                        AMPAMP_SYMBOL | CARET_SYMBOL | COMMA_SYMBOL |
+                        COMMENT_SYMBOL | CONTINUATION_SYMBOL | EQ_SYMBOL |
+                        GE_SYMBOL | GT_SYMBOL | LE_SYMBOL | LT_SYMBOL |
+                        MINUS_SYMBOL | NE_SYMBOL | PLUS_SYMBOL | STAR_SYMBOL |
+                        SLASH_SYMBOL )+;
+fragment COMMENTPARAMS: (WS | [a-zA-Z\?] | COLON | [0-9] | '$' | '.' | '@' |
+                        SINGLEQUOTES | '{' | '}' | AMP_SYMBOL |
+                        AMPAMP_SYMBOL | CARET_SYMBOL | COMMA_SYMBOL |
+                        COMMENT_SYMBOL | CONTINUATION_SYMBOL | EQ_SYMBOL |
+                        GE_SYMBOL | GT_SYMBOL | LE_SYMBOL | LT_SYMBOL |
+                        MINUS_SYMBOL | NE_SYMBOL | PLUS_SYMBOL | STAR_SYMBOL |
+                        SLASH_SYMBOL | '_')+;
 fragment DIGIT : '0'..'9' ;
-
 fragment INTEGRATIONFLOW: I N T E G R A T I O N F L O W;
 fragment INBOUNDENDPOINT: I N B O U N D E N D P O I N T;
 fragment HTTP: H T T P;
@@ -378,14 +362,16 @@ fragment CONDITION: C O N D I T I O N;
 fragment SOURCE: S O U R C E;
 fragment PATTERN: P A T T E R N;
 fragment PROCESS_MESSAGE: 'process_message';
-
+fragment AS: A S;
+fragment COMMENT: C O M M E N T;
 fragment CALL: C A L L;
 fragment FILTER: F I L T E R;
 fragment RESPOND: R E S P O N D;
 fragment LOG: L O G;
 fragment ENRICH: E N R I C H;
 fragment TRANSFORM: T R A N S F O R M;
-/* case insensitive lexer matching */
+
+// case insensitive lexer matching
 fragment A:('a'|'A');
 fragment B:('b'|'B');
 fragment C:('c'|'C');
