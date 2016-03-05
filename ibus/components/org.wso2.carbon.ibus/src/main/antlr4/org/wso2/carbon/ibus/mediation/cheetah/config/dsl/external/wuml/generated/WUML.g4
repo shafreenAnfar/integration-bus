@@ -181,7 +181,9 @@ refStatement
 
 // Definition of internal comment statement
 commentStatement
-    : COMMENTST;
+    : COMMENTST
+    | HASHCOMMENTST
+    | DOUBLESLASHCOMMENTST;
 
 
 expression
@@ -194,6 +196,14 @@ expression
 
 COMMENTST
     :  '/*' .*? '*/'
+    ;
+
+HASHCOMMENTST
+    : '#' COMMENTPARAMS
+    ;
+
+DOUBLESLASHCOMMENTST
+    : '//' COMMENTPARAMS
     ;
 
 //ROUTINGSTATEMENTX: ROUTINGSTATEMENT;
