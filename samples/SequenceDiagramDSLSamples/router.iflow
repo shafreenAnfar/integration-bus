@@ -1,32 +1,35 @@
 @startuml
 
-IntegrationFlow : Message_Router
+#Defining my integration flow
+myIntegrationFlow as IntegrationFlow
 
-participant inboundendpointListener : InboundEndpoint(protocol("http"),port(8080),context("/router"))
+//This is a sample inbound endpoint
+sampleHTTPinbound as InboundEndpoint(protocol("http"),port(8290),context("/sample/request"))
 
-participant pipeline1 : Pipeline("router_flow")
+samplePipeline as Pipeline("message_flow_1")
 
-participant outboundendpoint1 : OutboundEndpoint(protocol("http"),host("http://localhost:8280/backend1"))
+sampleOutbound1 as OutboundEndpoint(protocol("http"),host("http://localhost:9000/services/SimpleStockQuoteService"))
 
-participant outboundendpoint2 : OutboundEndpoint(protocol("http"),host("http://localhost:8280/backend2"))
+sampleOutbound2 as OutboundEndpoint(protocol("http"),host("http://localhost:9001/services/SimpleStockQuoteService"))
 
-inboundendpointListener -> pipeline1 : "request"
+sampleHTTPinbound =>+ samplePipeline comment "client request"
 
-log("Before Filter")
+log("before filter statement") as Mediator
 
-alt condition(source("$header.routeId"),pattern("r1"))
-    log("Filter True")
-    pipeline1 -> outboundendpoint1 : "Request_to_Backend1"
-    outboundendpoint1 -> pipeline1 : "Response_from_Backend1"
+alt with condition(source("$header.routeId"),pattern("r1"))
+    log("filter condition is true") as Mediator
+    samplePipeline =>>+ sampleOutbound1 comment "Validate policy with service 1"
+    sampleOutbound1 =>>- samplePipeline comment "Validate response from service 1"
 
 else
-    log("Filter False")
-    pipeline1 -> outboundendpoint2 : "Request_to_Backend2"
-    outboundendpoint2 -> pipeline1 : "Response_from_Backend2"
+    log("filter condition is false") as Mediator
+    samplePipeline =>>+ sampleOutbound2 comment "Validate policy with service 2"
+    sampleOutbound2 =>>- samplePipeline comment "Validate response from service 2"
 end
 
-log("After Filter")
+log("after filter statement") as Mediator
 
-pipeline1 -> inboundendpointListener : "Final_Response"
+samplePipeline =>- sampleHTTPinbound comment "Final Response"
+
 
 @enduml
