@@ -16,22 +16,13 @@
  * under the License.
  */
 
-package org.wso2.carbon.ibus.samples.router;
+package org.wso2.carbon.ibus.kernel.flow;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.wso2.carbon.ibus.kernel.config.dsl.internal.JavaConfigurationBuilder;
+public interface MediatorProvider {
 
-/**
- * Bundle Activator
- */
-public class Activator implements BundleActivator {
-    public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(JavaConfigurationBuilder.class, new MessageRouter(), null);
-    }
+    public String getName();
 
-    public void stop(BundleContext bundleContext) throws Exception {
+    public Mediator getMediator();
 
-    }
 
 }

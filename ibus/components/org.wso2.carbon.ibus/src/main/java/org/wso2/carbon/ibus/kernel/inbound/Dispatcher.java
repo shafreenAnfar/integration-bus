@@ -15,23 +15,26 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+package org.wso2.carbon.ibus.kernel.inbound;
 
-package org.wso2.carbon.ibus.samples.router;
+import org.wso2.carbon.messaging.CarbonCallback;
+import org.wso2.carbon.messaging.CarbonMessage;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.wso2.carbon.ibus.kernel.config.dsl.internal.JavaConfigurationBuilder;
 
 /**
- * Bundle Activator
+ * Message Dispatcher Interface. Need to have a protocol specific dispatcher
  */
-public class Activator implements BundleActivator {
-    public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(JavaConfigurationBuilder.class, new MessageRouter(), null);
-    }
+public interface Dispatcher {
 
-    public void stop(BundleContext bundleContext) throws Exception {
+    /**
+     * Dispatch the message to an inbound endpoint
+     *
+     * @param carbonMessage Carbon Message
+     * @param callback  Callback
+     * @return whether dispatching is successful or not
+     */
+    public boolean dispatch(CarbonMessage carbonMessage, CarbonCallback callback);
 
-    }
+    public String getProtocol();
 
 }

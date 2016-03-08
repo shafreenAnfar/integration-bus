@@ -19,11 +19,8 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.carbon.ibus.mediation.cheetah.CheetahMessageProcessor;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.deployer.IFlowDeployer;
-import org.wso2.carbon.ibus.mediation.cheetah.inbound.DispatcherRegistry;
-import org.wso2.carbon.ibus.mediation.cheetah.inbound.manager.InboundEndpointManager;
-import org.wso2.carbon.ibus.mediation.cheetah.inbound.protocols.http.HTTPInboundEPDispatcher;
+import org.wso2.carbon.ibus.kernel.MessageProcessor;
+import org.wso2.carbon.ibus.kernel.config.dsl.external.deployer.IFlowDeployer;
 import org.wso2.carbon.kernel.deployment.Deployer;
 import org.wso2.carbon.messaging.CarbonMessageProcessor;
 import org.wso2.carbon.messaging.TransportListenerManager;
@@ -41,14 +38,10 @@ public class Activator implements BundleActivator {
             log.info("Starting Integration Bus...!");
 
             //Creating the processor and registering the service
-            CheetahMessageProcessor engine = new CheetahMessageProcessor();
+            MessageProcessor engine = new MessageProcessor();
             bundleContext.registerService(CarbonMessageProcessor.class, engine, null);
-            bundleContext.registerService(TransportListenerManager.class,
-                                          InboundEndpointManager.getInstance(), null);
-            bundleContext.registerService(Deployer.class, new IFlowDeployer(), null);
 
-            //Registering dispatchers
-            DispatcherRegistry.getInstance().registerDispatcher("http", HTTPInboundEPDispatcher.getInstance());
+            bundleContext.registerService(Deployer.class, new IFlowDeployer(), null);
 
         } catch (Exception ex) {
             String msg = "Error while loading Cheetah";

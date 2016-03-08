@@ -20,7 +20,7 @@ package org.wso2.carbon.ibus.samples.router2;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.IntegrationSolution;
+import org.wso2.carbon.ibus.kernel.config.dsl.internal2.IntegrationSolution;
 
 /**
  * Bundle Activator

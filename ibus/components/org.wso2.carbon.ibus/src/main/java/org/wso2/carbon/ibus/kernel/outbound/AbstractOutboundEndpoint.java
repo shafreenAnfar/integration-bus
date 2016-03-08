@@ -16,22 +16,35 @@
  * under the License.
  */
 
-package org.wso2.carbon.ibus.samples.router;
+package org.wso2.carbon.ibus.kernel.outbound;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.wso2.carbon.ibus.kernel.config.dsl.internal.JavaConfigurationBuilder;
+import org.wso2.carbon.messaging.CarbonCallback;
+import org.wso2.carbon.messaging.CarbonMessage;
 
-/**
- * Bundle Activator
- */
-public class Activator implements BundleActivator {
-    public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(JavaConfigurationBuilder.class, new MessageRouter(), null);
+public abstract class AbstractOutboundEndpoint implements OutboundEndpoint {
+
+    private int timeOut;
+
+    private String name;
+
+    public AbstractOutboundEndpoint(String name) {
+        this.name = name;
     }
 
-    public void stop(BundleContext bundleContext) throws Exception {
+    @Override
+    public abstract boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
+            throws Exception;
 
+    public int getTimeOut() {
+        return timeOut;
+    }
+
+    public void setTimeOut(int timeOut) {
+        this.timeOut = timeOut;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

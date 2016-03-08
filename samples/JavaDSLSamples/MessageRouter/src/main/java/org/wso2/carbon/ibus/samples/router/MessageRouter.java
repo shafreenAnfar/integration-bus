@@ -19,19 +19,16 @@
 package org.wso2.carbon.ibus.samples.router;
 
 
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.JavaConfigurationBuilder;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.FilterMediatorBuilder.pattern;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.FilterMediatorBuilder.source;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder.context;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder.http;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPInboundEPBuilder.port;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPSInboundEPBuilder.keystorefile;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPSInboundEPBuilder.keystorepass;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.inbound.http.HTTPSInboundEPBuilder.https;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.outbound.http.HTTPOutboundEPBuilder.httpOutboundEndpoint;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.outbound.http.HTTPOutboundEPBuilder.uri;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.flow.mediators.CallMediatorBuilder.*;
+import org.wso2.carbon.ibus.kernel.config.dsl.internal.JavaConfigurationBuilder;
 
+import static org.wso2.carbon.ibus.kernel.config.dsl.internal.flow.mediators.CallMediatorBuilder.call;
+import static org.wso2.carbon.ibus.kernel.config.dsl.internal.flow.mediators.FilterMediatorBuilder.pattern;
+import static org.wso2.carbon.ibus.kernel.config.dsl.internal.flow.mediators.FilterMediatorBuilder.source;
+import static org.wso2.carbon.ibus.kernel.config.dsl.internal.inbound.http.HTTPInboundEPBuilder.context;
+import static org.wso2.carbon.ibus.kernel.config.dsl.internal.inbound.http.HTTPInboundEPBuilder.http;
+import static org.wso2.carbon.ibus.kernel.config.dsl.internal.inbound.http.HTTPInboundEPBuilder.port;
+import static org.wso2.carbon.ibus.kernel.config.dsl.internal.outbound.http.HTTPOutboundEPBuilder.httpOutboundEndpoint;
+import static org.wso2.carbon.ibus.kernel.config.dsl.internal.outbound.http.HTTPOutboundEPBuilder.uri;
 
 /**
  * Sample Internal DSL in method 1

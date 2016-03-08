@@ -97,8 +97,8 @@
         <import.package>
             org.osgi.framework.*;version="${osgi.framework.import.version.range}",
             org.sample.dsl.*;version="1.0.0",
-            org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal.*,
-            org.wso2.carbon.ibus.mediation.cheetah.*,
+            org.wso2.carbon.ibus.mediation.kernel.config.dsl.internal.*,
+            org.wso2.carbon.ibus.mediation.kernel.*,
         </import.package>
 
         <osgi.framework.import.version.range>[1.8.0, 2.0.0)</osgi.framework.import.version.range>

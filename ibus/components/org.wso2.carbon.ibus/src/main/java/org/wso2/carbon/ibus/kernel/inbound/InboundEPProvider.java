@@ -15,23 +15,18 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+package org.wso2.carbon.ibus.kernel.inbound;
 
-package org.wso2.carbon.ibus.samples.router;
+import org.wso2.carbon.messaging.TransportListenerManager;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.wso2.carbon.ibus.kernel.config.dsl.internal.JavaConfigurationBuilder;
+public interface InboundEPProvider {
 
-/**
- * Bundle Activator
- */
-public class Activator implements BundleActivator {
-    public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(JavaConfigurationBuilder.class, new MessageRouter(), null);
-    }
+    public String getProtocol();
 
-    public void stop(BundleContext bundleContext) throws Exception {
+    public InboundDeployer getInboundDeployer();
 
-    }
+    public InboundEndpoint getInboundEndpoint();
+
+    public Dispatcher getInboundEndpointDispatcher();
 
 }

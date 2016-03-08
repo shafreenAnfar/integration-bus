@@ -18,19 +18,18 @@
 
 package org.wso2.carbon.ibus.samples.router2;
 
-import org.wso2.carbon.ibus.mediation.cheetah.config.ESBConfigHolder;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.IntegrationSolution;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.flow.Message;
-import org.wso2.carbon.ibus.mediation.cheetah.flow.mediators.filter.Scope;
-import org.wso2.carbon.ibus.mediation.cheetah.outbound.OutboundEndpoint;
 
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.flow.mediators.filter.FilterMediatorBuilder.pattern;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.flow.mediators.filter.FilterMediatorBuilder.source;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.inbound.http.HTTPInboundEPBuilder.context;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.inbound.http.HTTPInboundEPBuilder.http;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.inbound.http.HTTPInboundEPBuilder.port;
-import static org.wso2.carbon.ibus.mediation.cheetah.config.dsl.internal2.outbound.http.HTTPOutboundEPBuilder.uri;
+import org.wso2.carbon.ibus.kernel.config.ESBConfigHolder;
+import org.wso2.carbon.ibus.kernel.config.dsl.internal2.IntegrationSolution;
+import org.wso2.carbon.ibus.kernel.config.dsl.internal2.flow.Message;
+import org.wso2.carbon.ibus.kernel.outbound.OutboundEndpoint;
 
+import static org.wso2.carbon.ibus.kernel.config.dsl.internal2.flow.mediators.filter.FilterMediatorBuilder.pattern;
+import static org.wso2.carbon.ibus.kernel.config.dsl.internal2.flow.mediators.filter.FilterMediatorBuilder.source;
+import static org.wso2.carbon.ibus.kernel.config.dsl.internal2.inbound.http.HTTPInboundEPBuilder.context;
+import static org.wso2.carbon.ibus.kernel.config.dsl.internal2.inbound.http.HTTPInboundEPBuilder.http;
+import static org.wso2.carbon.ibus.kernel.config.dsl.internal2.inbound.http.HTTPInboundEPBuilder.port;
+import static org.wso2.carbon.ibus.kernel.config.dsl.internal2.outbound.http.HTTPOutboundEPBuilder.uri;
 
 /**
  * Sample Internal DSL in  method 2
