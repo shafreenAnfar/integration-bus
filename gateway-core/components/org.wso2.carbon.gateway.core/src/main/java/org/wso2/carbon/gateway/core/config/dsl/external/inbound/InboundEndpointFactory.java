@@ -18,7 +18,6 @@
 package org.wso2.carbon.gateway.core.config.dsl.external.inbound;
 
 import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
-import org.wso2.carbon.gateway.core.inbound.builtin.http.HTTPInboundEP;
 
 /**
  * Factory class to generate inbound endpoints
@@ -28,7 +27,7 @@ public class InboundEndpointFactory {
         InboundEndpoint inboundEndpoint = null;
         switch (inboundEndpointType) {
             case http:
-                inboundEndpoint = new HTTPInboundEP(name, port);
+              //  inboundEndpoint = new HTTPInboundEP(name, port);
                 break;
             case jms:
                 break;

@@ -20,17 +20,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wso2.carbon.ibus</groupId>
-        <artifactId>org.wso2.carbon.ibus.parent</artifactId>
+        <groupId>org.wso2.carbon.gateway</groupId>
+        <artifactId>org.wso2.carbon.gateway.parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>org.wso2.carbon.ibus</artifactId>
+    <artifactId>org.wso2.carbon.gateway.core</artifactId>
     <packaging>bundle</packaging>
 
-    <name>WSO2 Carbon - Integration Bus Component</name>
-    <description>WSO2 Integration Bus</description>
+    <name>WSO2 Carbon - Gateway Core</name>
+    <description>WSO2 Gateway Core</description>
     <url>http://maven.apache.org</url>
 
     <licenses>
@@ -376,7 +376,7 @@
     <properties>
         <bundle.activator>org.wso2.carbon.gateway.core.Activator</bundle.activator>
         <export.package>
-            org.wso2.carbon.gateway.core.*;version="${carbon.ibus.package.export.version}"
+            org.wso2.carbon.gateway.core.*;version="${carbon.gw.package.export.version}"
         </export.package>
         <import.package>
             org.osgi.framework.*;version="${osgi.framework.import.version.range}",

@@ -65,14 +65,14 @@
             </dependency>
 
             <dependency>
-                <groupId>org.wso2.carbon.ibus</groupId>
-                <artifactId>org.wso2.carbon.ibus</artifactId>
-                <version>${carbon.ibus.version}</version>
+                <groupId>org.wso2.carbon.gateway</groupId>
+                <artifactId>org.wso2.carbon.gateway.core</artifactId>
+                <version>${carbon.gw.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.ibus</groupId>
-                <artifactId>org.wso2.carbon.ibus.feature</artifactId>
-				<version>${carbon.ibus.version}</version>
+                <groupId>org.wso2.carbon.gateway</groupId>
+                <artifactId>org.wso2.carbon.gateway.core.feature</artifactId>
+				<version>${carbon.gw.version}</version>
 				 <type>zip</type>
             </dependency>
 
@@ -117,50 +117,6 @@
     <build>
         <pluginManagement>
             <plugins>
-                <!--plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>validate</id>
-                            <phase>validate</phase>
-                            <configuration>
-                                <configLocation>
-                                    https://raw.githubusercontent.com/wso2/code-quality-tools/master/checkstyle/checkstyle.xml
-                                </configLocation>
-                                <suppressionsLocation>
-                                    https://raw.githubusercontent.com/wso2/code-quality-tools/master/checkstyle/suppressions.xml
-                                </suppressionsLocation>
-                                <encoding>UTF-8</encoding>
-                                <consoleOutput>true</consoleOutput>
-                                <failsOnError>true</failsOnError>
-                                <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                            </configuration>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin-->
-                <!--plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>findbugs-maven-plugin</artifactId>
-                    <configuration>
-                        <effort>Max</effort>
-                        <threshold>Low</threshold>
-                        <xmlOutput>true</xmlOutput>
-                        <findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>analyze-compile</id>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin-->
             </plugins>
         </pluginManagement>
 
@@ -174,17 +130,7 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-            <!--plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${maven.checkstyleplugin.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>${maven.findbugsplugin.version}</version>
-            </plugin-->
-        </plugins>
+            </plugins>
     </build>
 
     <properties>
@@ -196,8 +142,8 @@
         <carbon.kernel.version>5.0.0</carbon.kernel.version>
         <carbon.kernel.package.import.version.range>[5.0.0, 6.0.0)</carbon.kernel.package.import.version.range>
 
-        <carbon.ibus.version>1.0.0-SNAPSHOT</carbon.ibus.version>
-        <carbon.ibus.package.export.version>1.0.0</carbon.ibus.package.export.version>
+        <carbon.gw.version>1.0.0-SNAPSHOT</carbon.gw.version>
+        <carbon.gw.package.export.version>1.0.0</carbon.gw.package.export.version>
 
         <osgi.api.version>6.0.0</osgi.api.version>
         <equinox.osgi.version>3.10.2.v20150203-1939</equinox.osgi.version>
@@ -229,6 +175,7 @@
     <modules>
         <module>gateway-core/components/org.wso2.carbon.gateway.core</module>
         <module>gateway-core/features/org.wso2.carbon.gateway.core.feature</module>
+        <module>inbound-endpoints/http-inbound/components/org.wso2.carbon.gateway.inbounds.http</module>
         <module>samples</module>
         <module>product</module>
     </modules>

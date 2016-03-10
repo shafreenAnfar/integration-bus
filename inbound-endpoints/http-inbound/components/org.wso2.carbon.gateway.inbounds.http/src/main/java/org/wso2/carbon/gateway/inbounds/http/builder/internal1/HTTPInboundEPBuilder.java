@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
- *
+ * Copyright (c) 2016, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+ * <p>
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License.
  * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -16,17 +16,17 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.config.dsl.internal2.inbound.http;
+package org.wso2.carbon.gateway.inbounds.http.builder.internal1;
 
 
-import org.wso2.carbon.gateway.core.inbound.builtin.http.HTTPInboundEP;
+import org.wso2.carbon.gateway.inbounds.http.HTTPInboundEP;
 
 /**
  * A Builder class for HTTP Inbound Endpoint
  */
 public class HTTPInboundEPBuilder {
 
-    private HTTPInboundEP httpInboundEP;
+    protected HTTPInboundEP httpInboundEP;
 
     public static HTTPInboundEP http(Port port, Context context) {
         HTTPInboundEP inboundEP = new HTTPInboundEP(port.getPort());

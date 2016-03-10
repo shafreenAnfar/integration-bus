@@ -31,7 +31,6 @@ import org.wso2.carbon.gateway.core.config.dsl.external.inbound.InboundEndpointF
 import org.wso2.carbon.gateway.core.config.dsl.external.outbound.OutboundEndpointType;
 import org.wso2.carbon.gateway.core.flow.Mediator;
 import org.wso2.carbon.gateway.core.flow.Pipeline;
-import org.wso2.carbon.gateway.core.inbound.builtin.http.HTTPInboundEP;
 import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated.WUMLBaseListener;
 import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated.WUMLParser;
@@ -110,9 +109,9 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
         String context = StringParserUtil.getValueWithinDoubleQuotes(ctx.inboundEndpointDef().CONTEXTDEF().getText());
         InboundEndpoint inboundEndpoint = InboundEndpointFactory.getInboundEndpoint(InboundEndpointType
                 .valueOf(protocolName), ctx.INBOUNDENDPOINTNAME().getText(), port);
-        if (inboundEndpoint instanceof HTTPInboundEP) {
+        /*if (inboundEndpoint instanceof HTTPInboundEP) {
             ((HTTPInboundEP) inboundEndpoint).setContext(context);
-        }
+        }*/
         integrationFlow.getEsbConfigHolder().setInboundEndpoint(inboundEndpoint);
         super.exitInboundEndpointDefStatement(ctx);
     }

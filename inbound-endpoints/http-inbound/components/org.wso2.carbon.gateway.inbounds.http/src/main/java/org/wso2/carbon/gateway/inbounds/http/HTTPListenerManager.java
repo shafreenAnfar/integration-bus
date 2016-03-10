@@ -16,13 +16,12 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.inbound.builtin.http;
+package org.wso2.carbon.gateway.inbounds.http;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.gateway.core.inbound.InboundDeployer;
 import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
-import org.wso2.carbon.gateway.core.inbound.builtin.https.HTTPSInboundEP;
 import org.wso2.carbon.messaging.TransportListener;
 import org.wso2.carbon.messaging.TransportListenerManager;
 
@@ -104,11 +103,11 @@ public class HTTPListenerManager implements TransportListenerManager, InboundDep
                     }
                 }
 
-                if (inboundEndpoint instanceof HTTPSInboundEP) {
+               /* if (inboundEndpoint instanceof HTTPSInboundEP) {
                     transportListener.listen(host, port, ((HTTPSInboundEP) inboundEndpoint).getParMap());
-                } else {
+                } else {*/
                     transportListener.listen(host, port);
-                }
+                //}
 
                 deployedInbounds.put(name, inboundEndpoint);
             } else {

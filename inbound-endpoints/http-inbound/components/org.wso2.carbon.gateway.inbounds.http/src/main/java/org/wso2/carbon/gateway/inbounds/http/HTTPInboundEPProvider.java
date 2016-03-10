@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.inbound.builtin.http;
+package org.wso2.carbon.gateway.inbounds.http;
 
 import org.wso2.carbon.gateway.core.inbound.Dispatcher;
 import org.wso2.carbon.gateway.core.inbound.InboundDeployer;

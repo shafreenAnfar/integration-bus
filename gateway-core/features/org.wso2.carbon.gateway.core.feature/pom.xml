@@ -20,24 +20,24 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wso2.carbon.ibus</groupId>
-        <artifactId>org.wso2.carbon.ibus.parent</artifactId>
+        <groupId>org.wso2.carbon.gateway</groupId>
+        <artifactId>org.wso2.carbon.gateway.parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>org.wso2.carbon.ibus.feature</artifactId>
+    <artifactId>org.wso2.carbon.gateway.core.feature</artifactId>
     <packaging>carbon-feature</packaging>
-    <name>WSO2 Carbon - Integration Bus Feature</name>
+    <name>WSO2 Carbon - Gateway Core Feature</name>
     <url>http://wso2.org</url>
-    <description>This feature contains the core bundles required by the Integration Bus</description>
+    <description>This feature contains the core bundles required by the Gateway Core</description>
 
 
     <dependencies>
         <!-- Netty transport should be a feature of its own -->
         <dependency>
-            <groupId>org.wso2.carbon.ibus</groupId>
-            <artifactId>org.wso2.carbon.ibus</artifactId>
+            <groupId>org.wso2.carbon.gateway</groupId>
+            <artifactId>org.wso2.carbon.gateway.core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wso2.eclipse.osgi</groupId>
@@ -105,8 +105,8 @@
                                     <version>${slf4j.version}</version>
                                 </bundle>
                                 <bundle>
-                                    <symbolicName>org.wso2.carbon.ibus</symbolicName>
-                                    <version>${carbon.ibus.version}</version>
+                                    <symbolicName>org.wso2.carbon.gateway.core</symbolicName>
+                                    <version>${carbon.gw.version}</version>
                                 </bundle>
                                 <bundle>
                                     <symbolicName>antlr4-runtime</symbolicName>

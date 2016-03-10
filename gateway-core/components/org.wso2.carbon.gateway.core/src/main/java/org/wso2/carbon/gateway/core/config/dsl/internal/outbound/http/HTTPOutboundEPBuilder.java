@@ -29,9 +29,7 @@ public class HTTPOutboundEPBuilder {
 
     public static HTTPOutboundEndpoint httpOutboundEndpoint(String name, URI uri) {
         return new HTTPOutboundEndpoint(name, uri.getUri());
-
     }
-
 
     public static URI uri(String uri) {
         return new URI(uri);

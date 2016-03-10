@@ -21,16 +21,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wso2.carbon.ibus</groupId>
-        <artifactId>org.wso2.carbon.ibus.samples</artifactId>
+        <groupId>org.wso2.carbon.gateway</groupId>
+        <artifactId>org.wso2.carbon.gateway.parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../../../pom.xml</relativePath>
     </parent>
 
-    <name>Message Router Java DSL Sample 1</name>
-    <groupId>org.wso2.carbon.ibus.samples.router</groupId>
-    <artifactId>MessageRouter</artifactId>
-    <version>1.0</version>
+    <name>HTTP Inbound Endpoint</name>
+    <groupId>org.wso2.carbon.gateway.inbounds</groupId>
+    <artifactId>org.wso2.carbon.gateway.inbounds.http</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <dependencies>
@@ -50,19 +50,20 @@
             <version>3.4.0.v20140312-2051</version>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon.ibus</groupId>
-            <artifactId>org.wso2.carbon.ibus</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon.gateway.inbounds</groupId>
-            <artifactId>org.wso2.carbon.gateway.inbounds.http</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.gateway</groupId>
+            <artifactId>org.wso2.carbon.gateway.core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.messaging</groupId>
             <artifactId>org.wso2.carbon.messaging</artifactId>
-            <version>1.0.0-alpha2</version>
         </dependency>
     </dependencies>
 
@@ -95,16 +96,16 @@
     </build>
 
     <properties>
-       <bundle.activator>org.wso2.carbon.gateway.core.samples.router.Activator</bundle.activator>
+       <bundle.activator>org.wso2.carbon.gateway.inbounds.http.Activator</bundle.activator>
         <export.package>
-            org.wso2.carbon.ibus.samples.router.*;version="1.0.0"
+            org.wso2.carbon.gateway.inbounds.http;version="1.0.0"
+            org.wso2.carbon.gateway.inbounds.http.builder;version="1.0.0"
         </export.package>
         <import.package>
             org.osgi.framework.*;version="${osgi.framework.import.version.range}",
             org.sample.dsl.*;version="1.0.0",
             org.wso2.carbon.gateway.core.config.dsl.internal.*,
             org.wso2.carbon.gateway.core.*,
-            org.wso2.carbon.gateway.inbounds.http
         </import.package>
 
         <osgi.framework.import.version.range>[1.8.0, 2.0.0)</osgi.framework.import.version.range>
