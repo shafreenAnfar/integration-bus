@@ -60,6 +60,18 @@
             <type>zip</type>
         </dependency>
         <dependency>
+            <groupId>org.wso2.carbon.gateway.inbounds</groupId>
+            <artifactId>org.wso2.carbon.gateway.inbounds.http.feature</artifactId>
+            <version>${carbon.gw.version}</version>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.gateway.outbounds</groupId>
+            <artifactId>org.wso2.carbon.gateway.outbounds.http.feature</artifactId>
+            <version>${carbon.gw.version}</version>
+            <type>zip</type>
+        </dependency>
+        <dependency>
             <groupId>org.wso2.carbon.transport</groupId>
             <artifactId>org.wso2.carbon.transport.http.netty.feature</artifactId>
             <version>${carbon.transport.version}</version>

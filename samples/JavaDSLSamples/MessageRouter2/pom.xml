@@ -21,14 +21,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.wso2.carbon.ibus</groupId>
-        <artifactId>org.wso2.carbon.ibus.samples</artifactId>
+        <groupId>org.wso2.carbon.gateway</groupId>
+        <artifactId>org.wso2.carbon.gateway.samples</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <name>Message Router JAVA DSL Sample 2</name>
-    <groupId>org.wso2.carbon.ibus.samples.router2</groupId>
+    <groupId>org.wso2.carbon.gateway.samples.router2</groupId>
     <artifactId>MessageRouter2</artifactId>
     <version>1.0</version>
     <packaging>bundle</packaging>
@@ -50,19 +50,20 @@
             <version>3.4.0.v20140312-2051</version>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon.ibus</groupId>
-            <artifactId>org.wso2.carbon.ibus</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.messaging</groupId>
-            <artifactId>org.wso2.carbon.messaging</artifactId>
-            <version>1.0.0-alpha2</version>
+            <groupId>org.wso2.carbon.gateway</groupId>
+            <artifactId>org.wso2.carbon.gateway.core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.gateway.inbounds</groupId>
             <artifactId>org.wso2.carbon.gateway.inbounds.http</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.gateway.outbounds</groupId>
+            <artifactId>org.wso2.carbon.gateway.outbounds.http</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon.messaging</groupId>
+            <artifactId>org.wso2.carbon.messaging</artifactId>
         </dependency>
     </dependencies>
 
@@ -104,7 +105,6 @@
             org.sample.dsl.*;version="1.0.0",
             org.wso2.carbon.gateway.core.config.dsl.internal.*,
             org.wso2.carbon.gateway.core.*,
-            org.wso2.carbon.gateway.inbounds
         </import.package>
 
         <osgi.framework.import.version.range>[1.8.0, 2.0.0)</osgi.framework.import.version.range>

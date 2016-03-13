@@ -13,23 +13,23 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-package org.wso2.carbon.gateway.outbounds.http;
+package org.custom;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.carbon.gateway.core.outbound.OutboundEPProvider;
+import org.wso2.carbon.gateway.core.flow.MediatorProvider;
 
 /**
- * OSGi Bundle Activator of HTTP Outbound.
+ * OSGi Bundle Activator of Custom Mediator.
  */
 public class Activator implements BundleActivator {
 
     private static final Logger log = LoggerFactory.getLogger(Activator.class);
 
     public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(OutboundEPProvider.class, new HTTPOutboundProvider(), null);
+        bundleContext.registerService(MediatorProvider.class, new SampleCustomMediatorProvider(), null);
     }
 
     public void stop(BundleContext bundleContext) throws Exception {

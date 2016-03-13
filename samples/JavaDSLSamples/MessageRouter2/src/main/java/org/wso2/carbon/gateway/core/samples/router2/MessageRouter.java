@@ -20,16 +20,8 @@ package org.wso2.carbon.gateway.core.samples.router2;
 
 
 import org.wso2.carbon.gateway.core.config.dsl.internal2.IntegrationSolution;
-import org.wso2.carbon.gateway.core.config.dsl.internal2.outbound.http.HTTPOutboundEPBuilder;
 import org.wso2.carbon.gateway.core.config.ESBConfigHolder;
 import org.wso2.carbon.gateway.core.config.dsl.internal2.flow.Message;
-import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
-
-import static org.wso2.carbon.gateway.core.config.dsl.internal2.flow.mediators.filter.FilterMediatorBuilder.pattern;
-import static org.wso2.carbon.gateway.core.config.dsl.internal2.flow.mediators.filter.FilterMediatorBuilder.source;
-import static org.wso2.carbon.gateway.core.config.dsl.internal2.inbound.http.HTTPInboundEPBuilder.context;
-import static org.wso2.carbon.gateway.core.config.dsl.internal2.inbound.http.HTTPInboundEPBuilder.http;
-import static org.wso2.carbon.gateway.core.config.dsl.internal2.inbound.http.HTTPInboundEPBuilder.port;
 
 /**
  * Sample Internal DSL in  method 2
@@ -42,7 +34,7 @@ public class MessageRouter extends IntegrationSolution {
         /*OutboundEndpoint outboundEndpoint = defineHTTPOutboundEndpoint("outbound1",
                                                                        HTTPOutboundEPBuilder.uri("http://localhost:8280/backend1"));
         OutboundEndpoint outboundEndpoint2 = defineHTTPOutboundEndpoint("outbound2",
-                                                                        HTTPOutboundEPBuilder.uri("http://localhost:8280/backend2"));*/
+                                                                        HTTPOutboundEPBuilder.uri("http://localhost:8280/backend2"));
 
         Message message = receiveFrom(http(port(7777), context("/router"))).
                    directTo(defineMessageFlow("pipeline1")).getMessage();

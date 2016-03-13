@@ -22,8 +22,8 @@ package org.wso2.carbon.gateway.core.samples.router;
 import org.wso2.carbon.gateway.core.config.dsl.internal.JavaConfigurationBuilder;
 import org.wso2.carbon.gateway.core.config.dsl.internal.flow.mediators.CallMediatorBuilder;
 import org.wso2.carbon.gateway.core.config.dsl.internal.flow.mediators.FilterMediatorBuilder;
-import org.wso2.carbon.gateway.core.config.dsl.internal.inbound.http.HTTPInboundEPBuilder;
-import org.wso2.carbon.gateway.core.config.dsl.internal.outbound.http.HTTPOutboundEPBuilder;
+import org.wso2.carbon.gateway.inbounds.http.builder.internal1.HTTPInboundEPBuilder;
+import org.wso2.carbon.gateway.outbounds.http.builder.internal1.HTTPOutboundEPBuilder;
 
 /**
  * Sample Internal DSL in method 1
@@ -34,25 +34,19 @@ public class MessageRouter extends JavaConfigurationBuilder {
 
         IntegrationFlow router = integrationFlow("Message_Router");
 
-
-        router.inboundEndpoint("inboundEndpoint1", HTTPInboundEPBuilder.http(HTTPInboundEPBuilder.port(8280), HTTPInboundEPBuilder.context("/router"))).
+        router.inboundEndpoint("inboundEndpoint1", HTTPInboundEPBuilder.http(HTTPInboundEPBuilder.port(8280),
+                                                                             HTTPInboundEPBuilder.context("/router"))).
                    pipeline("pipeline1").
                    filter(FilterMediatorBuilder.source("$header.routeId"), FilterMediatorBuilder.pattern("r1")).
                    then(CallMediatorBuilder.call("outboundEp1")).
                    otherwise(CallMediatorBuilder.call("outboundEp2")).
                    respond();
 
-//        router.inboundEndpoint("inboundEndpoint1", https(port(8280), context("/router"), keystorefile("pathtofile"),
-//                                                         keystorepass("passwordoffile"))).
-//                   pipeline("pipeline1").
-//                   filter(source("$header.routeId"), pattern("r1")).
-//                   then(call("outboundEp1")).
-//                   otherwise(call("outboundEp2")).
-//                   respond();
+        router.outboundEndpoint(HTTPOutboundEPBuilder.httpOutboundEndpoint(
+                "outboundEp1", HTTPOutboundEPBuilder.uri("http://localhost:8280/backend1")));
 
-        router.outboundEndpoint(HTTPOutboundEPBuilder.httpOutboundEndpoint("outboundEp1", HTTPOutboundEPBuilder.uri("http://localhost:8280/backend1")));
-
-        router.outboundEndpoint(HTTPOutboundEPBuilder.httpOutboundEndpoint("outboundEp2", HTTPOutboundEPBuilder.uri("http://localhost:8280/backend2")));
+        router.outboundEndpoint(HTTPOutboundEPBuilder.httpOutboundEndpoint(
+                "outboundEp2", HTTPOutboundEPBuilder.uri("http://localhost:8280/backend2")));
 
         return router;
 

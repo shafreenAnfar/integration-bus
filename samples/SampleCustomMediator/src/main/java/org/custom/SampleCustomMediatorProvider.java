@@ -16,19 +16,19 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.outbounds.http;
+package org.custom;
 
-import org.wso2.carbon.gateway.core.outbound.OutboundEPProvider;
-import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
+import org.wso2.carbon.gateway.core.flow.Mediator;
+import org.wso2.carbon.gateway.core.flow.MediatorProvider;
 
-public class HTTPOutboundProvider implements OutboundEPProvider {
+public class SampleCustomMediatorProvider implements MediatorProvider {
     @Override
-    public String getProtocol() {
-        return "http";
+    public String getName() {
+        return "SampleCustomMediator";
     }
 
     @Override
-    public OutboundEndpoint getEndpoint() {
-        return new HTTPOutboundEndpoint();
+    public Mediator getMediator() {
+        return new SampleCustomMediator();
     }
 }

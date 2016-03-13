@@ -98,8 +98,9 @@
     <properties>
        <bundle.activator>org.wso2.carbon.gateway.inbounds.http.Activator</bundle.activator>
         <export.package>
-            org.wso2.carbon.gateway.inbounds.http;version="1.0.0"
-            org.wso2.carbon.gateway.inbounds.http.builder;version="1.0.0"
+            org.wso2.carbon.gateway.inbounds.http;version="1.0.0",
+            org.wso2.carbon.gateway.inbounds.http.builder.internal1;version="1.0.0",
+            org.wso2.carbon.gateway.inbounds.http.builder.internal2;version="1.0.0"
         </export.package>
         <import.package>
             org.osgi.framework.*;version="${osgi.framework.import.version.range}",

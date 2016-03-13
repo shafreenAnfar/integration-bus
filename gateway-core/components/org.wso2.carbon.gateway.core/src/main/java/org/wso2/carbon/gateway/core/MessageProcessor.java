@@ -21,6 +21,7 @@ package org.wso2.carbon.gateway.core;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.gateway.core.inbound.Dispatcher;
+import org.wso2.carbon.gateway.core.inbound.InboundEPProvider;
 import org.wso2.carbon.gateway.core.inbound.InboundEPProviderRegistry;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
@@ -39,19 +40,25 @@ public class MessageProcessor implements CarbonMessageProcessor {
     public boolean receive(CarbonMessage cMsg, CarbonCallback callback) throws Exception {
 
         if (log.isDebugEnabled()) {
-            log.debug("Cheetah received a message");
+            log.debug("Gateway received a message");
         }
 
         String protocol = "http";  //TODO: Take from cMsg
 
-        // Decide the dispatcher
-        Dispatcher dispatcher =
-                InboundEPProviderRegistry.getInstance().getProvider(protocol).
-                        getInboundEndpointDispatcher();
-        if (dispatcher == null) {
-            log.error("Cannot handle protocol : " + protocol);
+        InboundEPProvider provider = InboundEPProviderRegistry.getInstance().getProvider(protocol);
+
+        if (provider == null) {
+            log.error("Cannot handle protocol : " + protocol + " , Provider not found");
             return false;
         }
+
+        // Decide the dispatcher
+        Dispatcher dispatcher = provider.getInboundEndpointDispatcher();
+        if (dispatcher == null) {
+            log.error("Cannot handle protocol : " + protocol + " , Dispatcher not found");
+            return false;
+        }
+
         dispatcher.dispatch(cMsg, callback);
         return false;
     }

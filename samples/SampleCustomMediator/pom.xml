@@ -89,15 +89,13 @@
     </build>
 
     <properties>
-        <fragment.host>org.wso2.carbon.ibus</fragment.host>
-
         <export.package>
             org.custom.*;version="1.0.0"
         </export.package>
         <import.package>
             org.osgi.framework.*;version="${osgi.framework.import.version.range}",
             org.sample.dsl.*;version="1.0.0",
-            org.wso2.carbon.ibus.mediation.cheetah.*,
+            org.wso2.carbon.gateway.core.*
         </import.package>
 
         <osgi.framework.import.version.range>[1.8.0, 2.0.0)</osgi.framework.import.version.range>
