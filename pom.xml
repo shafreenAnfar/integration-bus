@@ -75,7 +75,17 @@
 				<version>${carbon.gw.version}</version>
 				 <type>zip</type>
             </dependency>
-
+            <dependency>
+                <groupId>org.wso2.carbon.gateway.inbounds</groupId>
+                <artifactId>org.wso2.carbon.gateway.inbounds.http</artifactId>
+                <version>${carbon.gw.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.gateway.inbounds</groupId>
+                <artifactId>org.wso2.carbon.gateway.inbounds.http.feature</artifactId>
+                <version>${carbon.gw.version}</version>
+                <type>zip</type>
+            </dependency>
             <dependency>
                 <groupId>org.osgi</groupId>
                 <artifactId>org.osgi.core</artifactId>
@@ -176,6 +186,7 @@
         <module>gateway-core/components/org.wso2.carbon.gateway.core</module>
         <module>gateway-core/features/org.wso2.carbon.gateway.core.feature</module>
         <module>inbound-endpoints/http-inbound/components/org.wso2.carbon.gateway.inbounds.http</module>
+        <module>inbound-endpoints/http-inbound/features/org.wso2.carbon.gateway.inbounds.http.feature</module>
         <module>samples</module>
         <module>product</module>
     </modules>
