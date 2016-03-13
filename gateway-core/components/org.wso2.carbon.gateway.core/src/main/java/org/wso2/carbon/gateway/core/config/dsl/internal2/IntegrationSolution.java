@@ -22,9 +22,7 @@ package org.wso2.carbon.gateway.core.config.dsl.internal2;
 import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
 import org.wso2.carbon.gateway.core.config.ESBConfigHolder;
 import org.wso2.carbon.gateway.core.config.dsl.internal2.flow.MessageFlow;
-import org.wso2.carbon.gateway.core.config.dsl.internal2.outbound.http.HTTPOutboundEPBuilder;
 import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
-import org.wso2.carbon.gateway.core.outbound.builtin.HTTPOutboundEndpoint;
 
 /**
  * A class that represents the IntegrationSolution
@@ -42,11 +40,11 @@ public abstract class IntegrationSolution {
     }
 
 
-    public OutboundEndpoint defineHTTPOutboundEndpoint(String name, HTTPOutboundEPBuilder.URI uri) {
+    /*public OutboundEndpoint defineHTTPOutboundEndpoint(String name, HTTPOutboundEPBuilder.URI uri) {
         HTTPOutboundEndpoint httpOutboundEndpoint = HTTPOutboundEPBuilder.httpOutboundEndpoint(name, uri);
         getEsbConfigHolder().addOutboundEndpoint(httpOutboundEndpoint);
         return httpOutboundEndpoint;
-    }
+    }*/
 
     public MessageFlow defineMessageFlow(String name) {
         return new MessageFlow(name, esbConfigHolder);

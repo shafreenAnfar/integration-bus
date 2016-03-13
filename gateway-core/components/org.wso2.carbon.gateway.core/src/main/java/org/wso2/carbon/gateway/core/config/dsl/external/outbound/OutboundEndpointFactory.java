@@ -19,7 +19,6 @@ package org.wso2.carbon.gateway.core.config.dsl.external.outbound;
 
 
 import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
-import org.wso2.carbon.gateway.core.outbound.builtin.HTTPOutboundEndpoint;
 
 /**
  * Factory class to generate outbound endpoints
@@ -30,7 +29,7 @@ public class OutboundEndpointFactory {
         OutboundEndpoint outboundEndpoint = null;
         switch (outboundEndpointType) {
             case http:
-                outboundEndpoint = new HTTPOutboundEndpoint(name, uri);
+                //outboundEndpoint = new HTTPOutboundEndpoint(name, uri);
                 break;
             case jms:
                 break;

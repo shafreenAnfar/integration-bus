@@ -31,6 +31,8 @@ public abstract class AbstractOutboundEndpoint implements OutboundEndpoint {
         this.name = name;
     }
 
+    public AbstractOutboundEndpoint() {}
+
     @Override
     public abstract boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
             throws Exception;

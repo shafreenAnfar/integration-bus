@@ -187,6 +187,7 @@
         <module>gateway-core/features/org.wso2.carbon.gateway.core.feature</module>
         <module>inbound-endpoints/http-inbound/components/org.wso2.carbon.gateway.inbounds.http</module>
         <module>inbound-endpoints/http-inbound/features/org.wso2.carbon.gateway.inbounds.http.feature</module>
+        <module>outbound-endpoints/http-outbound/components/org.wso2.carbon.gateway.outbounds.http</module>
         <module>samples</module>
         <module>product</module>
     </modules>

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.outbound.builtin;
+package org.wso2.carbon.gateway.outbounds.http;
 
 import org.wso2.carbon.gateway.core.ServiceContextHolder;
 import org.wso2.carbon.gateway.core.outbound.AbstractOutboundEndpoint;
@@ -65,4 +65,11 @@ public class HTTPOutboundEndpoint extends AbstractOutboundEndpoint {
         this.uri = uri;
     }
 
+    public HTTPOutboundEndpoint() {
+
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 }
