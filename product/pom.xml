@@ -148,6 +148,14 @@
                                     <id>org.wso2.carbon.messaging.feature</id>
                                     <version>${carbon.messaging.version}</version>
                                 </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.gateway.inbounds.http.feature</id>
+                                    <version>${carbon.gw.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.gateway.outbounds.http.feature</id>
+                                    <version>${carbon.gw.version}</version>
+                                </feature>
                             </features>
                         </configuration>
                     </execution>
@@ -215,6 +223,14 @@
                                 <feature>
                                     <id>org.wso2.carbon.messaging.feature.group</id>
                                     <version>${carbon.messaging.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.gateway.inbounds.http.feature</id>
+                                    <version>${carbon.gw.version}</version>
+                                </feature>
+                                <feature>
+                                    <id>org.wso2.carbon.gateway.outbounds.http.feature</id>
+                                    <version>${carbon.gw.version}</version>
                                 </feature>
                             </features>
                         </configuration>

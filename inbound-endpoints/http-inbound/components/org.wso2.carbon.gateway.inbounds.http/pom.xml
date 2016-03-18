@@ -98,15 +98,16 @@
     <properties>
        <bundle.activator>org.wso2.carbon.gateway.inbounds.http.Activator</bundle.activator>
         <export.package>
-            org.wso2.carbon.gateway.inbounds.http;version="1.0.0",
-            org.wso2.carbon.gateway.inbounds.http.builder.internal1;version="1.0.0",
-            org.wso2.carbon.gateway.inbounds.http.builder.internal2;version="1.0.0"
+            org.wso2.carbon.gateway.inbounds.http,
+            org.wso2.carbon.gateway.inbounds.http.builder.internal1,
+            org.wso2.carbon.gateway.inbounds.http.builder.internal2
         </export.package>
         <import.package>
             org.osgi.framework.*;version="${osgi.framework.import.version.range}",
             org.sample.dsl.*;version="1.0.0",
             org.wso2.carbon.gateway.core.config.dsl.internal.*,
             org.wso2.carbon.gateway.core.*,
+            org.slf4j.*;version="${slf4j.logging.package.import.version.range}",
         </import.package>
 
         <osgi.framework.import.version.range>[1.8.0, 2.0.0)</osgi.framework.import.version.range>

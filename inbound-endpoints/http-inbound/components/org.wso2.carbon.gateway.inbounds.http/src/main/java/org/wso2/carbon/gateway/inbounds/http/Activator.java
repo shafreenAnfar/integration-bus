@@ -17,16 +17,12 @@ package org.wso2.carbon.gateway.inbounds.http;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wso2.carbon.gateway.core.inbound.InboundEPProvider;
 
 /**
  * OSGi Bundle Activator of HTTP Inbound.
  */
 public class Activator implements BundleActivator {
-
-    private static final Logger log = LoggerFactory.getLogger(Activator.class);
 
     public void start(BundleContext bundleContext) throws Exception {
         bundleContext.registerService(InboundEPProvider.class, new HTTPInboundEPProvider(), null);
