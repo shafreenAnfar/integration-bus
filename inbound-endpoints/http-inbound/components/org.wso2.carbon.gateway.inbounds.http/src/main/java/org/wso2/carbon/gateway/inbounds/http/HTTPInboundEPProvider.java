@@ -18,12 +18,23 @@
 
 package org.wso2.carbon.gateway.inbounds.http;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.wso2.carbon.gateway.core.inbound.Dispatcher;
 import org.wso2.carbon.gateway.core.inbound.InboundDeployer;
 import org.wso2.carbon.gateway.core.inbound.InboundEPProvider;
 import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
+import org.wso2.carbon.kernel.startupresolver.CapabilityProvider;
 
-public class HTTPInboundEPProvider implements InboundEPProvider{
+
+@Component(
+        name = "org.wso2.carbon.gateway.inbounds.http.HTTPInboundEPProvider",
+        immediate = true,
+        service = InboundEPProvider.class
+)
+public class HTTPInboundEPProvider implements InboundEPProvider {
+
     @Override
     public String getProtocol() {
         return "http";

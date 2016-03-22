@@ -18,9 +18,16 @@
 
 package org.wso2.carbon.gateway.outbounds.http;
 
+import org.osgi.service.component.annotations.Component;
+import org.wso2.carbon.gateway.core.inbound.InboundEPProvider;
 import org.wso2.carbon.gateway.core.outbound.OutboundEPProvider;
 import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
 
+@Component(
+        name = "org.wso2.carbon.gateway.outbounds.http.HTTPOutboundProvider",
+        immediate = true,
+        service = OutboundEPProvider.class
+)
 public class HTTPOutboundProvider implements OutboundEPProvider {
     @Override
     public String getProtocol() {

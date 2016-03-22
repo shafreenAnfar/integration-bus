@@ -22,7 +22,7 @@ import org.wso2.carbon.gateway.core.inbound.InboundEPProvider;
 /**
  * OSGi Bundle Activator of HTTP Inbound.
  */
-public class Activator implements BundleActivator {
+public class Activator {
 
     public void start(BundleContext bundleContext) throws Exception {
         bundleContext.registerService(InboundEPProvider.class, new HTTPInboundEPProvider(), null);

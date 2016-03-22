@@ -34,6 +34,9 @@ import org.wso2.carbon.gateway.core.outbound.OutboundEPProvider;
 import org.wso2.carbon.gateway.core.outbound.OutboundEPProviderRegistry;
 import org.wso2.carbon.messaging.TransportSender;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Service component for Gateway.
@@ -43,6 +46,12 @@ import org.wso2.carbon.messaging.TransportSender;
         immediate = true
 )
 public class GatewayServiceComponent {
+
+
+    private static List<JavaConfigurationBuilder> earlyDSLs = new ArrayList<>();
+
+    private static boolean isInboundsReady, isOutboundsReady, isMediatorsReady = true;
+
     @Reference(
             name = "transport-sender",
             service = TransportSender.class,
@@ -66,7 +75,11 @@ public class GatewayServiceComponent {
             unbind = "removeJavaDSLType1"
     )
     protected void addJavaDSLType1(JavaConfigurationBuilder dsl) {
-        DSLLoader.loadDSLType1(dsl);
+        if (isInboundsReady && isOutboundsReady && isMediatorsReady) {
+            DSLLoader.loadDSLType1(dsl);
+        } else {
+            earlyDSLs.add(dsl);
+        }
     }
 
     protected void removeJavaDSLType1(JavaConfigurationBuilder dsl) {
@@ -102,34 +115,29 @@ public class GatewayServiceComponent {
         MediatorProviderRegistry.getInstance().unregisterMediatorProvider(mediatorProvider);
     }
 
-    @Reference(
-            name = "InboundEndpoint-Service",
-            service = InboundEPProvider.class,
-            cardinality = ReferenceCardinality.OPTIONAL,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "removeInboundProvider"
-    )
-    protected void addInboundProvider(InboundEPProvider inboundEndpointProvider) {
-        InboundEPProviderRegistry.getInstance().registerInboundEPProvider(inboundEndpointProvider);
+    public static void setInboundsReady(boolean inboundsReady) {
+        isInboundsReady = inboundsReady;
+        deployEarlyDSLs();
     }
 
-    protected void removeInboundProvider(InboundEPProvider inboundEndpointProvider) {
-        InboundEPProviderRegistry.getInstance().unregisterInboundEPProvider(inboundEndpointProvider);
+    public static void setOutboundsReady(boolean outboundsReady) {
+        isOutboundsReady = outboundsReady;
+        deployEarlyDSLs();
     }
 
-    @Reference(
-            name = "OutboundEndpoint-Service",
-            service = OutboundEPProvider.class,
-            cardinality = ReferenceCardinality.OPTIONAL,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "removeOutboundProvider"
-    )
-    protected void addOutboundProvider(OutboundEPProvider outboundEPProvider) {
-        OutboundEPProviderRegistry.getInstance().registerOutboundEPProvider(outboundEPProvider);
+    public static void setMediatorsReady(boolean mediatorsReady) {
+        isMediatorsReady = mediatorsReady;
+        deployEarlyDSLs();
     }
 
-    protected void removeOutboundProvider(OutboundEPProvider outboundEPProvider) {
-        OutboundEPProviderRegistry.getInstance().unregisterOutboundEPProvider(outboundEPProvider);
+    private static void deployEarlyDSLs() {
+        if (isInboundsReady && isOutboundsReady && isMediatorsReady) {
+            for (JavaConfigurationBuilder dsl : earlyDSLs) {
+                DSLLoader.loadDSLType1(dsl);
+                earlyDSLs.remove(dsl);
+            }
+        }
     }
+
 
 }

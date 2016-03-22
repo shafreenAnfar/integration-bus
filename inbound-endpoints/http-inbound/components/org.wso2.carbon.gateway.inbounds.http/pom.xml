@@ -62,6 +62,10 @@
             <artifactId>org.wso2.carbon.gateway.core</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.wso2.carbon.messaging</groupId>
             <artifactId>org.wso2.carbon.messaging</artifactId>
         </dependency>
@@ -96,13 +100,14 @@
     </build>
 
     <properties>
-       <bundle.activator>org.wso2.carbon.gateway.inbounds.http.Activator</bundle.activator>
+      <!-- <bundle.activator>org.wso2.carbon.gateway.inbounds.http.Activator</bundle.activator>-->
         <export.package>
             org.wso2.carbon.gateway.inbounds.http,
             org.wso2.carbon.gateway.inbounds.http.builder.internal1,
             org.wso2.carbon.gateway.inbounds.http.builder.internal2
         </export.package>
         <import.package>
+            org.wso2.carbon.kernel.startupresolver.*;version="${carbon.kernel.package.import.version.range}",
             org.osgi.framework.*;version="${osgi.framework.import.version.range}",
             org.sample.dsl.*;version="1.0.0",
             org.wso2.carbon.gateway.core.config.dsl.internal.*,
