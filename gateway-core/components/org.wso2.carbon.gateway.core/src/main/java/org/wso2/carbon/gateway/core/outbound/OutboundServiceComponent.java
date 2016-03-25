@@ -18,6 +18,8 @@
 
 package org.wso2.carbon.gateway.core.outbound;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -42,12 +44,19 @@ public class OutboundServiceComponent implements RequiredCapabilityListener {
 
     private static final Logger logger = LoggerFactory.getLogger(OutboundServiceComponent.class);
 
+    @Activate
+    protected void activate(BundleContext bundleContext) {
+        // Nothing to do
+    }
+
     @Override
     public void onAllRequiredCapabilitiesAvailable() {
       if (logger.isDebugEnabled()) {
           logger.debug("All Outbound Providers available");
       }
-        GatewayServiceComponent.setOutboundsReady(true);
+
+      logger.info("$$$$$ All Outbound Providers available");
+      GatewayServiceComponent.setOutboundsReady(true);
     }
 
     @Reference(

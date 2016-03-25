@@ -134,7 +134,6 @@ public class GatewayServiceComponent {
         if (isInboundsReady && isOutboundsReady && isMediatorsReady) {
             for (JavaConfigurationBuilder dsl : earlyDSLs) {
                 DSLLoader.loadDSLType1(dsl);
-                earlyDSLs.remove(dsl);
             }
         }
     }

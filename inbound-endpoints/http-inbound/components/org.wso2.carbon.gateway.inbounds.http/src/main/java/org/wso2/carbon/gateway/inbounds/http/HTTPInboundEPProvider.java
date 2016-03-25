@@ -18,15 +18,13 @@
 
 package org.wso2.carbon.gateway.inbounds.http;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.wso2.carbon.gateway.core.inbound.Dispatcher;
 import org.wso2.carbon.gateway.core.inbound.InboundDeployer;
 import org.wso2.carbon.gateway.core.inbound.InboundEPProvider;
 import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
-import org.wso2.carbon.kernel.startupresolver.CapabilityProvider;
-
 
 @Component(
         name = "org.wso2.carbon.gateway.inbounds.http.HTTPInboundEPProvider",
@@ -34,6 +32,10 @@ import org.wso2.carbon.kernel.startupresolver.CapabilityProvider;
         service = InboundEPProvider.class
 )
 public class HTTPInboundEPProvider implements InboundEPProvider {
+
+    @Activate
+    protected void start(BundleContext bundleContext) {
+    }
 
     @Override
     public String getProtocol() {
@@ -54,4 +56,5 @@ public class HTTPInboundEPProvider implements InboundEPProvider {
     public Dispatcher getInboundEndpointDispatcher() {
         return HTTPInboundEPDispatcher.getInstance();
     }
+
 }
