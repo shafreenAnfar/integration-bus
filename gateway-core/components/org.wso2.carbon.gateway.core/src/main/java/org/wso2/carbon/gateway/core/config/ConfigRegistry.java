@@ -19,7 +19,7 @@
 package org.wso2.carbon.gateway.core.config;
 
 
-import org.wso2.carbon.gateway.core.inbound.InboundDeployer;
+import org.wso2.carbon.gateway.core.inbound.InboundEPDeployer;
 import org.wso2.carbon.gateway.core.inbound.InboundEPProviderRegistry;
 import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
 import org.wso2.carbon.gateway.core.flow.Pipeline;
@@ -113,7 +113,7 @@ public class ConfigRegistry {
 
     public void registerInboundEndpoint(InboundEndpoint inboundEndpoint) {
         inboundEndpoints.put(inboundEndpoint.getName(), inboundEndpoint);
-        InboundDeployer deployer = InboundEPProviderRegistry.getInstance().
+        InboundEPDeployer deployer = InboundEPProviderRegistry.getInstance().
                 getProvider(inboundEndpoint.getProtocol()).getInboundDeployer();
         if (deployer != null) {
             deployer.deploy(inboundEndpoint);
@@ -128,7 +128,7 @@ public class ConfigRegistry {
     public void unregisterInboundEndpoint(InboundEndpoint inboundEndpoint) {
 
         inboundEndpoints.remove(inboundEndpoint.getName());
-        InboundDeployer deployer = InboundEPProviderRegistry.getInstance().
+        InboundEPDeployer deployer = InboundEPProviderRegistry.getInstance().
                 getProvider(inboundEndpoint.getProtocol()).getInboundDeployer();
         if (deployer != null) {
             deployer.undeploy(inboundEndpoint);

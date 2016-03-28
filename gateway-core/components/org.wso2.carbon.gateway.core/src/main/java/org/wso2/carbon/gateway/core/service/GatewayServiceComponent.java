@@ -25,13 +25,8 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.wso2.carbon.gateway.core.ServiceContextHolder;
 import org.wso2.carbon.gateway.core.config.dsl.internal.DSLLoader;
 import org.wso2.carbon.gateway.core.config.dsl.internal.JavaConfigurationBuilder;
-import org.wso2.carbon.gateway.core.config.dsl.internal2.IntegrationSolution;
 import org.wso2.carbon.gateway.core.flow.MediatorProvider;
 import org.wso2.carbon.gateway.core.flow.MediatorProviderRegistry;
-import org.wso2.carbon.gateway.core.inbound.InboundEPProvider;
-import org.wso2.carbon.gateway.core.inbound.InboundEPProviderRegistry;
-import org.wso2.carbon.gateway.core.outbound.OutboundEPProvider;
-import org.wso2.carbon.gateway.core.outbound.OutboundEPProviderRegistry;
 import org.wso2.carbon.messaging.TransportSender;
 
 import java.util.ArrayList;
@@ -68,39 +63,6 @@ public class GatewayServiceComponent {
     }
 
     @Reference(
-            name = "java-dsl-1",
-            service = JavaConfigurationBuilder.class,
-            cardinality = ReferenceCardinality.OPTIONAL,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "removeJavaDSLType1"
-    )
-    protected void addJavaDSLType1(JavaConfigurationBuilder dsl) {
-        if (isInboundsReady && isOutboundsReady && isMediatorsReady) {
-            DSLLoader.loadDSLType1(dsl);
-        } else {
-            earlyDSLs.add(dsl);
-        }
-    }
-
-    protected void removeJavaDSLType1(JavaConfigurationBuilder dsl) {
-    }
-
-
-    @Reference(
-            name = "java-dsl-2",
-            service = IntegrationSolution.class,
-            cardinality = ReferenceCardinality.OPTIONAL,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "removeJavaDSLType2"
-    )
-    protected void addJavaDSLType2(IntegrationSolution dsl) {
-        DSLLoader.loadDSLType2(dsl);
-    }
-
-    protected void removeJavaDSLType2(IntegrationSolution dsl) {
-    }
-
-    @Reference(
             name = "Mediator-Service",
             service = MediatorProvider.class,
             cardinality = ReferenceCardinality.OPTIONAL,
@@ -115,28 +77,6 @@ public class GatewayServiceComponent {
         MediatorProviderRegistry.getInstance().unregisterMediatorProvider(mediatorProvider);
     }
 
-    public static void setInboundsReady(boolean inboundsReady) {
-        isInboundsReady = inboundsReady;
-        deployEarlyDSLs();
-    }
-
-    public static void setOutboundsReady(boolean outboundsReady) {
-        isOutboundsReady = outboundsReady;
-        deployEarlyDSLs();
-    }
-
-    public static void setMediatorsReady(boolean mediatorsReady) {
-        isMediatorsReady = mediatorsReady;
-        deployEarlyDSLs();
-    }
-
-    private static void deployEarlyDSLs() {
-        if (isInboundsReady && isOutboundsReady && isMediatorsReady) {
-            for (JavaConfigurationBuilder dsl : earlyDSLs) {
-                DSLLoader.loadDSLType1(dsl);
-            }
-        }
-    }
 
 
 }

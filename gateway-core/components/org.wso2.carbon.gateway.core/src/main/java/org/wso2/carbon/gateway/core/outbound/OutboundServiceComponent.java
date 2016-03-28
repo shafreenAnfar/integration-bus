@@ -26,9 +26,6 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.carbon.gateway.core.inbound.InboundEPProvider;
-import org.wso2.carbon.gateway.core.inbound.InboundEPProviderRegistry;
-import org.wso2.carbon.gateway.core.service.GatewayServiceComponent;
 import org.wso2.carbon.kernel.startupresolver.RequiredCapabilityListener;
 
 
@@ -44,19 +41,34 @@ public class OutboundServiceComponent implements RequiredCapabilityListener {
 
     private static final Logger logger = LoggerFactory.getLogger(OutboundServiceComponent.class);
 
+    private BundleContext bundleContext;
+
+    private boolean isAllProviderAvailable;
+
     @Activate
     protected void activate(BundleContext bundleContext) {
-        // Nothing to do
+        this.bundleContext = bundleContext;
+
+        if (isAllProviderAvailable) {
+            bundleContext.registerService(ProviderRegistry.class,
+                                          OutboundEPProviderRegistry.getInstance(), null);
+        }
     }
 
     @Override
     public void onAllRequiredCapabilitiesAvailable() {
-      if (logger.isDebugEnabled()) {
-          logger.debug("All Outbound Providers available");
-      }
+        if (logger.isDebugEnabled()) {
+            logger.debug("All Outbound Providers available");
+        }
 
-      logger.info("$$$$$ All Outbound Providers available");
-      GatewayServiceComponent.setOutboundsReady(true);
+        logger.info("$$$$$ All Outbound Providers available");
+        isAllProviderAvailable = true;
+
+        if (bundleContext != null) {
+            bundleContext.registerService(ProviderRegistry.class,
+                                          OutboundEPProviderRegistry.getInstance(), null);
+        }
+
     }
 
     @Reference(

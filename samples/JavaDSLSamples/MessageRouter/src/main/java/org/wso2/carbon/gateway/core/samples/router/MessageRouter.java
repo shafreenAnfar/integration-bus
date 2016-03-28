@@ -22,8 +22,8 @@ package org.wso2.carbon.gateway.core.samples.router;
 import org.wso2.carbon.gateway.core.config.dsl.internal.JavaConfigurationBuilder;
 import org.wso2.carbon.gateway.core.config.dsl.internal.flow.mediators.CallMediatorBuilder;
 import org.wso2.carbon.gateway.core.config.dsl.internal.flow.mediators.FilterMediatorBuilder;
-import org.wso2.carbon.gateway.inbounds.http.builder.internal1.HTTPInboundEPBuilder;
-import org.wso2.carbon.gateway.outbounds.http.builder.internal1.HTTPOutboundEPBuilder;
+import org.wso2.carbon.gateway.inbounds.http.builder.HTTPInboundEPBuilder;
+import org.wso2.carbon.gateway.outbounds.http.builder.HTTPOutboundEPBuilder;
 
 /**
  * Sample Internal DSL in method 1
@@ -34,7 +34,7 @@ public class MessageRouter extends JavaConfigurationBuilder {
 
         IntegrationFlow router = integrationFlow("Message_Router");
 
-        router.inboundEndpoint("inboundEndpoint1", HTTPInboundEPBuilder.http(HTTPInboundEPBuilder.port(8280),
+        router.inboundEndpoint("inboundEndpoint1", HTTPInboundEPBuilder.http(HTTPInboundEPBuilder.port(7777),
                                                                              HTTPInboundEPBuilder.context("/router"))).
                    pipeline("pipeline1").
                    filter(FilterMediatorBuilder.source("$header.routeId"), FilterMediatorBuilder.pattern("r1")).

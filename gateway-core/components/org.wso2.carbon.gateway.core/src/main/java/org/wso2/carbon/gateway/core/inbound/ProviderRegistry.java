@@ -15,23 +15,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+package org.wso2.carbon.gateway.core.inbound;
 
-package org.wso2.carbon.gateway.core.samples.router2;
+public interface ProviderRegistry {
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.wso2.carbon.gateway.core.config.dsl.internal2.IntegrationSolution;
-
-/**
- * Bundle Activator
- */
-public class Activator implements BundleActivator {
-    public void start(BundleContext bundleContext) throws Exception {
-        bundleContext.registerService(IntegrationSolution.class, new MessageRouter(), null);
-    }
-
-    public void stop(BundleContext bundleContext) throws Exception {
-
-    }
+    public Provider getProvider(String protocol);
 
 }

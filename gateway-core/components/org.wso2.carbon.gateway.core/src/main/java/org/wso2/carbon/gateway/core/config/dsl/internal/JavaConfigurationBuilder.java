@@ -19,10 +19,10 @@
 package org.wso2.carbon.gateway.core.config.dsl.internal;
 
 
-import org.wso2.carbon.gateway.core.config.dsl.internal2.outbound.OutboundEndpointBuilder;
 import org.wso2.carbon.gateway.core.config.ESBConfigHolder;
 import org.wso2.carbon.gateway.core.config.dsl.internal.flow.PipelineBuilder;
-import org.wso2.carbon.gateway.core.config.dsl.internal2.inbound.InboundEPBuilder;
+import org.wso2.carbon.gateway.core.config.dsl.internal.inbound.InboundEPBuilder;
+import org.wso2.carbon.gateway.core.config.dsl.internal.outbound.OutboundEndpointBuilder;
 import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
 import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
 

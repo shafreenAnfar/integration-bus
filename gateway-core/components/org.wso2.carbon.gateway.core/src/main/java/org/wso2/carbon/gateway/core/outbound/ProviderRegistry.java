@@ -15,12 +15,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.carbon.gateway.core.inbound;
+package org.wso2.carbon.gateway.core.outbound;
 
-public interface InboundDeployer {
+public interface ProviderRegistry {
 
-    public void deploy(InboundEndpoint inboundEndpoint);
+    public OutboundEPProvider getProvider(String protocol);
 
-    public void undeploy(InboundEndpoint inboundEndpoint);
 
 }

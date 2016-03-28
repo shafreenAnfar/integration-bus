@@ -20,7 +20,7 @@ package org.wso2.carbon.gateway.inbounds.http;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.carbon.gateway.core.inbound.InboundDeployer;
+import org.wso2.carbon.gateway.core.inbound.InboundEPDeployer;
 import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
 import org.wso2.carbon.messaging.TransportListener;
 import org.wso2.carbon.messaging.TransportListenerManager;
@@ -31,7 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * An InboundEndpoint Manager class
  */
-public class HTTPListenerManager implements TransportListenerManager, InboundDeployer {
+public class HTTPListenerManager implements TransportListenerManager, InboundEPDeployer {
 
     private Map<String, TransportListener> listenerMap = new ConcurrentHashMap<>();
 

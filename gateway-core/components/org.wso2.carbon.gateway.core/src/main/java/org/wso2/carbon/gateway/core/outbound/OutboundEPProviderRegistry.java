@@ -21,7 +21,7 @@ package org.wso2.carbon.gateway.core.outbound;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OutboundEPProviderRegistry {
+public class OutboundEPProviderRegistry implements ProviderRegistry{
 
     private Map<String, OutboundEPProvider> outboundEPProviders = new HashMap<>();
 
@@ -39,6 +39,10 @@ public class OutboundEPProviderRegistry {
 
     public void unregisterOutboundEPProvider(OutboundEPProvider outboundEPProvider) {
         outboundEPProviders.remove(outboundEPProvider.getProtocol());
+    }
+
+    public OutboundEPProvider getProvider(String protocol) {
+        return outboundEPProviders.get(protocol);
     }
 
 }
