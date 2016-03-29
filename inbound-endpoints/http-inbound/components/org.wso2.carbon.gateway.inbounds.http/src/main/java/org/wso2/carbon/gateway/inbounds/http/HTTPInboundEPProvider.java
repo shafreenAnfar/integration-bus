@@ -21,6 +21,8 @@ package org.wso2.carbon.gateway.inbounds.http;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.wso2.carbon.gateway.core.config.ConfigRegistry;
+import org.wso2.carbon.gateway.core.config.ConfigRegistryObserver;
 import org.wso2.carbon.gateway.core.inbound.Dispatcher;
 import org.wso2.carbon.gateway.core.inbound.InboundEPDeployer;
 import org.wso2.carbon.gateway.core.inbound.Provider;
@@ -36,7 +38,10 @@ public class HTTPInboundEPProvider implements Provider {
 
     @Activate
     protected void start(BundleContext bundleContext) {
-        bundleContext.registerService(TransportListenerManager.class, HTTPListenerManager.getInstance(), null);
+        bundleContext.registerService(TransportListenerManager.class,
+                                      HTTPListenerManager.getInstance(), null);
+        bundleContext.registerService(ConfigRegistryObserver.class,
+                                      HTTPInboundEPDispatcher.getInstance(), null);
     }
 
     @Override
