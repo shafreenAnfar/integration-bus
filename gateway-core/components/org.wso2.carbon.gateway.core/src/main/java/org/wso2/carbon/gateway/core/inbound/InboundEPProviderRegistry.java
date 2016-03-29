@@ -25,8 +25,6 @@ import java.util.Map;
 
 public class InboundEPProviderRegistry implements ProviderRegistry{
 
-    private boolean isInboundProvidersReady;
-
     private Map<String, Provider> inboundEndpointProviders = new HashMap<>();
 
 

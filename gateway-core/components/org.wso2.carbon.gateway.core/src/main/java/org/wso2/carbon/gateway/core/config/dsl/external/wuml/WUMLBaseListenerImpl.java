@@ -21,6 +21,8 @@ package org.wso2.carbon.gateway.core.config.dsl.external.wuml;
 import org.wso2.carbon.gateway.core.config.dsl.external.StringParserUtil;
 import org.wso2.carbon.gateway.core.config.dsl.external.inbound.InboundEndpointType;
 import org.wso2.carbon.gateway.core.config.dsl.external.outbound.OutboundEndpointFactory;
+import org.wso2.carbon.gateway.core.config.dsl.external.wuml.generated.WUMLBaseListener;
+import org.wso2.carbon.gateway.core.config.dsl.external.wuml.generated.WUMLParser;
 import org.wso2.carbon.gateway.core.flow.MediatorProviderRegistry;
 import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.Condition;
 import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.FilterMediator;
@@ -32,8 +34,6 @@ import org.wso2.carbon.gateway.core.config.dsl.external.outbound.OutboundEndpoin
 import org.wso2.carbon.gateway.core.flow.Mediator;
 import org.wso2.carbon.gateway.core.flow.Pipeline;
 import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated.WUMLBaseListener;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated.WUMLParser;
 
 import java.util.Stack;
 import java.util.regex.Pattern;

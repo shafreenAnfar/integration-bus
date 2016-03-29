@@ -21,14 +21,22 @@ package org.wso2.carbon.gateway.core.config.dsl.external.deployer;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.gateway.core.config.ConfigRegistry;
 import org.wso2.carbon.gateway.core.config.ESBConfigHolder;
 import org.wso2.carbon.gateway.core.config.dsl.external.WUMLConfigurationBuilder;
 import org.wso2.carbon.gateway.core.config.dsl.external.wuml.WUMLBaseListenerImpl;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated.WUMLLexer;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated.WUMLParser;
+import org.wso2.carbon.gateway.core.config.dsl.external.wuml.generated.WUMLLexer;
+import org.wso2.carbon.gateway.core.config.dsl.external.wuml.generated.WUMLParser;
+import org.wso2.carbon.gateway.core.inbound.Provider;
+import org.wso2.carbon.gateway.core.inbound.ProviderRegistry;
 import org.wso2.carbon.kernel.deployment.Artifact;
 import org.wso2.carbon.kernel.deployment.ArtifactType;
 import org.wso2.carbon.kernel.deployment.Deployer;
@@ -47,6 +55,11 @@ import java.util.Map;
 /**
  * A class responsible for read the .iflow files and deploy them to the runtime Object model.
  */
+@Component(
+        name = "org.wso2.carbon.gateway.core.config.dsl.external.deployer.IFlowDeployer",
+        immediate = true,
+        service = Deployer.class
+)
 public class IFlowDeployer implements Deployer {
 
     private ArtifactType artifactType;
@@ -58,6 +71,51 @@ public class IFlowDeployer implements Deployer {
     private static final Logger logger = LoggerFactory.getLogger(IFlowDeployer.class);
 
     public static final String EXTERNAL_DSL_CONFIGS_DIRECTORY = "integration-flows";
+
+    @Activate
+    protected void activate(BundleContext bundleContext) {
+        //TODO: check whether this guarantee whether this deployer registered on
+        //TODO: after all mandatory services are available
+    }
+
+    @Reference(
+            name = "inbound-provider-registry-service",
+            service = ProviderRegistry.class,
+            cardinality = ReferenceCardinality.MANDATORY,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "removeInboundProviderRegistry"
+    )
+    protected void addInboundProviderRegistry(ProviderRegistry registry) {
+    }
+
+    protected void removeInboundProviderRegistry(ProviderRegistry registry) {
+    }
+
+    @Reference(
+            name = "outbound-provider-registry-service",
+            service = org.wso2.carbon.gateway.core.outbound.ProviderRegistry.class,
+            cardinality = ReferenceCardinality.MANDATORY,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "removeOutboundProviderRegistry"
+    )
+    protected void addOutboundProviderRegistry(org.wso2.carbon.gateway.core.outbound.ProviderRegistry registry) {
+    }
+
+    protected void removeOutboundProviderRegistry(org.wso2.carbon.gateway.core.outbound.ProviderRegistry registry) {
+    }
+
+    @Reference(
+            name = "mediator-provider-registry-service",
+            service = org.wso2.carbon.gateway.core.flow.ProviderRegistry.class,
+            cardinality = ReferenceCardinality.MANDATORY,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "removeMediatorProviderRegistry"
+    )
+    protected void addMediatorProviderRegistry(org.wso2.carbon.gateway.core.flow.ProviderRegistry registry) {
+    }
+
+    protected void removeMediatorProviderRegistry(org.wso2.carbon.gateway.core.flow.ProviderRegistry registry) {
+    }
 
     @Override
     public void init() {
