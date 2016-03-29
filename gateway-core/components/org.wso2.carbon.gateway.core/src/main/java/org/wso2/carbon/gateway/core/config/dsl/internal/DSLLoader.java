@@ -103,6 +103,19 @@ public class DSLLoader {
     protected void removeOutboundProviderRegistry(org.wso2.carbon.gateway.core.outbound.ProviderRegistry registry) {
     }
 
+    @Reference(
+            name = "mediator-provider-registry-service",
+            service = org.wso2.carbon.gateway.core.flow.ProviderRegistry.class,
+            cardinality = ReferenceCardinality.MANDATORY,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "removeMediatorProviderRegistry"
+    )
+    protected void addMediatorProviderRegistry(org.wso2.carbon.gateway.core.flow.ProviderRegistry registry) {
+    }
+
+    protected void removeMediatorProviderRegistry(org.wso2.carbon.gateway.core.flow.ProviderRegistry registry) {
+    }
+
 
     /**
      * Load Java DSL configuration file in type1

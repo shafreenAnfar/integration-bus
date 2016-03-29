@@ -23,10 +23,6 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.wso2.carbon.gateway.core.ServiceContextHolder;
-import org.wso2.carbon.gateway.core.config.dsl.internal.DSLLoader;
-import org.wso2.carbon.gateway.core.config.dsl.internal.JavaConfigurationBuilder;
-import org.wso2.carbon.gateway.core.flow.MediatorProvider;
-import org.wso2.carbon.gateway.core.flow.MediatorProviderRegistry;
 import org.wso2.carbon.messaging.TransportSender;
 
 import java.util.ArrayList;
@@ -42,11 +38,6 @@ import java.util.List;
 )
 public class GatewayServiceComponent {
 
-
-    private static List<JavaConfigurationBuilder> earlyDSLs = new ArrayList<>();
-
-    private static boolean isInboundsReady, isOutboundsReady, isMediatorsReady = true;
-
     @Reference(
             name = "transport-sender",
             service = TransportSender.class,
@@ -61,22 +52,6 @@ public class GatewayServiceComponent {
     protected void removeTransportSender(TransportSender transportSender) {
         ServiceContextHolder.getInstance().removeTransportSender(transportSender);
     }
-
-    @Reference(
-            name = "Mediator-Service",
-            service = MediatorProvider.class,
-            cardinality = ReferenceCardinality.OPTIONAL,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "unregisterMediatorProvider"
-    )
-    protected void registerMediatorProvider(MediatorProvider mediatorProvider) {
-        MediatorProviderRegistry.getInstance().registerMediatorProvider(mediatorProvider);
-    }
-
-    protected void unregisterMediatorProvider(MediatorProvider mediatorProvider) {
-        MediatorProviderRegistry.getInstance().unregisterMediatorProvider(mediatorProvider);
-    }
-
 
 
 }
