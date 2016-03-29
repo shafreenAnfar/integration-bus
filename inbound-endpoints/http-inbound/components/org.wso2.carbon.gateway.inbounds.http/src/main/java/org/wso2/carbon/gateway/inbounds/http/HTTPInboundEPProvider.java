@@ -18,22 +18,31 @@
 
 package org.wso2.carbon.gateway.inbounds.http;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.wso2.carbon.gateway.core.config.ConfigRegistry;
+import org.wso2.carbon.gateway.core.config.ConfigRegistryObserver;
 import org.wso2.carbon.gateway.core.inbound.Dispatcher;
-import org.wso2.carbon.gateway.core.inbound.InboundDeployer;
-import org.wso2.carbon.gateway.core.inbound.InboundEPProvider;
+import org.wso2.carbon.gateway.core.inbound.InboundEPDeployer;
+import org.wso2.carbon.gateway.core.inbound.Provider;
 import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
-import org.wso2.carbon.kernel.startupresolver.CapabilityProvider;
-
+import org.wso2.carbon.messaging.TransportListenerManager;
 
 @Component(
         name = "org.wso2.carbon.gateway.inbounds.http.HTTPInboundEPProvider",
         immediate = true,
-        service = InboundEPProvider.class
+        service = Provider.class
 )
-public class HTTPInboundEPProvider implements InboundEPProvider {
+public class HTTPInboundEPProvider implements Provider {
+
+    @Activate
+    protected void start(BundleContext bundleContext) {
+        bundleContext.registerService(TransportListenerManager.class,
+                                      HTTPListenerManager.getInstance(), null);
+        bundleContext.registerService(ConfigRegistryObserver.class,
+                                      HTTPInboundEPDispatcher.getInstance(), null);
+    }
 
     @Override
     public String getProtocol() {
@@ -41,7 +50,7 @@ public class HTTPInboundEPProvider implements InboundEPProvider {
     }
 
     @Override
-    public InboundDeployer getInboundDeployer() {
+    public InboundEPDeployer getInboundDeployer() {
         return HTTPListenerManager.getInstance();
     }
 
@@ -54,4 +63,5 @@ public class HTTPInboundEPProvider implements InboundEPProvider {
     public Dispatcher getInboundEndpointDispatcher() {
         return HTTPInboundEPDispatcher.getInstance();
     }
+
 }

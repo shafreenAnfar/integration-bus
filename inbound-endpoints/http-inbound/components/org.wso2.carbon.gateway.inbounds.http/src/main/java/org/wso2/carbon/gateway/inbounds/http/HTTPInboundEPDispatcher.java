@@ -51,7 +51,6 @@ public class HTTPInboundEPDispatcher implements Dispatcher, ConfigRegistryObserv
 
     private HTTPInboundEPDispatcher() {
         httpEPRegistry = new HashMap<Integer, ArrayList<HTTPInboundEP>>();
-        ConfigRegistry.getInstance().registerObserver(this);
     }
 
     @Override

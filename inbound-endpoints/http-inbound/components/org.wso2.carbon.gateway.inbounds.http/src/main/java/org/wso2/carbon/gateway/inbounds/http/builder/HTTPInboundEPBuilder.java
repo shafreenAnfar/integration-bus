@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.inbounds.http.builder.internal1;
+package org.wso2.carbon.gateway.inbounds.http.builder;
 
 
 import org.wso2.carbon.gateway.inbounds.http.HTTPInboundEP;

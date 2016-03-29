@@ -21,7 +21,7 @@ package org.wso2.carbon.gateway.core;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.gateway.core.inbound.Dispatcher;
-import org.wso2.carbon.gateway.core.inbound.InboundEPProvider;
+import org.wso2.carbon.gateway.core.inbound.Provider;
 import org.wso2.carbon.gateway.core.inbound.InboundEPProviderRegistry;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
@@ -45,7 +45,7 @@ public class MessageProcessor implements CarbonMessageProcessor {
 
         String protocol = "http";  //TODO: Take from cMsg
 
-        InboundEPProvider provider = InboundEPProviderRegistry.getInstance().getProvider(protocol);
+        Provider provider = InboundEPProviderRegistry.getInstance().getProvider(protocol);
 
         if (provider == null) {
             log.error("Cannot handle protocol : " + protocol + " , Provider not found");

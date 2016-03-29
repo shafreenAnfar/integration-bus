@@ -21,19 +21,19 @@ package org.wso2.carbon.gateway.core.config.dsl.external.wuml;
 import org.wso2.carbon.gateway.core.config.dsl.external.StringParserUtil;
 import org.wso2.carbon.gateway.core.config.dsl.external.inbound.InboundEndpointType;
 import org.wso2.carbon.gateway.core.config.dsl.external.outbound.OutboundEndpointFactory;
+import org.wso2.carbon.gateway.core.config.dsl.external.wuml.generated.WUMLBaseListener;
+import org.wso2.carbon.gateway.core.config.dsl.external.wuml.generated.WUMLParser;
+import org.wso2.carbon.gateway.core.flow.MediatorProviderRegistry;
 import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.Condition;
 import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.FilterMediator;
 import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.Source;
 import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
 import org.wso2.carbon.gateway.core.config.dsl.external.WUMLConfigurationBuilder;
-import org.wso2.carbon.gateway.core.config.dsl.external.flow.MediatorFactory;
 import org.wso2.carbon.gateway.core.config.dsl.external.inbound.InboundEndpointFactory;
 import org.wso2.carbon.gateway.core.config.dsl.external.outbound.OutboundEndpointType;
 import org.wso2.carbon.gateway.core.flow.Mediator;
 import org.wso2.carbon.gateway.core.flow.Pipeline;
 import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated.WUMLBaseListener;
-import org.wso2.carbon.ibus.mediation.cheetah.config.dsl.external.wuml.generated.WUMLParser;
 
 import java.util.Stack;
 import java.util.regex.Pattern;
@@ -168,7 +168,8 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     public void exitProcessmessageDef(WUMLParser.ProcessmessageDefContext ctx) {
         String mediatorName = StringParserUtil.getValueWithinDoubleQuotes(ctx.MEDIATORNAMESTRINGX().getText());
         String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.CONFIGSDEF().getText());
-        Mediator mediator = MediatorFactory.getInstance().getMediator(mediatorName, configurations);
+        Mediator mediator = MediatorProviderRegistry.getInstance().getMediator(mediatorName);
+        mediator.setConfigs(configurations);
         if (ifMultiThenBlockStarted) {
             filterMediatorStack.peek().addThenMediator(mediator);
 
@@ -186,7 +187,8 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     public void exitMessageProcessingDef(WUMLParser.MessageProcessingDefContext ctx) {
         String mediatorName = ctx.MEDIATORNAME().getText();
         String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.ARGUMENTLISTDEF().getText());
-        Mediator mediator = MediatorFactory.getInstance().getMediator(mediatorName, configurations);
+        Mediator mediator = MediatorProviderRegistry.getInstance().getMediator(mediatorName);
+        mediator.setConfigs(configurations);
         if (ifMultiThenBlockStarted) {
             filterMediatorStack.peek().addThenMediator(mediator);
 
@@ -221,7 +223,9 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
 
     @Override
     public void exitInvokeToTarget(WUMLParser.InvokeToTargetContext ctx) {
-        Mediator mediator = MediatorFactory.getInstance().getMediator("call", ctx.OUTBOUNDENDPOINTNAME().getText());
+        Mediator mediator = MediatorProviderRegistry.getInstance().getMediator("call");
+        mediator.setConfigs(ctx.OUTBOUNDENDPOINTNAME().getText());
+
         if(ifMultiThenBlockStarted) {
             filterMediatorStack.peek().addThenMediator(mediator);
 
@@ -247,7 +251,8 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
 
     @Override
     public void exitInvokeToSource(WUMLParser.InvokeToSourceContext ctx) {
-        Mediator mediator = MediatorFactory.getInstance().getMediator("respond", null);
+        Mediator mediator = MediatorProviderRegistry.getInstance().getMediator("respond");
+
         if(ifMultiThenBlockStarted) {
             filterMediatorStack.peek().addThenMediator(mediator);
 

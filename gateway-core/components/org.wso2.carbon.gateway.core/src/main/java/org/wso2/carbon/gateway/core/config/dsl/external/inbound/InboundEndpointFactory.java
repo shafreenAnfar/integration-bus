@@ -17,6 +17,7 @@
  */
 package org.wso2.carbon.gateway.core.config.dsl.external.inbound;
 
+import org.wso2.carbon.gateway.core.inbound.InboundEPProviderRegistry;
 import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
 
 /**
@@ -27,7 +28,6 @@ public class InboundEndpointFactory {
         InboundEndpoint inboundEndpoint = null;
         switch (inboundEndpointType) {
             case http:
-              //  inboundEndpoint = new HTTPInboundEP(name, port);
                 break;
             case jms:
                 break;

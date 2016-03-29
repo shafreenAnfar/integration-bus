@@ -100,11 +100,9 @@
     </build>
 
     <properties>
-      <!-- <bundle.activator>org.wso2.carbon.gateway.inbounds.http.Activator</bundle.activator>-->
         <export.package>
             org.wso2.carbon.gateway.inbounds.http,
-            org.wso2.carbon.gateway.inbounds.http.builder.internal1,
-            org.wso2.carbon.gateway.inbounds.http.builder.internal2
+            org.wso2.carbon.gateway.inbounds.http.builder,
         </export.package>
         <import.package>
             org.wso2.carbon.kernel.startupresolver.*;version="${carbon.kernel.package.import.version.range}",
@@ -113,8 +111,8 @@
             org.wso2.carbon.gateway.core.config.dsl.internal.*,
             org.wso2.carbon.gateway.core.*,
             org.slf4j.*;version="${slf4j.logging.package.import.version.range}",
+            org.wso2.carbon.messaging
         </import.package>
-
         <osgi.framework.import.version.range>[1.8.0, 2.0.0)</osgi.framework.import.version.range>
     </properties>
 

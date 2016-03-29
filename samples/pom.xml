@@ -32,7 +32,6 @@
     <url>http://wso2.org</url>
     <modules>
         <module>JavaDSLSamples/MessageRouter</module>
-        <module>JavaDSLSamples/MessageRouter2</module>
         <module>SampleCustomMediator</module>
     </modules>
 </project>

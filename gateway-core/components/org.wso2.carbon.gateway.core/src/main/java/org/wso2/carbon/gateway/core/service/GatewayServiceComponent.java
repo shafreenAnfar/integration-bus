@@ -18,24 +18,18 @@
 
 package org.wso2.carbon.gateway.core.service;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wso2.carbon.gateway.core.MessageProcessor;
 import org.wso2.carbon.gateway.core.ServiceContextHolder;
-import org.wso2.carbon.gateway.core.config.dsl.internal.DSLLoader;
-import org.wso2.carbon.gateway.core.config.dsl.internal.JavaConfigurationBuilder;
-import org.wso2.carbon.gateway.core.config.dsl.internal2.IntegrationSolution;
-import org.wso2.carbon.gateway.core.flow.MediatorProvider;
-import org.wso2.carbon.gateway.core.flow.MediatorProviderRegistry;
-import org.wso2.carbon.gateway.core.inbound.InboundEPProvider;
-import org.wso2.carbon.gateway.core.inbound.InboundEPProviderRegistry;
-import org.wso2.carbon.gateway.core.outbound.OutboundEPProvider;
-import org.wso2.carbon.gateway.core.outbound.OutboundEPProviderRegistry;
+import org.wso2.carbon.messaging.CarbonMessageProcessor;
 import org.wso2.carbon.messaging.TransportSender;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -47,10 +41,22 @@ import java.util.List;
 )
 public class GatewayServiceComponent {
 
+    private static final Logger log = LoggerFactory.getLogger(GatewayServiceComponent.class);
 
-    private static List<JavaConfigurationBuilder> earlyDSLs = new ArrayList<>();
+    @Activate
+    protected void start(BundleContext bundleContext) {
+        try {
+            log.info("Starting Gateway...!");
 
-    private static boolean isInboundsReady, isOutboundsReady, isMediatorsReady = true;
+            //Creating the processor and registering the service
+            bundleContext.registerService(CarbonMessageProcessor.class, new MessageProcessor(), null);
+
+        } catch (Exception ex) {
+            String msg = "Error while loading Gateway";
+            log.error(msg, ex);
+            throw new RuntimeException(msg, ex);
+        }
+    }
 
     @Reference(
             name = "transport-sender",
@@ -65,78 +71,6 @@ public class GatewayServiceComponent {
 
     protected void removeTransportSender(TransportSender transportSender) {
         ServiceContextHolder.getInstance().removeTransportSender(transportSender);
-    }
-
-    @Reference(
-            name = "java-dsl-1",
-            service = JavaConfigurationBuilder.class,
-            cardinality = ReferenceCardinality.OPTIONAL,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "removeJavaDSLType1"
-    )
-    protected void addJavaDSLType1(JavaConfigurationBuilder dsl) {
-        if (isInboundsReady && isOutboundsReady && isMediatorsReady) {
-            DSLLoader.loadDSLType1(dsl);
-        } else {
-            earlyDSLs.add(dsl);
-        }
-    }
-
-    protected void removeJavaDSLType1(JavaConfigurationBuilder dsl) {
-    }
-
-
-    @Reference(
-            name = "java-dsl-2",
-            service = IntegrationSolution.class,
-            cardinality = ReferenceCardinality.OPTIONAL,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "removeJavaDSLType2"
-    )
-    protected void addJavaDSLType2(IntegrationSolution dsl) {
-        DSLLoader.loadDSLType2(dsl);
-    }
-
-    protected void removeJavaDSLType2(IntegrationSolution dsl) {
-    }
-
-    @Reference(
-            name = "Mediator-Service",
-            service = MediatorProvider.class,
-            cardinality = ReferenceCardinality.OPTIONAL,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "unregisterMediatorProvider"
-    )
-    protected void registerMediatorProvider(MediatorProvider mediatorProvider) {
-        MediatorProviderRegistry.getInstance().registerMediatorProvider(mediatorProvider);
-    }
-
-    protected void unregisterMediatorProvider(MediatorProvider mediatorProvider) {
-        MediatorProviderRegistry.getInstance().unregisterMediatorProvider(mediatorProvider);
-    }
-
-    public static void setInboundsReady(boolean inboundsReady) {
-        isInboundsReady = inboundsReady;
-        deployEarlyDSLs();
-    }
-
-    public static void setOutboundsReady(boolean outboundsReady) {
-        isOutboundsReady = outboundsReady;
-        deployEarlyDSLs();
-    }
-
-    public static void setMediatorsReady(boolean mediatorsReady) {
-        isMediatorsReady = mediatorsReady;
-        deployEarlyDSLs();
-    }
-
-    private static void deployEarlyDSLs() {
-        if (isInboundsReady && isOutboundsReady && isMediatorsReady) {
-            for (JavaConfigurationBuilder dsl : earlyDSLs) {
-                DSLLoader.loadDSLType1(dsl);
-                earlyDSLs.remove(dsl);
-            }
-        }
     }
 
 

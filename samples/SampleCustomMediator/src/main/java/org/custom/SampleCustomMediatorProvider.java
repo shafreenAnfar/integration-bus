@@ -18,10 +18,24 @@
 
 package org.custom;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 import org.wso2.carbon.gateway.core.flow.Mediator;
 import org.wso2.carbon.gateway.core.flow.MediatorProvider;
 
+
+@Component(
+        name = "org.custom.SampleCustomMediatorProvider",
+        immediate = true,
+        service = MediatorProvider.class
+)
 public class SampleCustomMediatorProvider implements MediatorProvider {
+
+    @Activate
+    protected void start(BundleContext bundleContext) {
+    }
+
     @Override
     public String getName() {
         return "SampleCustomMediator";

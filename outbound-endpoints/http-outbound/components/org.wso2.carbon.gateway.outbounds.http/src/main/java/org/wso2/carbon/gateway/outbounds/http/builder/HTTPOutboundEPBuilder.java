@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.outbounds.http.builder.internal1;
+package org.wso2.carbon.gateway.outbounds.http.builder;
 
 
 import org.wso2.carbon.gateway.outbounds.http.HTTPOutboundEndpoint;

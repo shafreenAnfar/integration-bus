@@ -15,39 +15,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+package org.wso2.carbon.gateway.core.flow;
 
-package org.wso2.carbon.gateway.outbounds.http.builder.internal2;
+public interface ProviderRegistry {
 
-
-import org.wso2.carbon.gateway.outbounds.http.HTTPOutboundEndpoint;
-
-/**
- * HTTP Outbound Builder
- */
-public class HTTPOutboundEPBuilder {
-
-
-    public static HTTPOutboundEndpoint httpOutboundEndpoint(String name, URI uri) {
-        return new HTTPOutboundEndpoint(name, uri.getUri());
-    }
-
-    public static URI uri(String uri) {
-        return new URI(uri);
-    }
-
-    /**
-     * URI
-     */
-    public static class URI {
-        String uri;
-
-        private URI(String uri) {
-            this.uri = uri;
-        }
-
-        public String getUri() {
-            return uri;
-        }
-    }
+    public Mediator getMediator(String name);
 
 }

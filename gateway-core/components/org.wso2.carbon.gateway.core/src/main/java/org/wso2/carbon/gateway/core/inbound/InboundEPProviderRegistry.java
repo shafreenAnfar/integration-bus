@@ -18,12 +18,15 @@
 
 package org.wso2.carbon.gateway.core.inbound;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class InboundEPProviderRegistry {
+public class InboundEPProviderRegistry implements ProviderRegistry{
 
-    private Map<String, InboundEPProvider> inboundEndpointProviders = new HashMap<>();
+    private Map<String, Provider> inboundEndpointProviders = new HashMap<>();
+
 
     private static InboundEPProviderRegistry instance = new InboundEPProviderRegistry();
 
@@ -33,17 +36,16 @@ public class InboundEPProviderRegistry {
         return instance;
     }
 
-    public void registerInboundEPProvider(InboundEPProvider inboundEndpointProvider) {
+    public void registerInboundEPProvider(Provider inboundEndpointProvider) {
         inboundEndpointProviders.put(inboundEndpointProvider.getProtocol(), inboundEndpointProvider);
     }
 
-    public void unregisterInboundEPProvider(InboundEPProvider inboundEndpointProvider) {
+    public void unregisterInboundEPProvider(Provider inboundEndpointProvider) {
         inboundEndpointProviders.remove(inboundEndpointProvider.getProtocol());
     }
 
-    public InboundEPProvider getProvider(String protocol) {
+    public Provider getProvider(String protocol) {
         return inboundEndpointProviders.get(protocol);
     }
-
 
 }

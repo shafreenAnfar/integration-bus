@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.outbound;
+package org.wso2.carbon.gateway.core.flow;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -28,18 +28,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.kernel.startupresolver.RequiredCapabilityListener;
 
-
 @Component(
-        name = "org.wso2.carbon.gateway.core.outbound.ServiceComponent",
+        name = "org.wso2.carbon.gateway.core.flow.MediatorServiceComponent",
         immediate = true,
         property = {
-                "capability-name=org.wso2.carbon.gateway.core.outbound.OutboundEPProvider",
-                "component-key=outbound-provider"
+                "capability-name=org.wso2.carbon.gateway.core.flow.MediatorProvider",
+                "component-key=mediator-provider"
         }
 )
-public class OutboundServiceComponent implements RequiredCapabilityListener {
+public class MediatorServiceComponent implements RequiredCapabilityListener {
 
-    private static final Logger logger = LoggerFactory.getLogger(OutboundServiceComponent.class);
+    private static final Logger logger = LoggerFactory.getLogger(MediatorServiceComponent.class);
 
     private BundleContext bundleContext;
 
@@ -51,39 +50,38 @@ public class OutboundServiceComponent implements RequiredCapabilityListener {
 
         if (isAllProviderAvailable) {
             bundleContext.registerService(ProviderRegistry.class,
-                                          OutboundEPProviderRegistry.getInstance(), null);
+                                          MediatorProviderRegistry.getInstance(), null);
         }
     }
 
     @Override
     public void onAllRequiredCapabilitiesAvailable() {
         if (logger.isDebugEnabled()) {
-            logger.debug("All Outbound Providers available");
+            logger.debug("All Mediator Providers available");
         }
+        logger.info("@@@@@@@@@@@@@ All Mediator Providers available");
 
-        logger.info("$$$$$ All Outbound Providers available");
         isAllProviderAvailable = true;
 
         if (bundleContext != null) {
             bundleContext.registerService(ProviderRegistry.class,
-                                          OutboundEPProviderRegistry.getInstance(), null);
+                                          MediatorProviderRegistry.getInstance(), null);
         }
-
     }
+
 
     @Reference(
-            name = "OutboundEndpoint-Service",
-            service = OutboundEPProvider.class,
+            name = "Mediator-Service",
+            service = MediatorProvider.class,
             cardinality = ReferenceCardinality.OPTIONAL,
             policy = ReferencePolicy.DYNAMIC,
-            unbind = "removeOutboundProvider"
+            unbind = "unregisterMediatorProvider"
     )
-    protected void addOutboundProvider(OutboundEPProvider outboundEPProvider) {
-        OutboundEPProviderRegistry.getInstance().registerOutboundEPProvider(outboundEPProvider);
+    protected void registerMediatorProvider(MediatorProvider mediatorProvider) {
+        MediatorProviderRegistry.getInstance().registerMediatorProvider(mediatorProvider);
     }
 
-    protected void removeOutboundProvider(OutboundEPProvider outboundEPProvider) {
-        OutboundEPProviderRegistry.getInstance().unregisterOutboundEPProvider(outboundEPProvider);
+    protected void unregisterMediatorProvider(MediatorProvider mediatorProvider) {
+        MediatorProviderRegistry.getInstance().unregisterMediatorProvider(mediatorProvider);
     }
-
 }
