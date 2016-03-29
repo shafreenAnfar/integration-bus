@@ -378,7 +378,6 @@
 
     </profiles>
     <properties>
-        <bundle.activator>org.wso2.carbon.gateway.core.Activator</bundle.activator>
         <export.package>
             org.wso2.carbon.gateway.core.*;version="${carbon.gw.package.export.version}"
         </export.package>

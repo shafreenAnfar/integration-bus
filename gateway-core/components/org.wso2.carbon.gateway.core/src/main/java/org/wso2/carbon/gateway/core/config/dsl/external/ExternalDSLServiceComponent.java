@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.config.dsl.internal;
+package org.wso2.carbon.gateway.core.config.dsl.external;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -24,57 +24,22 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.wso2.carbon.gateway.core.config.ConfigRegistry;
-import org.wso2.carbon.gateway.core.config.ESBConfigHolder;
+import org.wso2.carbon.gateway.core.config.dsl.external.deployer.IFlowDeployer;
 import org.wso2.carbon.gateway.core.inbound.ProviderRegistry;
+import org.wso2.carbon.kernel.deployment.Deployer;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Service component for Gateway.
- */
 @Component(
-        name = "org.wso2.carbon.gateway.core.config.dsl.internal.DSLLoader",
+        name = "org.wso2.carbon.gateway.core.config.dsl.external.ExternalDSLServiceComponent",
         immediate = true
 )
-public class DSLLoader {
-
-
-    private List<JavaConfigurationBuilder> earlyDSLs = new ArrayList<>();
-
-    private static final Logger log = LoggerFactory.getLogger(DSLLoader.class);
-
-    private boolean isReady;
+public class ExternalDSLServiceComponent {
 
 
     @Activate
     protected void activate(BundleContext bundleContext) {
-        isReady = true;
-        earlyDSLs.forEach(this::loadDSL);
+        bundleContext.registerService(Deployer.class, new IFlowDeployer(), null);
+
     }
-
-
-    @Reference(
-            name = "java-dsl",
-            service = JavaConfigurationBuilder.class,
-            cardinality = ReferenceCardinality.OPTIONAL,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "removeJavaDSL"
-    )
-    protected void addJavaDSL(JavaConfigurationBuilder dsl) {
-        if (isReady) {
-            loadDSL(dsl);
-        } else {
-            earlyDSLs.add(dsl);
-        }
-    }
-
-    protected void removeJavaDSL(JavaConfigurationBuilder dsl) {
-    }
-
 
     @Reference(
             name = "inbound-provider-registry-service",
@@ -88,7 +53,6 @@ public class DSLLoader {
 
     protected void removeInboundProviderRegistry(ProviderRegistry registry) {
     }
-
 
     @Reference(
             name = "outbound-provider-registry-service",
@@ -114,25 +78,6 @@ public class DSLLoader {
     }
 
     protected void removeMediatorProviderRegistry(org.wso2.carbon.gateway.core.flow.ProviderRegistry registry) {
-    }
-
-
-    /**
-     * Load Java DSL configuration file
-     *
-     * @param javaConfigurationBuilder Java DSL
-     */
-    private void loadDSL(JavaConfigurationBuilder javaConfigurationBuilder) {
-        if (log.isDebugEnabled()) {
-            log.debug("Loading Type 1 Java DSL ..");
-        }
-        // Call the DSL
-        ESBConfigHolder esbConfigHolder =
-                javaConfigurationBuilder.configure().getEsbConfigHolder();
-
-        // Register the configuration
-        ConfigRegistry.getInstance().addESBConfig(esbConfigHolder);
-
     }
 
 }

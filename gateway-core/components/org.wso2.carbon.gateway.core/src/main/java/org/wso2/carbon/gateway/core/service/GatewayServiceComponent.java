@@ -18,15 +18,18 @@
 
 package org.wso2.carbon.gateway.core.service;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wso2.carbon.gateway.core.MessageProcessor;
 import org.wso2.carbon.gateway.core.ServiceContextHolder;
+import org.wso2.carbon.messaging.CarbonMessageProcessor;
 import org.wso2.carbon.messaging.TransportSender;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -37,6 +40,23 @@ import java.util.List;
         immediate = true
 )
 public class GatewayServiceComponent {
+
+    private static final Logger log = LoggerFactory.getLogger(GatewayServiceComponent.class);
+
+    @Activate
+    protected void start(BundleContext bundleContext) {
+        try {
+            log.info("Starting Gateway...!");
+
+            //Creating the processor and registering the service
+            bundleContext.registerService(CarbonMessageProcessor.class, new MessageProcessor(), null);
+
+        } catch (Exception ex) {
+            String msg = "Error while loading Gateway";
+            log.error(msg, ex);
+            throw new RuntimeException(msg, ex);
+        }
+    }
 
     @Reference(
             name = "transport-sender",
