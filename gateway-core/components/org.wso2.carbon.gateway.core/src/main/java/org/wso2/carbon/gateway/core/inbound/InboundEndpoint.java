@@ -21,6 +21,7 @@ package org.wso2.carbon.gateway.core.inbound;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.gateway.core.config.ConfigRegistry;
+import org.wso2.carbon.gateway.core.config.ParameterHolder;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
@@ -71,6 +72,8 @@ public abstract class InboundEndpoint {
     }
 
     public abstract String getProtocol();
+
+    public abstract void setParameters(ParameterHolder parameters);
 
 
 }

@@ -21,6 +21,7 @@ package org.wso2.carbon.gateway.core.flow.mediators.builtin.Manipulators;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.gateway.core.config.ConfigRegistry;
+import org.wso2.carbon.gateway.core.config.ParameterHolder;
 import org.wso2.carbon.gateway.core.flow.AbstractMediator;
 import org.wso2.carbon.gateway.core.flow.FlowControllerCallback;
 import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
@@ -50,8 +51,8 @@ public class CallMediator extends AbstractMediator {
         this.outboundEndpoint = outboundEndpoint;
     }
 
-    public void setConfigs(String configs) {
-        outboundEPKey = configs;
+    public void setParameters(ParameterHolder parameterHolder) {
+        outboundEPKey = parameterHolder.getParameter("endpointKey").getValue();
     }
 
     @Override

@@ -19,6 +19,7 @@ package org.wso2.carbon.gateway.core.flow.mediators.builtin.Manipulators;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.gateway.core.config.ParameterHolder;
 import org.wso2.carbon.gateway.core.flow.AbstractMediator;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
@@ -50,9 +51,8 @@ public class LogMediator extends AbstractMediator {
         return next(carbonMessage, carbonCallback);
     }
 
-    public void setConfigs(String configs) {
-        logMessage = configs;
-
+    public void setParameters(ParameterHolder parameterHolder) {
+        logMessage = parameterHolder.getParameter("message").getValue();
     }
 
 }

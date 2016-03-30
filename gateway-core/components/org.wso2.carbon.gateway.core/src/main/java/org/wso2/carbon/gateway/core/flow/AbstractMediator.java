@@ -18,6 +18,7 @@
 
 package org.wso2.carbon.gateway.core.flow;
 
+import org.wso2.carbon.gateway.core.config.ParameterHolder;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
@@ -64,12 +65,11 @@ public abstract class AbstractMediator implements Mediator {
     }
 
     /**
-     * TODO: We need a more better way to do this
      * Set Mediator Configurations
      *
-     * @param configs configuration parameter
+     * @param parameterHolder Parameters Holder
      */
-    public void setConfigs(String configs) {
+    public void setParameters(ParameterHolder parameterHolder) {
         //Do nothing
     }
 

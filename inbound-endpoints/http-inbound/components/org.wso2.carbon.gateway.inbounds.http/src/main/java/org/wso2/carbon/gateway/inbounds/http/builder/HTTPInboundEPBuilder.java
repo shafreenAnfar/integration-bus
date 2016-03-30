@@ -26,8 +26,6 @@ import org.wso2.carbon.gateway.inbounds.http.HTTPInboundEP;
  */
 public class HTTPInboundEPBuilder {
 
-    protected HTTPInboundEP httpInboundEP;
-
     public static HTTPInboundEP http(Port port, Context context) {
         HTTPInboundEP inboundEP = new HTTPInboundEP(port.getPort());
         inboundEP.setContext(context.getContext());

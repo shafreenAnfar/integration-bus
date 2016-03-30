@@ -20,6 +20,8 @@ package org.wso2.carbon.gateway.core.config.dsl.external.wuml;
 
 
 
+import org.wso2.carbon.gateway.core.config.Parameter;
+import org.wso2.carbon.gateway.core.config.ParameterHolder;
 import org.wso2.carbon.gateway.core.config.dsl.external.StringParserUtil;
 import org.wso2.carbon.gateway.core.config.dsl.external.WUMLConfigurationBuilder;
 import org.wso2.carbon.gateway.core.config.dsl.external.inbound.InboundEndpointFactory;
@@ -167,7 +169,8 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
         String mediatorName = ctx.IDENTIFIER().getText();
         String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.ARGUMENTLISTDEF().getText());
         Mediator mediator = MediatorProviderRegistry.getInstance().getMediator(mediatorName);
-        mediator.setConfigs(configurations);
+
+        // mediator.setParameters(configurations);
         if (ifMultiThenBlockStarted) {
             filterMediatorStack.peek().addThenMediator(mediator);
 
@@ -203,7 +206,11 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     @Override
     public void exitInvokeToTarget(WUMLParser.InvokeToTargetContext ctx) {
         Mediator mediator = MediatorProviderRegistry.getInstance().getMediator("call");
-        mediator.setConfigs(ctx.IDENTIFIER(1).getText());
+
+        ParameterHolder parameterHolder = new ParameterHolder();
+        parameterHolder.addParameter(new Parameter("endpointKey",ctx.IDENTIFIER(1).getText()));
+
+        mediator.setParameters(parameterHolder);
         if(ifMultiThenBlockStarted) {
             filterMediatorStack.peek().addThenMediator(mediator);
 

@@ -18,6 +18,7 @@
 
 package org.wso2.carbon.gateway.core.outbound;
 
+import org.wso2.carbon.gateway.core.config.ParameterHolder;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
@@ -34,4 +35,7 @@ public interface OutboundEndpoint {
 
     public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
             throws Exception;
+
+    public void setParameters(ParameterHolder parameters);
+
 }

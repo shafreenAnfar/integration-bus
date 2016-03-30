@@ -34,7 +34,7 @@ public class SampleCustomMediator extends AbstractMediator {
     public SampleCustomMediator() {
     }
 
-    public void setConfigs(String configs) {
+    public void setParameters(String configs) {
         logMessage = configs;
     }
 

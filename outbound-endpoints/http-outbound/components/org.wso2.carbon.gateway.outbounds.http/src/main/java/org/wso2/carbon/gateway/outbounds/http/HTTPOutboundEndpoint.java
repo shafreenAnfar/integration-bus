@@ -19,6 +19,7 @@
 package org.wso2.carbon.gateway.outbounds.http;
 
 import org.wso2.carbon.gateway.core.ServiceContextHolder;
+import org.wso2.carbon.gateway.core.config.ParameterHolder;
 import org.wso2.carbon.gateway.core.outbound.AbstractOutboundEndpoint;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
@@ -71,5 +72,10 @@ public class HTTPOutboundEndpoint extends AbstractOutboundEndpoint {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    @Override
+    public void setParameters(ParameterHolder parameters) {
+        uri = parameters.getParameter("uri").getValue();
     }
 }
