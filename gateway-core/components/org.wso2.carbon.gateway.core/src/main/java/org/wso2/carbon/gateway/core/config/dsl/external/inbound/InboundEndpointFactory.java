@@ -28,6 +28,10 @@ public class InboundEndpointFactory {
         InboundEndpoint inboundEndpoint = null;
         switch (inboundEndpointType) {
             case http:
+              //  inboundEndpoint = new HTTPInboundEP(name, port);
+                inboundEndpoint = InboundEPProviderRegistry.getInstance().getProvider("http").getInboundEndpoint();
+                inboundEndpoint.setName(name);
+
                 break;
             case jms:
                 break;
