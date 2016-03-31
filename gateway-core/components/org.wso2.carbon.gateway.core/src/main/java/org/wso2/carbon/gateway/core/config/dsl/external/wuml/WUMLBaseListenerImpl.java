@@ -20,6 +20,7 @@ package org.wso2.carbon.gateway.core.config.dsl.external.wuml;
 
 
 
+import org.antlr.v4.runtime.tree.TerminalNode;
 import org.wso2.carbon.gateway.core.config.Parameter;
 import org.wso2.carbon.gateway.core.config.ParameterHolder;
 import org.wso2.carbon.gateway.core.config.dsl.external.StringParserUtil;
@@ -36,7 +37,9 @@ import org.wso2.carbon.gateway.core.flow.Pipeline;
 import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.Condition;
 import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.FilterMediator;
 import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.Source;
+import org.wso2.carbon.gateway.core.inbound.InboundEPProviderRegistry;
 import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
+import org.wso2.carbon.gateway.core.outbound.OutboundEPProviderRegistry;
 import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
 
 import java.util.Stack;
@@ -108,14 +111,21 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     public void exitInboundEndpointDefStatement(WUMLParser.InboundEndpointDefStatementContext ctx) {
         String protocolName = StringParserUtil.getValueWithinDoubleQuotes(ctx.inboundEndpointDef().
                 PROTOCOLDEF().getText());
-        int port = Integer.parseInt(StringParserUtil.getValueWithinBrackets(ctx.inboundEndpointDef().
-                PORTDEF().getText()));
-        String context = StringParserUtil.getValueWithinDoubleQuotes(ctx.inboundEndpointDef().CONTEXTDEF().getText());
-        InboundEndpoint inboundEndpoint = InboundEndpointFactory.getInboundEndpoint(InboundEndpointType
-                                                                                            .valueOf(protocolName), ctx.IDENTIFIER().getText(), port);
-    /*    if (inboundEndpoint instanceof HTTPInboundEP) {
-            ((HTTPInboundEP) inboundEndpoint).setContext(context);
-        }*/
+
+        ParameterHolder parameterHolder = new ParameterHolder();
+
+        for (TerminalNode terminalNode : ctx.inboundEndpointDef().PARAMX()) {
+            String keyValue = terminalNode.getSymbol().getText();
+            String key = keyValue.substring(1, keyValue.indexOf("("));
+            String value = keyValue.substring(keyValue.indexOf("\"") + 1, keyValue.lastIndexOf("\""));
+
+            parameterHolder.addParameter(new Parameter(key, value));
+        }
+
+        InboundEndpoint inboundEndpoint = InboundEPProviderRegistry.getInstance().getProvider(protocolName)
+                        .getInboundEndpoint();
+        inboundEndpoint.setParameters(parameterHolder);
+
         integrationFlow.getEsbConfigHolder().setInboundEndpoint(inboundEndpoint);
         super.exitInboundEndpointDefStatement(ctx);
     }
@@ -131,9 +141,23 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     public void exitOutboundEndpointDefStatement(WUMLParser.OutboundEndpointDefStatementContext ctx) {
         String protocolName = StringParserUtil.getValueWithinDoubleQuotes(ctx.outboundEndpointDef().
                 PROTOCOLDEF().getText());
-        String uri = StringParserUtil.getValueWithinDoubleQuotes(ctx.outboundEndpointDef().HOSTDEF().getText());
-        OutboundEndpoint outboundEndpoint = OutboundEndpointFactory.getOutboundEndpoint(OutboundEndpointType
-                                                                                                .valueOf(protocolName), ctx.IDENTIFIER().getText(), uri);
+
+        ParameterHolder parameterHolder = new ParameterHolder();
+
+        for (TerminalNode terminalNode : ctx.outboundEndpointDef().PARAMX()) {
+            String keyValue = terminalNode.getSymbol().getText();
+            String key = keyValue.substring(1, keyValue.indexOf("("));
+            String value = keyValue.substring(keyValue.indexOf("\"") + 1, keyValue.lastIndexOf("\""));
+
+            parameterHolder.addParameter(new Parameter(key, value));
+        }
+
+        OutboundEndpoint outboundEndpoint = OutboundEPProviderRegistry.getInstance().getProvider(protocolName).getEndpoint();
+        outboundEndpoint.setParameters(parameterHolder);
+
+//        String uri = StringParserUtil.getValueWithinDoubleQuotes(ctx.outboundEndpointDef().HOSTDEF().getText());
+//        OutboundEndpoint outboundEndpoint = OutboundEndpointFactory.getOutboundEndpoint(OutboundEndpointType
+//                                                                                                .valueOf(protocolName), ctx.IDENTIFIER().getText(), uri);
         integrationFlow.getEsbConfigHolder().addOutboundEndpoint(outboundEndpoint);
         super.exitOutboundEndpointDefStatement(ctx);
     }
