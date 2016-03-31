@@ -21,6 +21,9 @@ package org.wso2.carbon.gateway.core.outbound;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Store for Outbound Endpoint Providers
+ */
 public class OutboundEPProviderRegistry implements ProviderRegistry{
 
     private Map<String, OutboundEPProvider> outboundEPProviders = new HashMap<>();

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.flow.mediators.builtin.Manipulators;
+package org.wso2.carbon.gateway.core.flow.mediators.builtin.manipulators;
 
 /**
  * A Header Mediator uses to mediate headers

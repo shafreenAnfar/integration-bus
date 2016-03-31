@@ -15,13 +15,19 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.carbon.gateway.core.flow;
 
-/**
- * Store for MediatorProviders
- */
-public interface ProviderRegistry {
+package org.custom.builder;
 
-    public Mediator getMediator(String name);
 
+import org.custom.SampleCustomMediator;
+import org.wso2.carbon.gateway.core.flow.Mediator;
+
+public class SampleCustomMediatorBuilder {
+    public static Mediator customLog(String message) {
+
+        SampleCustomMediator m = new SampleCustomMediator();
+        m.setLogMessage(message);
+        return m;
+
+    }
 }

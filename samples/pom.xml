@@ -33,5 +33,6 @@
     <modules>
         <module>JavaDSLSamples/MessageRouter</module>
         <module>SampleCustomMediator</module>
+        <module>JavaDSLSamples/CustomLogger</module>
     </modules>
 </project>

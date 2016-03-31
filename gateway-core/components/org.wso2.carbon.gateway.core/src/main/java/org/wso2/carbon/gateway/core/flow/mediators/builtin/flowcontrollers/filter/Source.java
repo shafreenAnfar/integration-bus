@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter;
+package org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter;
 
 /**
  * A class that represents the source condition of the message to be evaluated.

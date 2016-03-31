@@ -16,33 +16,15 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter;
-
-import java.util.regex.Pattern;
+package org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter;
 
 /**
- * A class that represents the Condition
+ * An Enum class that contains Filtering Scopes
  */
-public class Condition {
+public enum Scope {
 
+    HEADER,
+    MessageBody,
+    MessageHeader
 
-    private Source source;
-
-    private Pattern pattern;
-
-
-    public Condition(Source source, Pattern pattern) {
-        this.source = source;
-        this.pattern = pattern;
-    }
-
-
-    public Source getSource() {
-        return source;
-    }
-
-    public Pattern getPattern() {
-        return pattern;
-    }
 }
-

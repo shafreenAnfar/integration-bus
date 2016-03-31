@@ -15,13 +15,23 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.carbon.gateway.core.flow;
+
+package org.wso2.carbon.gateway.core.samples.custom.logger;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.wso2.carbon.gateway.core.config.dsl.internal.JavaConfigurationBuilder;
 
 /**
- * Store for MediatorProviders
+ * Bundle Activator
  */
-public interface ProviderRegistry {
+public class Activator implements BundleActivator {
+    public void start(BundleContext bundleContext) throws Exception {
+        bundleContext.registerService(JavaConfigurationBuilder.class, new CustomLogger(), null);
+    }
 
-    public Mediator getMediator(String name);
+    public void stop(BundleContext bundleContext) throws Exception {
+
+    }
 
 }

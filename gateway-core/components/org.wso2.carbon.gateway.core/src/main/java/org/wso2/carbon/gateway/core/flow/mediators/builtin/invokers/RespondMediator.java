@@ -16,17 +16,18 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.flow.mediators.builtin.Manipulators;
+package org.wso2.carbon.gateway.core.flow.mediators.builtin.invokers;
 
 import org.wso2.carbon.gateway.core.flow.AbstractMediator;
 import org.wso2.carbon.gateway.core.flow.FlowControllerCallback;
+import org.wso2.carbon.gateway.core.flow.Invoker;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
 /**
  * Mediator responsible for sending the response from pipeline back to client
  */
-public class RespondMediator extends AbstractMediator {
+public class RespondMediator extends AbstractMediator implements Invoker {
 
     @Override
     public String getName() {

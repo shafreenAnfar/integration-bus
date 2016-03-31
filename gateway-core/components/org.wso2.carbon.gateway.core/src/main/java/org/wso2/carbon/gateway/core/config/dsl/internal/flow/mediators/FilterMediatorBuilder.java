@@ -18,9 +18,9 @@
 
 package org.wso2.carbon.gateway.core.config.dsl.internal.flow.mediators;
 
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.Condition;
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.FilterMediator;
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.Source;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter.Condition;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter.FilterMediator;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter.Source;
 
 import java.util.regex.Pattern;
 

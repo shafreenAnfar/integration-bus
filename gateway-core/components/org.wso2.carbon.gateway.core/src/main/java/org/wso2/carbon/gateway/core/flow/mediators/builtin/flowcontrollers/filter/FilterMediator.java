@@ -16,12 +16,12 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter;
+package org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.gateway.core.flow.MediatorCollection;
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.evaluator.Evaluator;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter.evaluator.Evaluator;
 import org.wso2.carbon.gateway.core.flow.AbstractMediator;
 import org.wso2.carbon.gateway.core.flow.FlowController;
 import org.wso2.carbon.gateway.core.flow.FlowControllerCallback;

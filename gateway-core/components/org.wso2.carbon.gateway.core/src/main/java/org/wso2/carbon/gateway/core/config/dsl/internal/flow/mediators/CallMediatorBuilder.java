@@ -19,7 +19,7 @@
 package org.wso2.carbon.gateway.core.config.dsl.internal.flow.mediators;
 
 
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.Manipulators.CallMediator;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.invokers.CallMediator;
 
 /**
  * A builder class for CallMediator

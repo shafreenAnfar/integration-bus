@@ -16,12 +16,33 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core;
+package org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter;
+
+import java.util.regex.Pattern;
 
 /**
- * Constants for Gateway-core
+ * A class that represents the Condition
  */
-public class Constants {
+public class Condition {
 
-    public static final String ERROR_HANDLER = "ERROR_HANDLER";
+
+    private Source source;
+
+    private Pattern pattern;
+
+
+    public Condition(Source source, Pattern pattern) {
+        this.source = source;
+        this.pattern = pattern;
+    }
+
+
+    public Source getSource() {
+        return source;
+    }
+
+    public Pattern getPattern() {
+        return pattern;
+    }
 }
+

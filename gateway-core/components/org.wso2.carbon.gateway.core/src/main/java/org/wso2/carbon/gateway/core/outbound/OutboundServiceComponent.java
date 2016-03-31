@@ -28,7 +28,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.kernel.startupresolver.RequiredCapabilityListener;
 
-
+/**
+ * Service component for OutboundEndpoint Providers.
+ */
 @Component(
         name = "org.wso2.carbon.gateway.core.outbound.ServiceComponent",
         immediate = true,

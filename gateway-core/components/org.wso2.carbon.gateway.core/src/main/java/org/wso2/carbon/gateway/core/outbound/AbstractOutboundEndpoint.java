@@ -21,6 +21,9 @@ package org.wso2.carbon.gateway.core.outbound;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 
+/**
+ * Basic implementation for Outbound Endpoint
+ */
 public abstract class AbstractOutboundEndpoint implements OutboundEndpoint {
 
     private int timeOut;
