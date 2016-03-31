@@ -30,6 +30,9 @@ import org.wso2.carbon.gateway.core.flow.mediators.builtin.manipulators.Transfor
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Store for MediatorProviders
+ */
 public class MediatorProviderRegistry implements ProviderRegistry {
 
     private Map<String, MediatorProvider> mediatorProviders = new HashMap<>();

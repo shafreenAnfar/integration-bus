@@ -18,8 +18,10 @@
 
 package org.wso2.carbon.gateway.core;
 
-
+/**
+ * Constants for Gateway-core
+ */
 public class Constants {
 
-    public static final String CHEETAH_ERROR_HANDLER = "CHEETAH_ERROR_HANDLER";
+    public static final String ERROR_HANDLER = "ERROR_HANDLER";
 }

@@ -17,6 +17,9 @@
  */
 package org.wso2.carbon.gateway.core.flow;
 
+/**
+ * Store for MediatorProviders
+ */
 public interface ProviderRegistry {
 
     public Mediator getMediator(String name);

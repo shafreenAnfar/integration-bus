@@ -32,7 +32,7 @@ import java.util.Map;
 
 
 /**
- * A class that represents the configuration
+ * This is the place where all the configurations are stored at the runtime
  */
 public class ConfigRegistry {
 
@@ -41,7 +41,7 @@ public class ConfigRegistry {
 
     private Map<String, InboundEndpoint> inboundEndpoints = new HashMap<>();
 
-    private Map<String, Pipeline> pipelineMap = new HashMap<>();
+    private Map<String, Pipeline> pipelines = new HashMap<>();
 
     private Map<String, OutboundEndpoint> outBoundEndpointMap = new HashMap<>();
 
@@ -54,7 +54,6 @@ public class ConfigRegistry {
     }
 
     private ConfigRegistry() {
-
     }
 
     public void addESBConfig(ESBConfigHolder config) {
@@ -152,17 +151,16 @@ public class ConfigRegistry {
         observers.remove(observer);
     }
 
-
     public void registerPipeline(Pipeline pipeline) {
-        pipelineMap.put(pipeline.getName(), pipeline);
+        pipelines.put(pipeline.getName(), pipeline);
     }
 
     public void unregisterPipeline(Pipeline pipeline) {
-        pipelineMap.remove(pipeline.getName());
+        pipelines.remove(pipeline.getName());
     }
 
     public Pipeline getPipeline(String name) {
-        return pipelineMap.get(name);
+        return pipelines.get(name);
     }
 
     public OutboundEndpoint getOutboundEndpoint(String key) {
@@ -176,6 +174,5 @@ public class ConfigRegistry {
     public void unregisterOutboundEndpoint(OutboundEndpoint outboundEndpoint) {
         outBoundEndpointMap.remove(outboundEndpoint);
     }
-
 
 }

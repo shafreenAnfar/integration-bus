@@ -18,12 +18,13 @@
 
 package org.wso2.carbon.gateway.core.inbound;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class InboundEPProviderRegistry implements ProviderRegistry{
+/**
+ * Store for the Inbound Endpoint Providers
+ */
+public class InboundEPProviderRegistry implements ProviderRegistry {
 
     private Map<String, Provider> inboundEndpointProviders = new HashMap<>();
 

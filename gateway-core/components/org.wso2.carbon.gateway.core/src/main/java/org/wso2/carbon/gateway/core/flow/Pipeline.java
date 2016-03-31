@@ -68,7 +68,7 @@ public class Pipeline {
                 errorHandlerMediators = ePipeline.getMediators();
                 if (errorHandlerMediators != null && errorHandlerMediators.getMediators().size() > 0) {
                     carbonMessage.getFaultHandlerStack().push
-                            (new ErrorHandler(Constants.CHEETAH_ERROR_HANDLER, errorHandlerMediators));
+                            (new ErrorHandler(Constants.ERROR_HANDLER, errorHandlerMediators));
                 }
 
             }

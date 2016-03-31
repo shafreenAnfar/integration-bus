@@ -17,6 +17,9 @@
  */
 package org.wso2.carbon.gateway.core.outbound;
 
+/**
+ * Interface for Inbound Provider Registry
+ */
 public interface ProviderRegistry {
 
     public OutboundEPProvider getProvider(String protocol);

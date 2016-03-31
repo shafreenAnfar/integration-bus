@@ -17,6 +17,9 @@
  */
 package org.wso2.carbon.gateway.core.inbound;
 
+/**
+ * Interface for Inbound Provider
+ */
 public interface Provider {
 
     public String getProtocol();
