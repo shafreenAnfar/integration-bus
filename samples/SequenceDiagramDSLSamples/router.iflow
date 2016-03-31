@@ -4,7 +4,7 @@
 myIntegrationFlow : IntegrationFlow
 
 //This is a sample inbound endpoint
-participant sampleHTTPinbound : InboundEndpoint(protocol("http"),port(8290),context("/sample/request"))
+participant sampleHTTPinbound : InboundEndpoint(protocol("http"),port("8290"),context("/sample/request"))
 
 participant samplePipeline : Pipeline("message_flow_1")
 
