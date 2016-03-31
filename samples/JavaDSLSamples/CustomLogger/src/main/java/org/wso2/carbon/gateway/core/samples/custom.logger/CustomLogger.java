@@ -16,7 +16,7 @@
 * under the License.
 */
 
-package org.wso2.carbon.gateway.core.samples.router;
+package org.wso2.carbon.gateway.core.samples.custom.logger;
 
 
 import org.custom.SampleCustomMediator;
@@ -34,26 +34,20 @@ import static org.wso2.carbon.gateway.outbounds.http.builder.HTTPOutboundEPBuild
 import static org.wso2.carbon.gateway.outbounds.http.builder.HTTPOutboundEPBuilder.uri;
 
 /**
- * Sample Internal DSL in method 1
+ * This is a sample for demonstrating custom mediator functionality
  */
-public class MessageRouter extends JavaConfigurationBuilder {
+public class CustomLogger extends JavaConfigurationBuilder {
 
     public IntegrationFlow configure() {
 
-        IntegrationFlow router = integrationFlow("Message_Router");
+        IntegrationFlow router = integrationFlow("Custom_Logger");
 
-        router.inboundEndpoint("inboundEndpoint1", http(port(7777), context("/router"))).
-                   pipeline("pipeline1").
-                   filter(source("$header.routeId"), pattern("r1")).
-                   then(call("outboundEp1")).
-                   otherwise(call("outboundEp2")).
-                   respond();
+        router.inboundEndpoint("inboundEndpoint1", http(port(7777), context("/customLogger"))).
+                   pipeline("pipeline1").process(customLog("This is logged from Custom Mediator...!")).
+                   call("outboundEp1").respond();
 
         router.outboundEndpoint(httpOutboundEndpoint(
                 "outboundEp1", uri("http://localhost:8280/backend1")));
-
-        router.outboundEndpoint(httpOutboundEndpoint(
-                "outboundEp2", uri("http://localhost:8280/backend2")));
 
         return router;
 
