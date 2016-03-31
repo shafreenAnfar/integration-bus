@@ -16,11 +16,33 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.flow.mediators.builtin.manipulators;
+package org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter;
+
+import java.util.regex.Pattern;
 
 /**
- * A Header Mediator uses to mediate headers
- * TODO: Not implemented yet
+ * A class that represents the Condition
  */
-public class HeaderMediator {
+public class Condition {
+
+
+    private Source source;
+
+    private Pattern pattern;
+
+
+    public Condition(Source source, Pattern pattern) {
+        this.source = source;
+        this.pattern = pattern;
+    }
+
+
+    public Source getSource() {
+        return source;
+    }
+
+    public Pattern getPattern() {
+        return pattern;
+    }
 }
+

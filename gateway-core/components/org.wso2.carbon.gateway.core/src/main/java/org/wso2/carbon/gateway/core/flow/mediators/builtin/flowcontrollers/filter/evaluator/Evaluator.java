@@ -16,9 +16,9 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.evaluator;
+package org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter.evaluator;
 
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.Source;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter.Source;
 import org.wso2.carbon.messaging.CarbonMessage;
 
 import java.util.Map;

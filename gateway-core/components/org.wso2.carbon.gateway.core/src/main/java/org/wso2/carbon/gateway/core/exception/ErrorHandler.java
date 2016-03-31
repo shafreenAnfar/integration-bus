@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.gateway.core.flow.MediatorCollection;
 import org.wso2.carbon.gateway.core.flow.FlowControllerCallback;
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.Manipulators.RespondMediator;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.invokers.RespondMediator;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
 import org.wso2.carbon.messaging.Constants;

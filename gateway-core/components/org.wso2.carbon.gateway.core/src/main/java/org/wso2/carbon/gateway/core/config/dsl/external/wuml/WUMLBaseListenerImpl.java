@@ -33,9 +33,9 @@ import org.wso2.carbon.gateway.core.config.dsl.external.wuml.generated.WUMLParse
 import org.wso2.carbon.gateway.core.flow.Mediator;
 import org.wso2.carbon.gateway.core.flow.MediatorProviderRegistry;
 import org.wso2.carbon.gateway.core.flow.Pipeline;
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.Condition;
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.FilterMediator;
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.Source;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter.Condition;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter.FilterMediator;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter.Source;
 import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
 import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
 

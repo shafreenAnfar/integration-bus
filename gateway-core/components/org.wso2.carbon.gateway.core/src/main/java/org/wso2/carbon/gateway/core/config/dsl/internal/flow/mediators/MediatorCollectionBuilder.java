@@ -20,9 +20,9 @@ package org.wso2.carbon.gateway.core.config.dsl.internal.flow.mediators;
 
 
 import org.wso2.carbon.gateway.core.flow.MediatorCollection;
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.Source;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter.Source;
 import org.wso2.carbon.gateway.core.flow.Mediator;
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.Manipulators.CallMediator;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.invokers.CallMediator;
 
 import java.util.regex.Pattern;
 

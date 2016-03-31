@@ -32,7 +32,7 @@ import java.util.Map;
 
 
 /**
- * A class that represents the Cheetah configuration
+ * A class that represents the configuration
  */
 public class ConfigRegistry {
 

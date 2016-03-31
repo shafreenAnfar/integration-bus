@@ -20,12 +20,12 @@ package org.wso2.carbon.gateway.core.flow;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter.FilterMediator;
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.Manipulators.CallMediator;
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.Manipulators.EnrichMediator;
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.Manipulators.LogMediator;
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.Manipulators.RespondMediator;
-import org.wso2.carbon.gateway.core.flow.mediators.builtin.Manipulators.TransformMediator;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.flowcontrollers.filter.FilterMediator;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.invokers.CallMediator;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.manipulators.EnrichMediator;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.manipulators.LogMediator;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.invokers.RespondMediator;
+import org.wso2.carbon.gateway.core.flow.mediators.builtin.manipulators.TransformMediator;
 
 import java.util.HashMap;
 import java.util.Map;

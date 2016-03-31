@@ -19,11 +19,7 @@
 package org.wso2.carbon.gateway.core.samples.router;
 
 
-import org.custom.SampleCustomMediator;
-import org.custom.builder.SampleCustomMediatorBuilder;
 import org.wso2.carbon.gateway.core.config.dsl.internal.JavaConfigurationBuilder;
-
-import static org.custom.builder.SampleCustomMediatorBuilder.customLog;
 import static org.wso2.carbon.gateway.core.config.dsl.internal.flow.mediators.CallMediatorBuilder.call;
 import static org.wso2.carbon.gateway.core.config.dsl.internal.flow.mediators.FilterMediatorBuilder.pattern;
 import static org.wso2.carbon.gateway.core.config.dsl.internal.flow.mediators.FilterMediatorBuilder.source;

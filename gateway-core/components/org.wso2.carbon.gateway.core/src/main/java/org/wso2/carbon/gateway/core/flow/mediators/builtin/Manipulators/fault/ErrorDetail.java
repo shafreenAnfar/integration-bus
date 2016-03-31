@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.flow.mediators.builtin.Manipulators.fault;
+package org.wso2.carbon.gateway.core.flow.mediators.builtin.manipulators.fault;
 
 
 /**

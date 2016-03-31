@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.flow.mediators.builtin.Manipulators;
+package org.wso2.carbon.gateway.core.flow.mediators.builtin.invokers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +24,7 @@ import org.wso2.carbon.gateway.core.config.ConfigRegistry;
 import org.wso2.carbon.gateway.core.config.ParameterHolder;
 import org.wso2.carbon.gateway.core.flow.AbstractMediator;
 import org.wso2.carbon.gateway.core.flow.FlowControllerCallback;
+import org.wso2.carbon.gateway.core.flow.Invoker;
 import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
 import org.wso2.carbon.messaging.CarbonCallback;
 import org.wso2.carbon.messaging.CarbonMessage;
@@ -31,7 +32,7 @@ import org.wso2.carbon.messaging.CarbonMessage;
 /**
  * Send a Message out from Pipeline to an Outbound Endpoint
  */
-public class CallMediator extends AbstractMediator {
+public class CallMediator extends AbstractMediator implements Invoker{
 
 
     private String outboundEPKey;

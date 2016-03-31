@@ -16,15 +16,13 @@
  * under the License.
  */
 
-package org.wso2.carbon.gateway.core.flow.mediators.builtin.FlowControllers.filter;
+package org.wso2.carbon.gateway.core.flow;
+
 
 /**
- * An Enum class that contains Filtering Scopes
+ * An interface for identify FlowControllable artifacts
  */
-public enum Scope {
+public interface Invoker extends Mediator {
 
-    HEADER,
-    MessageBody,
-    MessageHeader
 
 }
