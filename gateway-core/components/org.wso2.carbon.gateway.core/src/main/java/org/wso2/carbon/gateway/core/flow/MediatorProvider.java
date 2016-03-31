@@ -20,13 +20,15 @@ package org.wso2.carbon.gateway.core.flow;
 
 /**
  * Interface for Mediator Providers
+ *
  * MediatorProvider is responsible for providing an instance of a Mediator
+ *
  */
 public interface MediatorProvider {
 
-    public String getName();
+    String getName();
 
-    public Mediator getMediator();
+    Mediator getMediator();
 
 
 }

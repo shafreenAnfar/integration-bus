@@ -22,7 +22,6 @@ package org.wso2.carbon.gateway.core.outbound;
  */
 public interface ProviderRegistry {
 
-    public OutboundEPProvider getProvider(String protocol);
-
+    OutboundEPProvider getProvider(String protocol);
 
 }

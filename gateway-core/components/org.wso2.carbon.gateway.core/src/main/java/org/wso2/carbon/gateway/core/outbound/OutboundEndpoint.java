@@ -27,15 +27,15 @@ import org.wso2.carbon.messaging.CarbonMessage;
  */
 public interface OutboundEndpoint {
 
-    public int getTimeOut();
+    int getTimeOut();
 
-    public void setTimeOut(int timeOut);
+    void setTimeOut(int timeOut);
 
-    public String getName();
+    String getName();
 
-    public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
+    boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
             throws Exception;
 
-    public void setParameters(ParameterHolder parameters);
+    void setParameters(ParameterHolder parameters);
 
 }

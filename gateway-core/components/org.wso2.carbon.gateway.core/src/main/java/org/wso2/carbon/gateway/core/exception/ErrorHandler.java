@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A FaultHandler class for Cheetah message engine
+ * A FaultHandler class for engine
  */
 public class ErrorHandler implements FaultHandler {
 
@@ -58,6 +58,7 @@ public class ErrorHandler implements FaultHandler {
                             CarbonCallback carbonCallback) {
 
         initiatedCallback = getSuperParentCallback(carbonCallback);
+
         if (mediatorCollection.getFirstMediator() instanceof RespondMediator) {
             DefaultCarbonMessage response = new DefaultCarbonMessage();
             String payload = throwable.getMessage();

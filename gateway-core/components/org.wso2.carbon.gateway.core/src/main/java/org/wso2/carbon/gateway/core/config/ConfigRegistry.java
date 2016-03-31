@@ -32,7 +32,7 @@ import java.util.Map;
 
 
 /**
- * This is the place where all the configurations are stored at the runtime
+ * This is the central place where all the configurations are stored at the runtime
  */
 public class ConfigRegistry {
 
@@ -47,7 +47,7 @@ public class ConfigRegistry {
 
     private List<ConfigRegistryObserver> observers = new ArrayList<>();
 
-    private Map<String, ESBConfigHolder> configurations = new HashMap<>();
+    private Map<String, GWConfigHolder> configurations = new HashMap<>();
 
     public static ConfigRegistry getInstance() {
         return configRegistry;
@@ -56,21 +56,31 @@ public class ConfigRegistry {
     private ConfigRegistry() {
     }
 
-    public void addESBConfig(ESBConfigHolder config) {
-        configurations.put(config.getName(), config);
-        updateArtifacts(config);
+    /**
+     * Add a Gateway Artifact Configuration to the Registry
+     *
+     * @param configHolder a Gateway Artifact
+     */
+    public void addGWConfig(GWConfigHolder configHolder) {
+        configurations.put(configHolder.getName(), configHolder);
+        updateArtifacts(configHolder);
     }
 
-    public void removeESBConfig(ESBConfigHolder configHolder) {
+    /**
+     * Remove a Gateway Artifact configuration
+     *
+     * @param configHolder a Gateway Artifact
+     */
+    public void removeGWConfig(GWConfigHolder configHolder) {
         configurations.remove(configHolder.getName());
         unDeployArtifacts(configHolder);
     }
 
-    public ESBConfigHolder getESBConfig(String name) {
+    public GWConfigHolder getGWConfig(String name) {
         return configurations.get(name);
     }
 
-    private void updateArtifacts(ESBConfigHolder config) {
+    private void updateArtifacts(GWConfigHolder config) {
 
         //For Inbound Endpoint
         InboundEndpoint inboundEndpoint = config.getInboundEndpoint();
@@ -91,26 +101,26 @@ public class ConfigRegistry {
 
     }
 
-    private void unDeployArtifacts(ESBConfigHolder esbConfigHolder) {
+    private void unDeployArtifacts(GWConfigHolder GWConfigHolder) {
         //For Inbound Endpoint
-        InboundEndpoint inboundEndpoint = esbConfigHolder.getInboundEndpoint();
+        InboundEndpoint inboundEndpoint = GWConfigHolder.getInboundEndpoint();
         if (inboundEndpoint != null) {
             unregisterInboundEndpoint(inboundEndpoint);
         }
 
         //For Pipelines
-        for (Pipeline pipeline : esbConfigHolder.getPipelines().values()) {
+        for (Pipeline pipeline : GWConfigHolder.getPipelines().values()) {
             unregisterPipeline(pipeline);
         }
 
         //For Outbound Endpoints
-        for (OutboundEndpoint outboundEndpoint : esbConfigHolder.getOutboundEndpoints().values()) {
+        for (OutboundEndpoint outboundEndpoint : GWConfigHolder.getOutboundEndpoints().values()) {
             unregisterOutboundEndpoint(outboundEndpoint);
         }
 
     }
 
-    public void registerInboundEndpoint(InboundEndpoint inboundEndpoint) {
+    private void registerInboundEndpoint(InboundEndpoint inboundEndpoint) {
         inboundEndpoints.put(inboundEndpoint.getName(), inboundEndpoint);
         InboundEPDeployer deployer = InboundEPProviderRegistry.getInstance().
                 getProvider(inboundEndpoint.getProtocol()).getInboundDeployer();
@@ -124,7 +134,7 @@ public class ConfigRegistry {
         }
     }
 
-    public void unregisterInboundEndpoint(InboundEndpoint inboundEndpoint) {
+    private void unregisterInboundEndpoint(InboundEndpoint inboundEndpoint) {
 
         inboundEndpoints.remove(inboundEndpoint.getName());
         InboundEPDeployer deployer = InboundEPProviderRegistry.getInstance().

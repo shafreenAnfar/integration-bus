@@ -25,6 +25,9 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * Service component for Config Registry.
+ *
+ * This service is responsible for getting all the Config Registry observers
+ * subscribed to the Config Registry
  */
 @Component(
         name = "ConfigRegistryServiceComponent",

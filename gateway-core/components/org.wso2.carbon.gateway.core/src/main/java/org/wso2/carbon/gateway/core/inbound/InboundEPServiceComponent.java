@@ -31,6 +31,9 @@ import org.wso2.carbon.kernel.startupresolver.RequiredCapabilityListener;
 
 /**
  * Service component for InboundEndpoint Providers.
+ *
+ * This will wait until all the InboundProviders are available and then register the
+ * InboundProviderRegistry as a service so that others can consume it.
  */
 @Component(
         name = "org.wso2.carbon.gateway.core.inbound.InboundServiceComponent",
@@ -63,8 +66,6 @@ public class InboundEPServiceComponent implements RequiredCapabilityListener {
       if (logger.isDebugEnabled()) {
           logger.debug("All Inbound Providers available");
       }
-
-      logger.info("#############  All Inbound Providers available");
 
       isAllProviderAvailable = true;
 

@@ -22,8 +22,8 @@ package org.wso2.carbon.gateway.core.inbound;
  */
 public interface InboundEPDeployer {
 
-    public void deploy(InboundEndpoint inboundEndpoint);
+    void deploy(InboundEndpoint inboundEndpoint);
 
-    public void undeploy(InboundEndpoint inboundEndpoint);
+    void undeploy(InboundEndpoint inboundEndpoint);
 
 }

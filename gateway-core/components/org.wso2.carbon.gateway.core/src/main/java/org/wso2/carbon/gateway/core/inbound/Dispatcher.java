@@ -30,11 +30,11 @@ public interface Dispatcher {
      * Dispatch the message to an inbound endpoint
      *
      * @param carbonMessage Carbon Message
-     * @param callback  Callback
+     * @param callback      Callback
      * @return whether dispatching is successful or not
      */
-    public boolean dispatch(CarbonMessage carbonMessage, CarbonCallback callback);
+    boolean dispatch(CarbonMessage carbonMessage, CarbonCallback callback);
 
-    public String getProtocol();
+    String getProtocol();
 
 }

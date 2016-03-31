@@ -23,8 +23,8 @@ package org.wso2.carbon.gateway.core.outbound;
  */
 public interface OutboundEPProvider {
 
-    public String getProtocol();
+    String getProtocol();
 
-    public OutboundEndpoint getEndpoint();
+    OutboundEndpoint getEndpoint();
 
 }

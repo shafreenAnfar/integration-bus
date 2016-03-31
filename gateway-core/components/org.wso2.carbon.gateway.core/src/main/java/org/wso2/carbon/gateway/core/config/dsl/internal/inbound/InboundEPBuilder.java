@@ -18,7 +18,7 @@
 
 package org.wso2.carbon.gateway.core.config.dsl.internal.inbound;
 
-import org.wso2.carbon.gateway.core.config.ESBConfigHolder;
+import org.wso2.carbon.gateway.core.config.GWConfigHolder;
 import org.wso2.carbon.gateway.core.config.dsl.internal.JavaConfigurationBuilder;
 import org.wso2.carbon.gateway.core.config.dsl.internal.flow.PipelineBuilder;
 import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
@@ -28,12 +28,12 @@ import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
  */
 public class InboundEPBuilder {
 
-    ESBConfigHolder parentConfig;
+    GWConfigHolder parentConfig;
     String pipeline;
     JavaConfigurationBuilder.IntegrationFlow integrationFlow;
 
 
-    public static InboundEPBuilder inboundEndpoint(String name, ESBConfigHolder parentConfig,
+    public static InboundEPBuilder inboundEndpoint(String name, GWConfigHolder parentConfig,
                                                    JavaConfigurationBuilder.IntegrationFlow integrationFlow,
                                                    InboundEndpoint inboundEndpoint) {
         inboundEndpoint.setName(name);
@@ -42,7 +42,7 @@ public class InboundEPBuilder {
         return new InboundEPBuilder(parentConfig, integrationFlow);
     }
 
-    private InboundEPBuilder(ESBConfigHolder parentConfig,
+    private InboundEPBuilder(GWConfigHolder parentConfig,
                              JavaConfigurationBuilder.IntegrationFlow integrationFlow) {
         this.parentConfig = parentConfig;
         this.integrationFlow = integrationFlow;

@@ -33,21 +33,21 @@ public interface Mediator {
      *
      * @return mediator name
      */
-    public String getName();
+    String getName();
 
     /**
      * Set the pointer to the next sibling in the pipeline
      *
      * @param nextMediator Next sibling mediator in the pipeline
      */
-    public void setNext(Mediator nextMediator);
+    void setNext(Mediator nextMediator);
 
     /**
      * Check whether a sibling is present after this in the pipeline
      *
      * @return whether a sibling is present after this
      */
-    public boolean hasNext();
+    boolean hasNext();
 
     /**
      * Invoke the next sibling in the pipeline
@@ -57,7 +57,7 @@ public interface Mediator {
      * @return whether mediation is proceeded
      * @throws Exception
      */
-    public boolean next(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
+    boolean next(CarbonMessage carbonMessage, CarbonCallback carbonCallback)
             throws Exception;
 
     /**
@@ -68,14 +68,13 @@ public interface Mediator {
      * @return Whether mediation is proceeded
      * @throws Exception
      */
-    public boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws
-                                                                                       Exception;
+    boolean receive(CarbonMessage carbonMessage, CarbonCallback carbonCallback) throws
+                                                                                Exception;
 
     /**
-     * TODO: We need a more better way to do this
      * Set Mediator Configurations
      *
      * @param parameters Parameters
      */
-    public void setParameters(ParameterHolder parameters);
+    void setParameters(ParameterHolder parameters);
 }

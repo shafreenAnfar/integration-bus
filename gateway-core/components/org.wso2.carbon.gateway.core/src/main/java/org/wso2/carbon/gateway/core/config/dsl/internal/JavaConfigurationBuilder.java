@@ -19,7 +19,7 @@
 package org.wso2.carbon.gateway.core.config.dsl.internal;
 
 
-import org.wso2.carbon.gateway.core.config.ESBConfigHolder;
+import org.wso2.carbon.gateway.core.config.GWConfigHolder;
 import org.wso2.carbon.gateway.core.config.dsl.internal.flow.PipelineBuilder;
 import org.wso2.carbon.gateway.core.config.dsl.internal.inbound.InboundEPBuilder;
 import org.wso2.carbon.gateway.core.config.dsl.internal.outbound.OutboundEndpointBuilder;
@@ -44,29 +44,29 @@ public abstract class JavaConfigurationBuilder {
      */
     public static class IntegrationFlow {
 
-        private ESBConfigHolder esbConfigHolder;
+        private GWConfigHolder GWConfigHolder;
 
         public IntegrationFlow(String name) {
-            esbConfigHolder = new ESBConfigHolder(name);
+            GWConfigHolder = new GWConfigHolder(name);
         }
 
-        public ESBConfigHolder getEsbConfigHolder() {
-            return esbConfigHolder;
+        public GWConfigHolder getGWConfigHolder() {
+            return GWConfigHolder;
         }
 
         /* For Inbound */
         public InboundEPBuilder inboundEndpoint(String name, InboundEndpoint inboundEndpoint) {
-            return InboundEPBuilder.inboundEndpoint(name, esbConfigHolder, this, inboundEndpoint);
+            return InboundEPBuilder.inboundEndpoint(name, GWConfigHolder, this, inboundEndpoint);
         }
 
         /* For Outbound */
         public OutboundEndpointBuilder outboundEndpoint(OutboundEndpoint outboundEndpoint) {
-            return OutboundEndpointBuilder.outboundEndpoint(outboundEndpoint, esbConfigHolder);
+            return OutboundEndpointBuilder.outboundEndpoint(outboundEndpoint, GWConfigHolder);
         }
 
         /* For Pipeline */
         public PipelineBuilder pipeline(String name) {
-            return PipelineBuilder.pipeline(name, esbConfigHolder);
+            return PipelineBuilder.pipeline(name, GWConfigHolder);
         }
 
     }
