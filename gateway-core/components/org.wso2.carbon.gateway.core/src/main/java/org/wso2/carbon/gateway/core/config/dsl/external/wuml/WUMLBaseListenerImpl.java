@@ -122,14 +122,14 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
                         .getInboundEndpoint();
         inboundEndpoint.setParameters(parameterHolder);
 
-        integrationFlow.getEsbConfigHolder().setInboundEndpoint(inboundEndpoint);
+        integrationFlow.getGWConfigHolder().setInboundEndpoint(inboundEndpoint);
         super.exitInboundEndpointDefStatement(ctx);
     }
 
     @Override
     public void exitPipelineDefStatement(WUMLParser.PipelineDefStatementContext ctx) {
         Pipeline pipeline = new Pipeline(ctx.IDENTIFIER().getText());
-        integrationFlow.getEsbConfigHolder().addPipeline(pipeline);
+        integrationFlow.getGWConfigHolder().addPipeline(pipeline);
         super.exitPipelineDefStatement(ctx);
     }
 
@@ -154,7 +154,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
 //        String uri = StringParserUtil.getValueWithinDoubleQuotes(ctx.outboundEndpointDef().HOSTDEF().getText());
 //        OutboundEndpoint outboundEndpoint = OutboundEndpointFactory.getOutboundEndpoint(OutboundEndpointType
 //                                                                                                .valueOf(protocolName), ctx.IDENTIFIER().getText(), uri);
-        integrationFlow.getEsbConfigHolder().addOutboundEndpoint(outboundEndpoint);
+        integrationFlow.getGWConfigHolder().addOutboundEndpoint(outboundEndpoint);
         super.exitOutboundEndpointDefStatement(ctx);
     }
 
@@ -198,7 +198,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
             filterMediatorStack.peek().addOtherwiseMediator(mediator);
 
         } else {
-            integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
+            integrationFlow.getGWConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
         }
         super.exitMediatorDef(ctx);
     }
@@ -217,7 +217,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
     public void exitInvokeFromSource(WUMLParser.InvokeFromSourceContext ctx) {
         //String inbountEndpointName = ctx.INBOUNDENDPOINTNAME().getText();
         String pipelineName = ctx.IDENTIFIER(1).getText();
-        integrationFlow.getEsbConfigHolder().getInboundEndpoint().setPipeline(pipelineName);
+        integrationFlow.getGWConfigHolder().getInboundEndpoint().setPipeline(pipelineName);
         pipelineStack.push(pipelineName);
         //activePipeline = pipelineName;
         super.exitInvokeFromSource(ctx);
@@ -241,7 +241,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
 //            String mediatorName = StringParserUtil.getValueWithinDoubleQuotes(ctx.MEDIATORNAMESTRINGX().getText());
 //            String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.CONFIGSDEF().getText());
 //            Mediator mediator = MediatorFactory.getMediator(MediatorType.valueOf(mediatorName), configurations);
-            integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
+            integrationFlow.getGWConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
         }
         pipelineStack.pop();
         super.exitInvokeToTarget(ctx);
@@ -267,7 +267,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
 //            String mediatorName = StringParserUtil.getValueWithinDoubleQuotes(ctx.MEDIATORNAMESTRINGX().getText());
 //            String configurations = StringParserUtil.getValueWithinDoubleQuotes(ctx.CONFIGSDEF().getText());
 //            Mediator mediator = MediatorFactory.getMediator(MediatorType.valueOf(mediatorName), configurations);
-            integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
+            integrationFlow.getGWConfigHolder().getPipeline(pipelineStack.peek()).addMediator(mediator);
         }
         pipelineStack.pop();
         super.exitInvokeToSource(ctx);
@@ -319,7 +319,7 @@ public class WUMLBaseListenerImpl extends WUMLBaseListener {
                 new Condition(source, Pattern.compile(conditionValue));
 
         FilterMediator filterMediator = new FilterMediator(condition);
-        integrationFlow.getEsbConfigHolder().getPipeline(pipelineStack.peek()).addMediator(filterMediator);
+        integrationFlow.getGWConfigHolder().getPipeline(pipelineStack.peek()).addMediator(filterMediator);
         filterMediatorStack.push(filterMediator);
         super.exitConditionStatement(ctx);
     }

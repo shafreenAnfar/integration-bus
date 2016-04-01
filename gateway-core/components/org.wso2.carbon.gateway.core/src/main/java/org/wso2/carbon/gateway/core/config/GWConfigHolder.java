@@ -26,9 +26,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Object Model which holds configurations related to a one ESB process
+ * Object Model which holds configurations related to a one GW process
  */
-public class ESBConfigHolder {
+public class GWConfigHolder {
 
     private String name;
 
@@ -39,7 +39,7 @@ public class ESBConfigHolder {
     private Map<String, OutboundEndpoint> outboundEndpoints = new HashMap<>();
 
 
-    public ESBConfigHolder(String name) {
+    public GWConfigHolder(String name) {
         this.name = name;
     }
 

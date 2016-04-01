@@ -29,6 +29,13 @@ import org.wso2.carbon.gateway.core.inbound.Provider;
 import org.wso2.carbon.gateway.core.inbound.InboundEndpoint;
 import org.wso2.carbon.messaging.TransportListenerManager;
 
+/**
+ * HTTP Inbound Provider
+ *
+ * This is responsible for providing a http inbound endpoint instance to engine
+ * And also this is responsible for registering other required services
+ *
+ */
 @Component(
         name = "org.wso2.carbon.gateway.inbounds.http.HTTPInboundEPProvider",
         immediate = true,

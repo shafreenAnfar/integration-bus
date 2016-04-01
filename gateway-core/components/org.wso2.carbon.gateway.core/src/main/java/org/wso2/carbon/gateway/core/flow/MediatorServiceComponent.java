@@ -28,6 +28,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.kernel.startupresolver.RequiredCapabilityListener;
 
+/**
+ * Service Component for for MediatorProviders
+ *
+ * This will wait until all the MediatorProviders availability and register ProviderRegistry as a
+ * service so that others can consume it.
+ *
+ */
 @Component(
         name = "org.wso2.carbon.gateway.core.flow.MediatorServiceComponent",
         immediate = true,
@@ -59,7 +66,6 @@ public class MediatorServiceComponent implements RequiredCapabilityListener {
         if (logger.isDebugEnabled()) {
             logger.debug("All Mediator Providers available");
         }
-        logger.info("@@@@@@@@@@@@@ All Mediator Providers available");
 
         isAllProviderAvailable = true;
 
@@ -68,7 +74,6 @@ public class MediatorServiceComponent implements RequiredCapabilityListener {
                                           MediatorProviderRegistry.getInstance(), null);
         }
     }
-
 
     @Reference(
             name = "Mediator-Service",

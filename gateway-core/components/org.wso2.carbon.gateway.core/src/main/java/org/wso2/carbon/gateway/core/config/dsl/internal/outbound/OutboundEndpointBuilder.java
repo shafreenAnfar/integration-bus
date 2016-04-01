@@ -19,7 +19,7 @@
 package org.wso2.carbon.gateway.core.config.dsl.internal.outbound;
 
 
-import org.wso2.carbon.gateway.core.config.ESBConfigHolder;
+import org.wso2.carbon.gateway.core.config.GWConfigHolder;
 import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
 
 /**
@@ -28,14 +28,14 @@ import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
 public class OutboundEndpointBuilder {
 
     private OutboundEndpoint outboundEndpoint;
-    private ESBConfigHolder parentConfig;
+    private GWConfigHolder parentConfig;
 
     public static OutboundEndpointBuilder outboundEndpoint(OutboundEndpoint outboundEndpoint,
-                                                           ESBConfigHolder parentConfig) {
+                                                           GWConfigHolder parentConfig) {
         return new OutboundEndpointBuilder(outboundEndpoint, parentConfig);
     }
 
-    private OutboundEndpointBuilder(OutboundEndpoint outboundEndpoint, ESBConfigHolder parentConfig) {
+    private OutboundEndpointBuilder(OutboundEndpoint outboundEndpoint, GWConfigHolder parentConfig) {
         this.parentConfig = parentConfig;
         this.outboundEndpoint = outboundEndpoint;
         this.parentConfig.addOutboundEndpoint(outboundEndpoint);

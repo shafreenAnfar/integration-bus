@@ -22,12 +22,12 @@ package org.wso2.carbon.gateway.core.inbound;
  */
 public interface Provider {
 
-    public String getProtocol();
+    String getProtocol();
 
-    public InboundEPDeployer getInboundDeployer();
+    InboundEPDeployer getInboundDeployer();
 
-    public InboundEndpoint getInboundEndpoint();
+    InboundEndpoint getInboundEndpoint();
 
-    public Dispatcher getInboundEndpointDispatcher();
+    Dispatcher getInboundEndpointDispatcher();
 
 }

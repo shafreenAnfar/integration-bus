@@ -24,6 +24,12 @@ import org.osgi.service.component.annotations.Component;
 import org.wso2.carbon.gateway.core.outbound.OutboundEPProvider;
 import org.wso2.carbon.gateway.core.outbound.OutboundEndpoint;
 
+/**
+ * HTTP Outbound Provider
+ *
+ * This is responsible for providing a http outbound endpoint instance to engine
+ *
+ */
 @Component(
         name = "org.wso2.carbon.gateway.outbounds.http.HTTPOutboundProvider",
         immediate = true,

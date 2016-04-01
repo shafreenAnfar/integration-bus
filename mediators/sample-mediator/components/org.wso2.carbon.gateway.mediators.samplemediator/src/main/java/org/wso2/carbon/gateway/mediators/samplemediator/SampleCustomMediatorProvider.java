@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.custom;
+package org.wso2.carbon.gateway.mediators.samplemediator;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -26,7 +26,7 @@ import org.wso2.carbon.gateway.core.flow.MediatorProvider;
 
 
 @Component(
-        name = "org.custom.SampleCustomMediatorProvider",
+        name = "SampleCustomMediatorProvider",
         immediate = true,
         service = MediatorProvider.class
 )

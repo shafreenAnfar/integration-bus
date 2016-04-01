@@ -30,12 +30,11 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.gateway.core.config.ConfigRegistry;
-import org.wso2.carbon.gateway.core.config.ESBConfigHolder;
+import org.wso2.carbon.gateway.core.config.GWConfigHolder;
 import org.wso2.carbon.gateway.core.config.dsl.external.WUMLConfigurationBuilder;
 import org.wso2.carbon.gateway.core.config.dsl.external.wuml.WUMLBaseListenerImpl;
 import org.wso2.carbon.gateway.core.config.dsl.external.wuml.generated.WUMLLexer;
 import org.wso2.carbon.gateway.core.config.dsl.external.wuml.generated.WUMLParser;
-import org.wso2.carbon.gateway.core.inbound.Provider;
 import org.wso2.carbon.gateway.core.inbound.ProviderRegistry;
 import org.wso2.carbon.kernel.deployment.Artifact;
 import org.wso2.carbon.kernel.deployment.ArtifactType;
@@ -66,7 +65,7 @@ public class IFlowDeployer implements Deployer {
 
     private URL directoryLocation;
 
-    private Map<String, ESBConfigHolder> artifactMap = new HashMap<>();
+    private Map<String, GWConfigHolder> artifactMap = new HashMap<>();
 
     private static final Logger logger = LoggerFactory.getLogger(IFlowDeployer.class);
 
@@ -143,8 +142,8 @@ public class IFlowDeployer implements Deployer {
 
     @Override
     public void undeploy(Object o) throws CarbonDeploymentException {
-        ESBConfigHolder configHolder = artifactMap.remove((String) o);
-        ConfigRegistry.getInstance().removeESBConfig(configHolder);
+        GWConfigHolder configHolder = artifactMap.remove((String) o);
+        ConfigRegistry.getInstance().removeGWConfig(configHolder);
     }
 
     @Override
@@ -189,10 +188,10 @@ public class IFlowDeployer implements Deployer {
             parser.script();
 
             WUMLConfigurationBuilder.IntegrationFlow integrationFlow = wumlBaseListener.getIntegrationFlow();
-            ESBConfigHolder esbConfigHolder = integrationFlow.getEsbConfigHolder();
-            if (esbConfigHolder != null) {
-                artifactMap.put(key, esbConfigHolder);
-                ConfigRegistry.getInstance().addESBConfig(esbConfigHolder);
+            GWConfigHolder GWConfigHolder = integrationFlow.getGWConfigHolder();
+            if (GWConfigHolder != null) {
+                artifactMap.put(key, GWConfigHolder);
+                ConfigRegistry.getInstance().addGWConfig(GWConfigHolder);
             }
 
         } catch (IOException e) {

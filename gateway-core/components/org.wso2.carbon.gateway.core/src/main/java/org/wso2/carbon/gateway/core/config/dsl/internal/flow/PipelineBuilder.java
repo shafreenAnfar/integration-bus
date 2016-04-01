@@ -20,7 +20,7 @@ package org.wso2.carbon.gateway.core.config.dsl.internal.flow;
 
 
 import org.wso2.carbon.gateway.core.config.dsl.internal.flow.mediators.MediatorCollectionBuilder;
-import org.wso2.carbon.gateway.core.config.ESBConfigHolder;
+import org.wso2.carbon.gateway.core.config.GWConfigHolder;
 import org.wso2.carbon.gateway.core.flow.Pipeline;
 
 
@@ -31,11 +31,11 @@ public class PipelineBuilder extends MediatorCollectionBuilder {
 
     private Pipeline pipeline;
 
-    public static PipelineBuilder pipeline(String name, ESBConfigHolder parentConfig) {
+    public static PipelineBuilder pipeline(String name, GWConfigHolder parentConfig) {
         return new PipelineBuilder(name, parentConfig);
     }
 
-    private PipelineBuilder(String name, ESBConfigHolder parentConfig) {
+    private PipelineBuilder(String name, GWConfigHolder parentConfig) {
         super();
         pipeline = new Pipeline(name, super.getMediatorCollection());
         parentConfig.addPipeline(pipeline);

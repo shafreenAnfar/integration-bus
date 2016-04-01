@@ -98,6 +98,17 @@
                 <type>zip</type>
             </dependency>
             <dependency>
+                <groupId>org.wso2.carbon.gateway.mediators</groupId>
+                <artifactId>org.wso2.carbon.gateway.mediators.samplemediator</artifactId>
+                <version>${carbon.gw.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.gateway.mediators</groupId>
+                <artifactId>org.wso2.carbon.gateway.mediators.samplemediator.feature</artifactId>
+                <version>${carbon.gw.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
                 <groupId>org.osgi</groupId>
                 <artifactId>org.osgi.core</artifactId>
                 <version>${osgi.api.version}</version>
@@ -199,12 +210,10 @@
     </properties>
 
     <modules>
-        <module>gateway-core/components/org.wso2.carbon.gateway.core</module>
-        <module>gateway-core/features/org.wso2.carbon.gateway.core.feature</module>
-        <module>inbound-endpoints/http-inbound/components/org.wso2.carbon.gateway.inbounds.http</module>
-        <module>inbound-endpoints/http-inbound/features/org.wso2.carbon.gateway.inbounds.http.feature</module>
-        <module>outbound-endpoints/http-outbound/components/org.wso2.carbon.gateway.outbounds.http</module>
-        <module>outbound-endpoints/http-outbound/features/org.wso2.carbon.gateway.outbounds.http.feature</module>
+        <module>gateway-core</module>
+        <module>inbound-endpoints</module>
+        <module>outbound-endpoints</module>
+        <module>mediators</module>
         <module>samples</module>
         <module>product</module>
     </modules>

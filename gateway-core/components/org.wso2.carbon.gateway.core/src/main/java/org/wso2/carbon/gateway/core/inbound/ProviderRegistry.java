@@ -22,6 +22,6 @@ package org.wso2.carbon.gateway.core.inbound;
  */
 public interface ProviderRegistry {
 
-    public Provider getProvider(String protocol);
+    Provider getProvider(String protocol);
 
 }

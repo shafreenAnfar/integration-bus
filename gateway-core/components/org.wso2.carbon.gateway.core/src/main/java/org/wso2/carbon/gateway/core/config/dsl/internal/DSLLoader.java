@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.gateway.core.config.ConfigRegistry;
-import org.wso2.carbon.gateway.core.config.ESBConfigHolder;
+import org.wso2.carbon.gateway.core.config.GWConfigHolder;
 import org.wso2.carbon.gateway.core.inbound.ProviderRegistry;
 
 import java.util.ArrayList;
@@ -127,11 +127,11 @@ public class DSLLoader {
             log.debug("Loading Type 1 Java DSL ..");
         }
         // Call the DSL
-        ESBConfigHolder esbConfigHolder =
-                javaConfigurationBuilder.configure().getEsbConfigHolder();
+        GWConfigHolder GWConfigHolder =
+                javaConfigurationBuilder.configure().getGWConfigHolder();
 
         // Register the configuration
-        ConfigRegistry.getInstance().addESBConfig(esbConfigHolder);
+        ConfigRegistry.getInstance().addGWConfig(GWConfigHolder);
 
     }
 

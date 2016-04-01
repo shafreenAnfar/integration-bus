@@ -66,9 +66,8 @@
             <artifactId>org.wso2.carbon.messaging</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.custom</groupId>
-            <artifactId>SampleCustomMediator</artifactId>
-            <version>1.0</version>
+            <groupId>org.wso2.carbon.gateway.mediators</groupId>
+            <artifactId>org.wso2.carbon.gateway.mediators.samplemediator</artifactId>
         </dependency>
     </dependencies>
 
@@ -113,8 +112,8 @@
             org.wso2.carbon.gateway.inbounds.http,
             org.wso2.carbon.gateway.outbounds.http,
             org.wso2.carbon.gateway.outbounds.http.builder,
-            org.custom.builder,
-            org.custom
+            org.wso2.carbon.gateway.mediators.samplemediator.builder,
+            org.wso2.carbon.gateway.mediators.samplemediator
         </import.package>
 
         <osgi.framework.import.version.range>[1.8.0, 2.0.0)</osgi.framework.import.version.range>

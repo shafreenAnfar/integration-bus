@@ -30,6 +30,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * An InboundEndpoint Manager class
+ *
+ * This acts as the Deployer for HTTP Inbound Endpoint as well as a Transport Listener Manager
  */
 public class HTTPListenerManager implements TransportListenerManager, InboundEPDeployer {
 
