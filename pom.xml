@@ -98,6 +98,17 @@
                 <type>zip</type>
             </dependency>
             <dependency>
+                <groupId>org.wso2.carbon.gateway.mediators</groupId>
+                <artifactId>org.wso2.carbon.gateway.mediators.samplemediator</artifactId>
+                <version>${carbon.gw.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.gateway.mediators</groupId>
+                <artifactId>org.wso2.carbon.gateway.mediators.samplemediator.feature</artifactId>
+                <version>${carbon.gw.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
                 <groupId>org.osgi</groupId>
                 <artifactId>org.osgi.core</artifactId>
                 <version>${osgi.api.version}</version>
@@ -202,6 +213,7 @@
         <module>gateway-core</module>
         <module>inbound-endpoints</module>
         <module>outbound-endpoints</module>
+        <module>mediators</module>
         <module>samples</module>
         <module>product</module>
     </modules>

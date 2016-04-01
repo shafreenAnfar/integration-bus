@@ -19,17 +19,12 @@
 package org.wso2.carbon.gateway.core.samples.custom.logger;
 
 
-import org.custom.SampleCustomMediator;
-import org.custom.builder.SampleCustomMediatorBuilder;
 import org.wso2.carbon.gateway.core.config.dsl.internal.JavaConfigurationBuilder;
 
-import static org.custom.builder.SampleCustomMediatorBuilder.customLog;
-import static org.wso2.carbon.gateway.core.config.dsl.internal.flow.mediators.CallMediatorBuilder.call;
-import static org.wso2.carbon.gateway.core.config.dsl.internal.flow.mediators.FilterMediatorBuilder.pattern;
-import static org.wso2.carbon.gateway.core.config.dsl.internal.flow.mediators.FilterMediatorBuilder.source;
 import static org.wso2.carbon.gateway.inbounds.http.builder.HTTPInboundEPBuilder.context;
 import static org.wso2.carbon.gateway.inbounds.http.builder.HTTPInboundEPBuilder.http;
 import static org.wso2.carbon.gateway.inbounds.http.builder.HTTPInboundEPBuilder.port;
+import static org.wso2.carbon.gateway.mediators.samplemediator.builder.SampleCustomMediatorBuilder.customLog;
 import static org.wso2.carbon.gateway.outbounds.http.builder.HTTPOutboundEPBuilder.httpOutboundEndpoint;
 import static org.wso2.carbon.gateway.outbounds.http.builder.HTTPOutboundEPBuilder.uri;
 

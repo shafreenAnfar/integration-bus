@@ -26,12 +26,12 @@
 
     <modelVersion>4.0.0</modelVersion>
     <version>1.0.0-SNAPSHOT</version>
-    <artifactId>org.wso2.carbon.gateway.samples</artifactId>
+    <groupId>org.wso2.carbon.gateway.mediators</groupId>
+    <artifactId>org.wso2.carbon.gateway.mediators.parent</artifactId>
     <packaging>pom</packaging>
-    <name>WSO2 Gateway - Samples Module</name>
+    <name>WSO2 Gateway - Mediators Module</name>
     <url>http://wso2.org</url>
     <modules>
-        <module>JavaDSLSamples/MessageRouter</module>
-        <module>JavaDSLSamples/CustomLogger</module>
+        <module>sample-mediator</module>
     </modules>
 </project>

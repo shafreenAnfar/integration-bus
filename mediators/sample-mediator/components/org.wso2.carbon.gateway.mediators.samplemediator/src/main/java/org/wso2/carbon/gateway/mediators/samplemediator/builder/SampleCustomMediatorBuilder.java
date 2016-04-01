@@ -16,10 +16,10 @@
  * under the License.
  */
 
-package org.custom.builder;
+package org.wso2.carbon.gateway.mediators.samplemediator.builder;
 
 
-import org.custom.SampleCustomMediator;
+import org.wso2.carbon.gateway.mediators.samplemediator.SampleCustomMediator;
 import org.wso2.carbon.gateway.core.flow.Mediator;
 
 public class SampleCustomMediatorBuilder {
